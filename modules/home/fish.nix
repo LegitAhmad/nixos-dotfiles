@@ -21,6 +21,17 @@
       gs = "git status";
       gd = "git diff";
       gl = "git log --oneline -n 10";
+
+      # Safety alias: send to trash instead of permanent delete
+      rm = "trash-put";
+    };
+
+    functions = {
+      # mc: make directory and cd into it
+      mc = {
+        description = "Create a directory and cd into it";
+        body = "mkdir -p $argv[1] && cd $argv[1]";
+      };
     };
   };
 
@@ -61,4 +72,7 @@
     enable = true;
     enableFishIntegration = true;
   };
+
+  # Trash CLI for safe deletion
+  home.packages = with pkgs; [ trash-cli ];
 }

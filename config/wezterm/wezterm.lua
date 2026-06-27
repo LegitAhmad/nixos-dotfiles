@@ -126,17 +126,12 @@ for i = 1, 9 do
   })
 end
 
--- Custom right status display for active workspace name and date/time (Tmux-like style)
+-- Custom right status display for active workspace name (Tmux-like style)
 wezterm.on('update-right-status', function(window, pane)
   local workspace = window:active_workspace()
-  local date = wezterm.strftime('%a %b %d  %I:%M %p')
   window:set_right_status(wezterm.format {
     { Foreground = { Color = '#7f9687' } },
-    { Text = '   ' .. workspace .. ' ' },
-    { Foreground = { Color = '#364b3f' } },
-    { Text = ' │ ' },
-    { Foreground = { Color = '#90d5ae' } },
-    { Text = '   ' .. date .. ' ' },
+    { Text = '   ' .. workspace .. ' ' },
   })
 end)
 

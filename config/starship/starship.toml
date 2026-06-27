@@ -1,100 +1,82 @@
-format = "[ ](bold blue) $username in $directory$fill$git_branch$git_status${custom.jujutsu}$package$c$golang$nodejs$python$rust$lua$nix_shell${custom.nix}$cmd_duration$line_break$character"
+format = """
+[⸢](bold purple)[ ](bold purple)[⸥](bold purple) $username $directory$fill$cmd_duration $git_branch$python$nodejs$golang$rust$nix_shell
+$character
+"""
+
 palette = "tokyonight"
 
 [palettes.tokyonight]
-bg = "#1a1b26"
-fg = "#c0caf5"
-blue = "#7aa2f7"
-cyan = "#7dcfff"
-green = "#9ece6a"
-orange = "#ff9e64"
-purple = "#bb9af7"
-red = "#f7768e"
-yellow = "#e0af68"
+fg      = "#c0caf5"
+blue    = "#7aa2f7"
+green   = "#9ece6a"
+yellow  = "#e0af68"
+orange  = "#ff9e64"
+purple  = "#bb9af7"
+red     = "#f7768e"
 comment = "#565f89"
 
-[directory]
-style = "bold blue"
-format = "[$path]($style)[$read_only]($read_only_style) "
-truncation_length = 8
-truncation_symbol = "~/"
-
-[character]
-success_symbol = "[→ :](bold green)"
-error_symbol = "[→ :](bold red)"
-
-[git_branch]
-symbol = " "
-style = "bold orange"
-format = "on [$symbol$branch]($style) "
-
-[git_status]
-style = "bold red"
-format = "([\\[$all_status$ahead_behind\\]]($style) )"
-
-[nix_shell]
-symbol = " "
-style = "bold cyan"
-format = 'via [\[$symbol$state\]]($style) '
-
-[cmd_duration]
-style = "bold yellow"
-format = "took [$duration]($style) "
-
-[custom.jujutsu]
-command = "jj log -r @ -n 1 --color never --template '\"󰘬 \" ++ change_id.short() ++ if(bookmarks, \" @ \" ++ bookmarks.join(\", \"))'"
-when = "command -v jj >/dev/null && jj root --quiet"
-style = "bold purple"
-format = "on [$output]($style) "
+# Left side
 
 [username]
 show_always = true
 style_user = "bold purple"
-format = "[$user]($style)"
+format = "[$user]($style) "
 
-[package]
-symbol = "󰏗 "
-style = "bold comment"
-format = "is [$symbol$version]($style) "
+[directory]
+style = "bold blue"
+truncation_length = 4
+truncate_to_repo = true
+home_symbol = "~"
+format = "($style)[$path]($style) "
 
-[rust]
-symbol = " "
+# Git
+
+[git_branch]
+symbol = ""
+style = "bold orange"
+format = "on [$symbol $branch]($style)"
+
+[git_status]
 style = "bold red"
-format = "via [$symbol$version]($style) "
+format = "([$all_status$ahead_behind]($style)) "
 
-[golang]
-symbol = " "
-style = "bold cyan"
-format = "via [$symbol$version]($style) "
-
-[nodejs]
-symbol = " "
-style = "bold green"
-format = "via [$symbol$version]($style) "
+# Languages
 
 [python]
 symbol = " "
-style = "bold yellow"
-format = 'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\))]($style) '
+style = "yellow"
+format = " via [$symbol$version]($style) "
 
-[c]
-symbol = " "
-style = "bold blue"
-format = "via [$symbol$version]($style) "
+[nodejs]
+symbol = " "
+style = "green"
+format = " via [$symbol$version]($style) "
 
-[lua]
-symbol = " "
-style = "bold purple"
-format = "via [$symbol$version]($style) "
+[golang]
+symbol = " "
+style = "cyan"
+format = " via [$symbol$version]($style) "
 
-[custom.nix]
-command = "true"
-when = "[ -z \"$IN_NIX_SHELL\" ] && { [ -f flake.nix ] || [ -f shell.nix ] || [ -f default.nix ] || [ -f flake.lock ]; }"
+[rust]
+symbol = " "
+style = "red"
+format = " via [$symbol$version]($style) "
+
+[nix_shell]
 symbol = " "
-style = "bold cyan"
-format = 'via [\[$symbol\]]($style) '
+style = "bold purple"
+format = " via [$symbol]($style)"
+
+# Prompt
+
+[character]
+success_symbol = "[ → :](bold green)"
+error_symbol = "[ → :](bold red)"
+
+[cmd_duration]
+min_time = 2000
+style = "yellow"
+format = "[ $duration]($style)"
 
 [fill]
 symbol = " "
-
-
