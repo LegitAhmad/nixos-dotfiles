@@ -1,6 +1,10 @@
 format = """
-[⸢](bold purple)[ ](bold blue)[⸥](bold purple) $username $directory$fill$cmd_duration $git_branch$python$nodejs$golang$rust$nix_shell
+[⸢](bold purple)[ ](bold blue)[⸥](bold purple) $username$directory
 $character
+"""
+
+right_format = """
+$cmd_duration$git_branch$python$nodejs$golang$rust$nix_shell
 """
 
 palette = "tokyonight"
@@ -34,7 +38,7 @@ format = "($style)[$path]($style) "
 [git_branch]
 symbol = ""
 style = "bold orange"
-format = "on [$symbol $branch]($style)"
+format = " on [$symbol $branch]($style)"
 
 [git_status]
 style = "bold red"
@@ -45,22 +49,22 @@ format = "([$all_status$ahead_behind]($style)) "
 [python]
 symbol = " "
 style = "yellow"
-format = " via [$symbol$version]($style) "
+format = " via [$symbol$version]($style)"
 
 [nodejs]
 symbol = " "
 style = "green"
-format = " via [$symbol$version]($style) "
+format = " via [$symbol$version]($style)"
 
 [golang]
 symbol = " "
 style = "cyan"
-format = " via [$symbol$version]($style) "
+format = " via [$symbol$version]($style)"
 
 [rust]
 symbol = " "
 style = "red"
-format = " via [$symbol$version]($style) "
+format = " via [$symbol$version]($style)"
 
 [nix_shell]
 symbol = " "
@@ -76,7 +80,7 @@ error_symbol = "[ → :](bold red)"
 [cmd_duration]
 min_time = 2000
 style = "yellow"
-format = "[  $duration]($style)"
+format = " [ $duration]($style)"
 
 [fill]
 symbol = " "

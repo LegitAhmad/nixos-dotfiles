@@ -80,6 +80,14 @@
     };
   };
 
+  # Configure systemd timeouts for stopping services to be 10 seconds (modern NixOS syntax)
+  systemd.settings.Manager = {
+    DefaultTimeoutStopSec = "10s";
+  };
+  systemd.user.settings.Manager = {
+    DefaultTimeoutStopSec = "10s";
+  };
+
   # System state version.
   system.stateVersion = "26.05";
 }

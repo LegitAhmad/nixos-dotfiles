@@ -35,7 +35,7 @@
     enable = true;
     settings = {
       theme = lib.mkDefault "noctalia";
-      font-size = 15;
+      font-size = 13;
       window-padding-x = 6;
       window-padding-y = 6;
       window-padding-balance = true;
@@ -63,16 +63,6 @@
   # Symlink the foot configuration file from the local dotfiles directory
   xdg.configFile."foot/foot.ini" = {
     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/foot/foot.ini";
-    force = true;
-  };
-
-  programs.rio = {
-    enable = true;
-  };
-
-  # Symlink the rio configuration file from the local dotfiles directory
-  xdg.configFile."rio/config.toml" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/rio/config.toml";
     force = true;
   };
 

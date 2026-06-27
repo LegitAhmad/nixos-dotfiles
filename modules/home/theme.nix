@@ -39,32 +39,32 @@ in {
     };
   };
 
-  # Generate colors.ini for Foot
+  # Generate colors.ini for Foot (using Tokyo Night Vibrant theme)
   xdg.configFile."foot/colors.ini".text = ''
     [colors-dark]
     alpha=0.85
-    background=${colors.base00}
-    foreground=${colors.base05}
+    background=16161e
+    foreground=c0caf5
 
     # Normal/regular colors
-    regular0=${colors.base00}
-    regular1=${colors.base08}
-    regular2=${colors.base0B}
-    regular3=${colors.base0A}
-    regular4=${colors.base0D}
-    regular5=${colors.base0E}
-    regular6=${colors.base0C}
-    regular7=${colors.base05}
+    regular0=15161e
+    regular1=f7768e
+    regular2=9ece6a
+    regular3=e0af68
+    regular4=7aa2f7
+    regular5=bb9af7
+    regular6=7dcfff
+    regular7=a9b1d6
 
     # Bright colors
-    bright0=${colors.base03}
-    bright1=${colors.base08}
-    bright2=${colors.base0B}
-    bright3=${colors.base0A}
-    bright4=${colors.base0D}
-    bright5=${colors.base0E}
-    bright6=${colors.base0C}
-    bright7=${colors.base07}
+    bright0=414868
+    bright1=f7768e
+    bright2=9ece6a
+    bright3=e0af68
+    bright4=7aa2f7
+    bright5=bb9af7
+    bright6=7dcfff
+    bright7=c0caf5
   '';
 
   # Generate colors.lua for WezTerm
@@ -110,56 +110,6 @@ in {
             inactive-color "#${colors.base02}"
         }
     }
-  '';
-
-  # Generate Noctalia theme for Rio
-  xdg.configFile."rio/themes/noctalia.toml".text = ''
-    [colors]
-    background = '#${colors.base00}'
-    foreground = '#${colors.base05}'
-    cursor = '#${colors.base05}'
-    vi-cursor = '#${colors.base0E}'
-    selection-background = '#${colors.base02}'
-    selection-foreground = '#${colors.base05}'
-
-    # Normal colors
-    black = '#${colors.base00}'
-    red = '#${colors.base08}'
-    green = '#${colors.base0B}'
-    yellow = '#${colors.base0A}'
-    blue = '#${colors.base0D}'
-    magenta = '#${colors.base0E}'
-    cyan = '#${colors.base0C}'
-    white = '#${colors.base05}'
-
-    # Bright colors
-    light-black = '#${colors.base03}'
-    light-red = '#${colors.base08}'
-    light-green = '#${colors.base0B}'
-    light-yellow = '#${colors.base0A}'
-    light-blue = '#${colors.base0D}'
-    light-magenta = '#${colors.base0E}'
-    light-cyan = '#${colors.base0C}'
-    light-white = '#${colors.base07}'
-
-    # Dim colors
-    dim-black = '#${colors.base01}'
-    dim-red = '#${colors.base08}'
-    dim-green = '#${colors.base0B}'
-    dim-yellow = '#${colors.base0A}'
-    dim-blue = '#${colors.base0D}'
-    dim-magenta = '#${colors.base0E}'
-    dim-cyan = '#${colors.base0C}'
-    dim-white = '#${colors.base06}'
-
-    # Tabs and split
-    tabs = '#${colors.base01}'
-    tabs-foreground = '#${colors.base04}'
-    tabs-active = '#${colors.base00}'
-    tabs-active-foreground = '#${colors.base05}'
-    tabs-active-highlight = '#${colors.base0E}'
-    bar = '#${colors.base01}'
-    split = '#${colors.base02}'
   '';
 
   # Generate theme.yml for Eza

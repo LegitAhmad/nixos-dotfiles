@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   # Enable the X11 windowing system.
@@ -9,6 +14,19 @@
 
   # Enable touchpad support.
   services.libinput.enable = true;
+
+  # Enable Intel CPU/GPU drivers & hardware graphics acceleration
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      intel-vaapi-driver
+      vpl-gpu-rt
+    ];
+  };
+
+  # Intel CPU temperature/throttling daemon
+  services.thermald.enable = true;
 
   # Enable sound with Pipewire.
   services.pipewire = {
@@ -40,13 +58,18 @@
       thunar-volman
     ];
   };
-  services.gvfs.enable = true;    # Mount, trash, and other file system features
-  services.tumbler.enable = true;  # Thumbnail support for images
-  programs.xfconf.enable = true;   # Thunar preference savings
+  services.gvfs.enable = true; # Mount, trash, and other file system features
+  services.tumbler.enable = true; # Thumbnail support for images
+  programs.xfconf.enable = true; # Thunar preference savings
 
   # Enable ly display manager.
   services.displayManager = {
     ly.enable = true;
+  };
+
+  # Delay display manager restart to allow systemd shutdown to cleanly stop the service before it respawns.
+  systemd.services.display-manager.serviceConfig = {
+    RestartSec = lib.mkForce "3s";
   };
 
   # Enable Bluetooth.
@@ -69,12 +92,12 @@
   fonts = {
     packages = with pkgs; [
       nerd-fonts.fira-code
-      nerd-fonts.fantasque-sans-mono
       nerd-fonts.jetbrains-mono
+      nerd-fonts.symbols-only
     ];
     fontconfig = {
       defaultFonts = {
-        monospace = [ "FantasqueSansM Nerd Font" ];
+        monospace = [ "JetBrainsMono Nerd Font" ];
       };
     };
   };

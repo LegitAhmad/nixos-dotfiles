@@ -9,7 +9,7 @@ local colors = require 'colors'
 colors.tab_bar = {
   background = colors.background,
   active_tab = {
-    bg_color = '#364b3f',
+    bg_color = colors.background,
     fg_color = colors.foreground,
     intensity = 'Bold',
   },
@@ -18,7 +18,7 @@ colors.tab_bar = {
     fg_color = '#7f9687',
   },
   inactive_tab_hover = {
-    bg_color = '#25352c',
+    bg_color = colors.background,
     fg_color = colors.foreground,
   },
   new_tab = {
@@ -26,18 +26,25 @@ colors.tab_bar = {
     fg_color = '#7f9687',
   },
   new_tab_hover = {
-    bg_color = '#25352c',
+    bg_color = colors.background,
     fg_color = '#cacd59',
   },
 }
 config.colors = colors
+config.check_for_updates = false
+
+-- Performance & Integration Optimizations
+config.scrollback_lines = 10000                     -- Increase scrollback history
+config.enable_kitty_graphics = true                 -- Enable Kitty graphics protocol (for yazi image previews)
+config.adjust_window_size_when_changing_font_size = false -- Do not resize window on font zoom
 
 config.font = wezterm.font_with_fallback {
-  'FantasqueSansM Nerd Font',
+  'JetBrainsMono Nerd Font',
   'FiraCode Nerd Font',
-  'JetBrainsMono Nerd Font Mono',
+  'Noto Color Emoji',
 }
-config.font_size = 15.0
+
+config.font_size = 13.0
 config.line_height = 1.15
 
 -- Set cursor to blinking bar (not block)
@@ -57,7 +64,7 @@ config.window_padding = {
 
 -- Tab bar layout & styling
 config.enable_tab_bar = true
-config.use_fancy_tab_bar = false
+config.use_fancy_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = false
 config.tab_bar_at_bottom = false
 
@@ -126,18 +133,61 @@ for i = 1, 9 do
   })
 end
 
--- Custom right status display for active workspace name (Tmux-like style)
+-- Helper function to map processes to Cool icons
+local function get_process_icon(process_name)
+  local name = process_name:lower()
+  if name:find("node") or name:find("npm") or name:find("yarn") then
+    return "󰎙"
+  elseif name:find("python") or name:find("py") then
+    return "󰌠"
+  elseif name:find("git") or name:find("lazygit") then
+    return "󰊢"
+  elseif name:find("nvim") or name:find("vim") or name:find("vi") then
+    return ""
+  elseif name:find("fish") or name:find("bash") or name:find("zsh") or name:find("sh") then
+    return ""
+  elseif name:find("cargo") or name:find("rustc") then
+    return ""
+  elseif name:find("docker") then
+    return "󰡨"
+  elseif name:find("yazi") then
+    return "󰇘"
+  elseif name:find("helix") or name:find("hx") then
+    return "󰘦"
+  else
+    return ""
+  end
+end
+
+-- Custom right status display with styled status pills (Workspace)
 wezterm.on('update-right-status', function(window, pane)
   local workspace = window:active_workspace()
+  
+  local active_bg = '#364b3f'
+  local active_fg = colors.foreground
+  local inactive_bg = colors.background
+
   window:set_right_status(wezterm.format {
-    { Foreground = { Color = '#7f9687' } },
-    { Text = '   ' .. workspace .. ' ' },
+    -- Workspace Pill
+    { Background = { Color = inactive_bg } },
+    { Foreground = { Color = active_bg } },
+    { Text = '' },
+    { Background = { Color = active_bg } },
+    { Foreground = { Color = active_fg } },
+    { Text = '󱂬  ' .. workspace },
+    { Background = { Color = inactive_bg } },
+    { Foreground = { Color = active_bg } },
+    { Text = ' ' },
   })
 end)
 
--- Custom tab bar titles formatting (modern index + process/folder names with icons)
+-- Custom tab bar titles formatting (modern index + process/folder names with icons + rounded dividers + wide tabs)
 wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
   local index = tab.tab_index + 1
+  local process_name = tab.active_pane.user_vars.WEZTERM_PROG or tab.active_pane.foreground_process_name or ""
+  if process_name == "" then
+    process_name = tab.active_pane.title
+  end
   local title = tab.active_pane.title
   
   -- Shorten paths to just the current directory name
@@ -145,15 +195,44 @@ wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_wid
     title = title:gsub(".*/", "")
   end
   
-  local icon = ""
+  local icon = get_process_icon(process_name)
+  
+  local active_bg = '#364b3f'
+  local active_fg = colors.foreground
+  local inactive_bg = colors.background
+  local inactive_fg = '#7f9687'
+  local hover_bg = '#25352c'
+  local hover_fg = colors.foreground
+
   if tab.is_active then
     return {
-      { Attribute = { Intensity = 'Bold' } },
-      { Text = string.format(" %s %d: %s ", icon, index, title) }
+      { Background = { Color = inactive_bg } },
+      { Foreground = { Color = active_bg } },
+      { Text = '' },
+      { Background = { Color = active_bg } },
+      { Foreground = { Color = active_fg } },
+      { Text = string.format("    %s  %d: %s    ", icon, index, title) },
+      { Background = { Color = inactive_bg } },
+      { Foreground = { Color = active_bg } },
+      { Text = '' },
+    }
+  elseif hover then
+    return {
+      { Background = { Color = inactive_bg } },
+      { Foreground = { Color = hover_bg } },
+      { Text = '' },
+      { Background = { Color = hover_bg } },
+      { Foreground = { Color = hover_fg } },
+      { Text = string.format("    %s  %d: %s    ", icon, index, title) },
+      { Background = { Color = inactive_bg } },
+      { Foreground = { Color = hover_bg } },
+      { Text = '' },
     }
   else
     return {
-      { Text = string.format(" %d: %s ", index, title) }
+      { Background = { Color = inactive_bg } },
+      { Foreground = { Color = inactive_fg } },
+      { Text = string.format("      %s  %d: %s      ", icon, index, title) },
     }
   end
 end)

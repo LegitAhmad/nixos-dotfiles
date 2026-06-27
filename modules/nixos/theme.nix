@@ -1,8 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.theme;
-in {
+in
+{
   options.theme = {
     enableStylix = lib.mkOption {
       type = lib.types.bool;
@@ -23,7 +29,11 @@ in {
     };
 
     polarity = lib.mkOption {
-      type = lib.types.enum [ "dark" "light" "either" ];
+      type = lib.types.enum [
+        "dark"
+        "light"
+        "either"
+      ];
       default = "dark";
       description = "The polarity of the theme.";
     };
@@ -44,8 +54,9 @@ in {
       image = ../../config/assets/wallpaper.jpg;
 
       # Conditionally set base16Scheme if not generating from wallpaper
-      base16Scheme = lib.mkIf (!cfg.useWallpaperColors)
-        "${pkgs.base16-schemes}/share/themes/${cfg.scheme}.yaml";
+      base16Scheme = lib.mkIf (
+        !cfg.useWallpaperColors
+      ) "${pkgs.base16-schemes}/share/themes/${cfg.scheme}.yaml";
 
       polarity = cfg.polarity;
 
@@ -59,8 +70,8 @@ in {
       # System-wide typography mapping
       fonts = {
         monospace = {
-          package = pkgs.nerd-fonts.fantasque-sans-mono;
-          name = "FantasqueSansM Nerd Font";
+          package = pkgs.nerd-fonts.jetbrains-mono;
+          name = "JetBrainsMono Nerd Font";
         };
         sansSerif = {
           package = pkgs.dejavu_fonts;
@@ -73,7 +84,7 @@ in {
 
         sizes = {
           applications = 12;
-          terminal = 15;
+          terminal = 13;
           desktop = 11;
           popups = 11;
         };

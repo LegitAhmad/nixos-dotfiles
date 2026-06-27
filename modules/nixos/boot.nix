@@ -24,7 +24,7 @@
 
   boot = {
     initrd.supportedFilesystems = [ "btrfs" ];
-    initrd.kernelModules = [ "btrfs" ];
+    initrd.kernelModules = [ "btrfs" "i915" ];
     initrd.compressor = "xz";
     supportedFilesystems = [ "btrfs" ];
 
