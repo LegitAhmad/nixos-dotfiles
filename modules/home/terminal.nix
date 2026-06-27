@@ -11,10 +11,8 @@
     wget
     brightnessctl
     nushell
-    btop
     bandwhich
     ripgrep
-    yazi
     ani-cli
     lazygit
     lazyjj
@@ -25,11 +23,19 @@
     cava
   ];
 
+  programs.btop = {
+    enable = true;
+  };
+
+  programs.yazi = {
+    enable = true;
+  };
+
   programs.ghostty = {
     enable = true;
     settings = {
-      theme = lib.mkDefault "TokyoNight";
-      font-size = 13;
+      theme = lib.mkDefault "noctalia";
+      font-size = 15;
       window-padding-x = 6;
       window-padding-y = 6;
       window-padding-balance = true;

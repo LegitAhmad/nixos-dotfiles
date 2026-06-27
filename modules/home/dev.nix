@@ -39,9 +39,11 @@
     ];
     userSettings = {
       theme = lib.mkForce "Tokyo Night";
-      ui_font_family = lib.mkForce "FiraCode Nerd Font";
+      ui_font_family = lib.mkForce "FantasqueSansM Nerd Font";
+      ui_font_weight = lib.mkForce "bold";
       ui_font_size = lib.mkForce 15;
-      buffer_font_family = lib.mkForce "FiraCode Nerd Font";
+      buffer_font_family = lib.mkForce "FantasqueSansM Nerd Font";
+      buffer_font_weight = lib.mkForce "bold";
       buffer_font_size = lib.mkForce 14;
       vim_mode = lib.mkForce true;
       autosave = "on_focus_change";
@@ -61,8 +63,9 @@
         auto_fold_dirs = true;
       };
       terminal = {
-        font_family = "FiraCode Nerd Font";
-        font_size = 13;
+        font_family = "FantasqueSansM Nerd Font";
+        font_weight = "bold";
+        font_size = 15;
         copy_on_select = true;
       };
       lsp = {

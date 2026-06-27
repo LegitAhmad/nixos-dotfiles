@@ -12,13 +12,13 @@ in {
 
     useWallpaperColors = lib.mkOption {
       type = lib.types.bool;
-      default = true;
+      default = false;
       description = "Generate the base16 scheme dynamically from the wallpaper. If false, uses the scheme option.";
     };
 
     scheme = lib.mkOption {
       type = lib.types.str;
-      default = "tokyo-night";
+      default = "tokyo-night-dark";
       description = "The base16 scheme to use as a fallback when useWallpaperColors is false.";
     };
 
@@ -59,8 +59,8 @@ in {
       # System-wide typography mapping
       fonts = {
         monospace = {
-          package = pkgs.nerd-fonts.fira-code;
-          name = "FiraCode Nerd Font";
+          package = pkgs.nerd-fonts.fantasque-sans-mono;
+          name = "FantasqueSansM Nerd Font";
         };
         sansSerif = {
           package = pkgs.dejavu_fonts;
@@ -73,7 +73,7 @@ in {
 
         sizes = {
           applications = 12;
-          terminal = 13;
+          terminal = 15;
           desktop = 11;
           popups = 11;
         };
@@ -86,6 +86,7 @@ in {
         gnome.enable = true;
         gtk.enable = true;
         qt.enable = true;
+        chromium.enable = true;
       };
     };
   };

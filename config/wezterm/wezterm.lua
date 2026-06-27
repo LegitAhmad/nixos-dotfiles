@@ -1,15 +1,49 @@
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
--- ==========================================
--- Appearance & Typography
--- ==========================================
--- Color Scheme: Catppuccin Mocha dark theme
-config.color_scheme = 'Catppuccin Mocha'
+-- Add the user's config directory to the Lua path so require 'colors' works with symlinked wezterm.lua
+local home = os.getenv("HOME")
+package.path = package.path .. ";" .. home .. "/.config/wezterm/?.lua"
 
-config.font = wezterm.font('FiraCode Nerd Font', { weight = 'Medium' })
-config.font_size = 12.0
+local colors = require 'colors'
+colors.tab_bar = {
+  background = colors.background,
+  active_tab = {
+    bg_color = '#364b3f',
+    fg_color = colors.foreground,
+    intensity = 'Bold',
+  },
+  inactive_tab = {
+    bg_color = colors.background,
+    fg_color = '#7f9687',
+  },
+  inactive_tab_hover = {
+    bg_color = '#25352c',
+    fg_color = colors.foreground,
+  },
+  new_tab = {
+    bg_color = colors.background,
+    fg_color = '#7f9687',
+  },
+  new_tab_hover = {
+    bg_color = '#25352c',
+    fg_color = '#cacd59',
+  },
+}
+config.colors = colors
+
+config.font = wezterm.font_with_fallback {
+  'FantasqueSansM Nerd Font',
+  'FiraCode Nerd Font',
+  'JetBrainsMono Nerd Font Mono',
+}
+config.font_size = 15.0
 config.line_height = 1.15
+
+-- Set cursor to blinking bar (not block)
+config.default_cursor_style = 'BlinkingBar'
+config.cursor_blink_ease_in = 'Constant'
+config.cursor_blink_ease_out = 'Constant'
 
 -- Beautiful background opacity with no window title bars for a clean flat aesthetic
 config.window_background_opacity = 0.85
@@ -24,7 +58,7 @@ config.window_padding = {
 -- Tab bar layout & styling
 config.enable_tab_bar = true
 config.use_fancy_tab_bar = false
-config.hide_tab_bar_if_only_one_tab = true
+config.hide_tab_bar_if_only_one_tab = false
 config.tab_bar_at_bottom = false
 
 
@@ -92,14 +126,62 @@ for i = 1, 9 do
   })
 end
 
--- Custom right status display for active workspace name
+-- Custom right status display for active workspace name and date/time (Tmux-like style)
 wezterm.on('update-right-status', function(window, pane)
   local workspace = window:active_workspace()
+  local date = wezterm.strftime('%a %b %d  %I:%M %p')
   window:set_right_status(wezterm.format {
-    { Attribute = { Intensity = 'Bold' } },
-    { Foreground = { AnsiColor = 'Cyan' } },
-    { Text = '   ' .. workspace .. '  ' },
+    { Foreground = { Color = '#7f9687' } },
+    { Text = '   ' .. workspace .. ' ' },
+    { Foreground = { Color = '#364b3f' } },
+    { Text = ' │ ' },
+    { Foreground = { Color = '#90d5ae' } },
+    { Text = '   ' .. date .. ' ' },
   })
 end)
+
+-- Custom tab bar titles formatting (modern index + process/folder names with icons)
+wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
+  local index = tab.tab_index + 1
+  local title = tab.active_pane.title
+  
+  -- Shorten paths to just the current directory name
+  if title:find("/") then
+    title = title:gsub(".*/", "")
+  end
+  
+  local icon = ""
+  if tab.is_active then
+    return {
+      { Attribute = { Intensity = 'Bold' } },
+      { Text = string.format(" %s %d: %s ", icon, index, title) }
+    }
+  else
+    return {
+      { Text = string.format(" %d: %s ", index, title) }
+    }
+  end
+end)
+
+config.mouse_bindings = {
+  {
+    event = { Up = { streak = 1, button = 'Left' } },
+    mods = 'NONE',
+    action = wezterm.action_callback(function(window, pane)
+      local selection = window:get_selection_text_for_pane(pane)
+      if selection and selection ~= "" then
+        window:perform_action(wezterm.action.CompleteSelectionOrOpenLinkAtMouseCursor 'ClipboardAndPrimarySelection', pane)
+        local display = selection
+        if #display > 30 then
+          display = display:sub(1, 30) .. "..."
+        end
+        display = display:gsub("\n", " ")
+        window:toast_notification("WezTerm", "Copied: \"" .. display .. "\"", nil, 1500)
+      else
+        window:perform_action(wezterm.action.CompleteSelectionOrOpenLinkAtMouseCursor 'ClipboardAndPrimarySelection', pane)
+      end
+    end),
+  },
+}
 
 return config

@@ -69,10 +69,12 @@
   fonts = {
     packages = with pkgs; [
       nerd-fonts.fira-code
+      nerd-fonts.fantasque-sans-mono
+      nerd-fonts.jetbrains-mono
     ];
     fontconfig = {
       defaultFonts = {
-        monospace = [ "FiraCode Nerd Font" ];
+        monospace = [ "FantasqueSansM Nerd Font" ];
       };
     };
   };

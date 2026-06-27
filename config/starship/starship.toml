@@ -1,4 +1,4 @@
-format = "[ ](bold blue) $username on $directory$git_branch$git_status$custom$package$c$golang$nodejs$python$rust$lua$nix_shell$cmd_duration$line_break$character"
+format = "[ ](bold blue) $username in $directory$fill$git_branch$git_status${custom.jujutsu}$package$c$golang$nodejs$python$rust$lua$nix_shell${custom.nix}$cmd_duration$line_break$character"
 palette = "tokyonight"
 
 [palettes.tokyonight]
@@ -16,12 +16,12 @@ comment = "#565f89"
 [directory]
 style = "bold blue"
 format = "[$path]($style)[$read_only]($read_only_style) "
-truncation_length = 3
-truncation_symbol = "…/"
+truncation_length = 8
+truncation_symbol = "~/"
 
 [character]
-success_symbol = "[❯](bold green)"
-error_symbol = "[❯](bold red)"
+success_symbol = "[→ :](bold green)"
+error_symbol = "[→ :](bold red)"
 
 [git_branch]
 symbol = " "
@@ -35,7 +35,7 @@ format = "([\\[$all_status$ahead_behind\\]]($style) )"
 [nix_shell]
 symbol = " "
 style = "bold cyan"
-format = "via [$symbol ($state)]($style) "
+format = 'via [\[$symbol$state\]]($style) '
 
 [cmd_duration]
 style = "bold yellow"
@@ -75,7 +75,7 @@ format = "via [$symbol$version]($style) "
 [python]
 symbol = " "
 style = "bold yellow"
-format = "via [$symbol$version]($style) "
+format = 'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\))]($style) '
 
 [c]
 symbol = " "
@@ -86,4 +86,15 @@ format = "via [$symbol$version]($style) "
 symbol = " "
 style = "bold purple"
 format = "via [$symbol$version]($style) "
+
+[custom.nix]
+command = "true"
+when = "[ -z \"$IN_NIX_SHELL\" ] && { [ -f flake.nix ] || [ -f shell.nix ] || [ -f default.nix ] || [ -f flake.lock ]; }"
+symbol = " "
+style = "bold cyan"
+format = 'via [\[$symbol\]]($style) '
+
+[fill]
+symbol = " "
+
 

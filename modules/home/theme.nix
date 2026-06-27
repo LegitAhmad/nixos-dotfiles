@@ -4,34 +4,38 @@ let
   # Check if Stylix is enabled on the system level
   stylixEnabled = if osConfig != null then osConfig.theme.enableStylix else true;
 
-  # Tokyo Night fallback colors (used if Stylix is disabled or as default)
-  tokyoNight = {
-    base00 = "1a1b26"; # Background
-    base01 = "16161e";
-    base02 = "2f3549";
-    base03 = "444b6a";
-    base04 = "787c99";
-    base05 = "a9b1d6"; # Foreground
-    base06 = "cbccd1";
-    base07 = "d5d6db";
-    base08 = "f7768e"; # Red
+  # Noctalia theme colors
+  noctalia = {
+    base00 = "0b1610"; # Background
+    base01 = "364b3f";
+    base02 = "364b3f";
+    base03 = "7f9687";
+    base04 = "7f9687";
+    base05 = "d9e6db"; # Foreground
+    base06 = "b4ccbc";
+    base07 = "d9e6db";
+    base08 = "ffb4ab"; # Red
     base09 = "ff9e64"; # Orange
-    base0A = "e0af68"; # Yellow
-    base0B = "9ece6a"; # Green
-    base0C = "7dcfff"; # Cyan
-    base0D = "7aa2f7"; # Blue
-    base0E = "bb9af7"; # Purple
-    base0F = "c0caf5";
+    base0A = "c9cb77"; # Yellow
+    base0B = "cacd59"; # Green
+    base0C = "c9cb77"; # Cyan
+    base0D = "90d5ae"; # Blue
+    base0E = "cacd59"; # Purple
+    base0F = "d9e6db";
   };
 
-  # Terminals and other non-gtk/qt tools use Tokyo Night colors directly instead of the custom palette
-  colors = tokyoNight;
+  # Terminals use Noctalia colors directly to match desktop shell theme
+  colors = noctalia;
 in {
   stylix = {
     autoEnable = false;
     targets = {
       gtk.enable = true;
       qt.enable = true;
+      btop.enable = true;
+      zen-browser.enable = true;
+      vesktop.enable = true;
+      yazi.enable = true;
     };
   };
 
@@ -106,6 +110,85 @@ in {
             inactive-color "#${colors.base02}"
         }
     }
+  '';
+
+  # Generate Noctalia theme for Rio
+  xdg.configFile."rio/themes/noctalia.toml".text = ''
+    [colors]
+    background = '#${colors.base00}'
+    foreground = '#${colors.base05}'
+    cursor = '#${colors.base05}'
+    vi-cursor = '#${colors.base0E}'
+    selection-background = '#${colors.base02}'
+    selection-foreground = '#${colors.base05}'
+
+    # Normal colors
+    black = '#${colors.base00}'
+    red = '#${colors.base08}'
+    green = '#${colors.base0B}'
+    yellow = '#${colors.base0A}'
+    blue = '#${colors.base0D}'
+    magenta = '#${colors.base0E}'
+    cyan = '#${colors.base0C}'
+    white = '#${colors.base05}'
+
+    # Bright colors
+    light-black = '#${colors.base03}'
+    light-red = '#${colors.base08}'
+    light-green = '#${colors.base0B}'
+    light-yellow = '#${colors.base0A}'
+    light-blue = '#${colors.base0D}'
+    light-magenta = '#${colors.base0E}'
+    light-cyan = '#${colors.base0C}'
+    light-white = '#${colors.base07}'
+
+    # Dim colors
+    dim-black = '#${colors.base01}'
+    dim-red = '#${colors.base08}'
+    dim-green = '#${colors.base0B}'
+    dim-yellow = '#${colors.base0A}'
+    dim-blue = '#${colors.base0D}'
+    dim-magenta = '#${colors.base0E}'
+    dim-cyan = '#${colors.base0C}'
+    dim-white = '#${colors.base06}'
+
+    # Tabs and split
+    tabs = '#${colors.base01}'
+    tabs-foreground = '#${colors.base04}'
+    tabs-active = '#${colors.base00}'
+    tabs-active-foreground = '#${colors.base05}'
+    tabs-active-highlight = '#${colors.base0E}'
+    bar = '#${colors.base01}'
+    split = '#${colors.base02}'
+  '';
+
+  # Generate theme.yml for Eza
+  xdg.configFile."eza/theme.yml".text = ''
+    colourful: true
+
+    filekinds:
+      normal: { foreground: "#${colors.base05}" }
+      directory: { foreground: "#${colors.base0D}" }
+      symlink: { foreground: "#${colors.base0C}" }
+      pipe: { foreground: "#${colors.base03}" }
+      block_device: { foreground: "#${colors.base0A}" }
+      char_device: { foreground: "#${colors.base0A}" }
+      socket: { foreground: "#${colors.base03}" }
+      special: { foreground: "#${colors.base0E}" }
+      executable: { foreground: "#${colors.base0B}" }
+      mount_point: { foreground: "#${colors.base0C}" }
+
+    perms:
+      user_read: { foreground: "#${colors.base0C}" }
+      user_write: { foreground: "#${colors.base0E}" }
+      user_execute_file: { foreground: "#${colors.base0B}" }
+      user_execute_other: { foreground: "#${colors.base0B}" }
+      group_read: { foreground: "#${colors.base0C}" }
+      group_write: { foreground: "#${colors.base09}" }
+      group_execute: { foreground: "#${colors.base0B}" }
+      other_read: { foreground: "#${colors.base0C}" }
+      other_write: { foreground: "#${colors.base08}" }
+      other_execute: { foreground: "#${colors.base0B}" }
   '';
 
   # Enforce system-wide dark mode

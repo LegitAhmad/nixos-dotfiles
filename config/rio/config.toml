@@ -1,59 +1,22 @@
 # Rio Configuration File
 # Documentation: https://raphamorim.io/rio/docs/
 
+theme = "noctalia"
+
 [window]
 opacity = 0.85
 blur = true
 decorations = "Buttonless"
 
 [fonts]
-size = 13.0
-family = "FiraCode Nerd Font"
+size = 15.0
+family = "FantasqueSansM Nerd Font"
 
 [fonts.regular]
-family = "FiraCode Nerd Font"
+family = "FantasqueSansM Nerd Font"
 style = "normal"
-weight = 500
+weight = 700
 
 [effects]
 trail-cursor = true
 
-[colors]
-# Catppuccin Mocha Dark Theme
-background = '#1e1e2e'
-foreground = '#cdd6f4'
-cursor = '#f5e0dc'
-vi-cursor = '#b4befe'
-
-# Normal colors
-black = '#45475a'
-red = '#f38ba8'
-green = '#a6e3a1'
-yellow = '#f9e2af'
-blue = '#89b4fa'
-magenta = '#f5c2e7'
-cyan = '#94e2d5'
-white = '#bac2de'
-
-# Dim colors
-dim-black = '#585b70'
-dim-red = '#f38ba8'
-dim-green = '#a6e3a1'
-dim-yellow = '#f9e2af'
-dim-blue = '#89b4fa'
-dim-magenta = '#f5c2e7'
-dim-cyan = '#94e2d5'
-dim-white = '#a6adc8'
-
-# Selection
-selection-foreground = '#1e1e2e'
-selection-background = '#f5e0dc'
-
-# Tabs
-tabs = '#181825'
-tabs-foreground = '#bac2de'
-tabs-active = '#1e1e2e'
-tabs-active-foreground = '#cdd6f4'
-tabs-active-highlight = '#f5c2e7'
-bar = '#11111b'
-split = '#313244'

@@ -34,6 +34,8 @@
     adw-gtk3
     proton-vpn
     mpv
+    libreoffice-fresh
+    wpsoffice
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 

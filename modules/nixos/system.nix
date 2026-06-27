@@ -6,6 +6,7 @@
     experimental-features = [ "nix-command" "flakes" ];
     accept-flake-config = true;
     narinfo-cache-negative-ttl = 0;
+    warn-dirty = false;
     substituters = [
       "https://cache.nixos.org"
       "https://noctalia.cachix.org"
