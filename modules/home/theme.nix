@@ -126,6 +126,35 @@ in
       other_execute: { foreground: "#${colors.base0B}" }
   '';
 
+  # Generate styles.json for Carapace (dynamically mapped to Stylix base16 colors)
+  xdg.configFile."carapace/styles.json".text = builtins.toJSON {
+    carapace = {
+      Value = colors.withHashtag.base05;
+      Description = "italic ${colors.withHashtag.base03}";
+      Error = colors.withHashtag.base08;
+      Usage = colors.withHashtag.base0E;
+      KeywordPositive = colors.withHashtag.base0B;
+      KeywordNegative = colors.withHashtag.base08;
+      KeywordUnknown = colors.withHashtag.base09;
+      FlagNoArg = colors.withHashtag.base0D;
+      FlagArg = colors.withHashtag.base0A;
+      FlagMultiArg = colors.withHashtag.base0A;
+      FlagOptArg = colors.withHashtag.base0A;
+      Highlight1 = colors.withHashtag.base0D;
+      Highlight2 = colors.withHashtag.base0B;
+      Highlight3 = colors.withHashtag.base0A;
+      Highlight4 = colors.withHashtag.base0C;
+      Highlight5 = colors.withHashtag.base0E;
+      Highlight6 = colors.withHashtag.base08;
+      Highlight7 = colors.withHashtag.base09;
+      Highlight8 = colors.withHashtag.base0D;
+      Highlight9 = colors.withHashtag.base0B;
+      Highlight10 = colors.withHashtag.base0A;
+      Highlight11 = colors.withHashtag.base0C;
+      Highlight12 = colors.withHashtag.base0E;
+    };
+  };
+
   # Enforce system-wide dark mode
   dconf.settings = {
     "org/gnome/desktop/interface" = {
