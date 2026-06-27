@@ -11,6 +11,6 @@
     useUserPackages = true;
     backupFileExtension = "backup";
     extraSpecialArgs = { inherit inputs; };
-    users.LegitAhmad = import ../../modules/home;
+    users.legitahmad = import ../../modules/home;
   };
 }

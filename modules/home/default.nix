@@ -14,8 +14,8 @@
     ./theme.nix
   ];
 
-  home.username = "LegitAhmad";
-  home.homeDirectory = lib.mkForce "/home/LegitAhmad";
+  home.username = "legitahmad";
+  home.homeDirectory = lib.mkForce "/home/legitahmad";
 
   # Compatibility version.
   home.stateVersion = "26.05";

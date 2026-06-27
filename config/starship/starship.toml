@@ -1,5 +1,5 @@
 format = """
-[⸢](bold purple)[ ](bold purple)[⸥](bold purple) $username $directory$fill$cmd_duration $git_branch$python$nodejs$golang$rust$nix_shell
+[⸢](bold purple)[ ](bold blue)[⸥](bold purple) $username $directory$fill$cmd_duration $git_branch$python$nodejs$golang$rust$nix_shell
 $character
 """
 
@@ -76,7 +76,7 @@ error_symbol = "[ → :](bold red)"
 [cmd_duration]
 min_time = 2000
 style = "yellow"
-format = "[ $duration]($style)"
+format = "[  $duration]($style)"
 
 [fill]
 symbol = " "

@@ -5,7 +5,7 @@
     enable = true;
     settings = {
       user = {
-        name = "LegitAhmad";
+        name = "legitahmad";
         email = "a.s20061111@gmail.com";
       };
     };
@@ -23,7 +23,7 @@
     enable = true;
     settings = {
       user = {
-        name = "LegitAhmad";
+        name = "legitahmad";
         email = "a.s20061111@gmail.com";
       };
     };

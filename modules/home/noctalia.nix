@@ -17,7 +17,7 @@
 
       wallpaper = {
         default = {
-          path = "/home/LegitAhmad/nixos-dotfiles/config/assets/wallpaper.jpg";
+          path = "/home/legitahmad/nixos-dotfiles/config/assets/wallpaper.jpg";
         };
       };
 
