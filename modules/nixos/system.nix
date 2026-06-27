@@ -16,6 +16,11 @@
       "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
     ];
     trusted-users = [ "root" "@wheel" ];
+
+    # 12-Core CPU & Disk I/O optimizations
+    max-jobs = "auto";
+    cores = 0;                         # Tells Nix to use all 12 cores for building packages
+    auto-optimise-store = true;        # Hardlink identical files in the store to save disk space and I/O time
   };
 
   # Enable fish shell system-wide.

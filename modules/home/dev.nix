@@ -84,7 +84,7 @@
     enable = true;
     defaultEditor = true;
     settings = {
-      theme = lib.mkDefault "tokyonight";
+      theme = lib.mkDefault "gruvbox";
       editor = {
         line-number = "relative";
         lsp.display-messages = true;

@@ -240,6 +240,7 @@ layout {
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
 // spawn-at-startup "waybar"
+spawn-at-startup "foot" "--server"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -320,6 +321,11 @@ window-rule {
     // block-out-from "screencast"
 }
 
+blur {
+    passes 2
+    offset 2.0
+}
+
 // Enable rounded corners and background blur for all windows.
 window-rule {
     geometry-corner-radius 12
@@ -345,7 +351,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+T hotkey-overlay-title="Open a Terminal: Foot" { spawn "foot"; }
+    Mod+T hotkey-overlay-title="Open a Terminal: Foot Client" { spawn "footclient"; }
     Mod+A hotkey-overlay-title="Run an Application: Noctalia" { spawn-sh "noctalia msg panel-toggle launcher"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: Noctalia" { spawn-sh "noctalia msg session lock"; }
     Super+V hotkey-overlay-title="Clipboard" { spawn-sh "noctalia msg panel-toggle clipboard"; }

@@ -1,0 +1,103 @@
+#:schema https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+
+version = 4
+extends = "/home/legitahmad/.config/oh-my-posh/colors.toml"
+
+[[blocks]]
+type = "prompt"
+alignment = "left"
+
+  [[blocks.segments]]
+  type = "text"
+  style = "plain"
+  foreground = "p:purple"
+  template = "⸢"
+
+  [[blocks.segments]]
+  type = "text"
+  style = "plain"
+  foreground = "p:blue"
+  template = " "
+
+  [[blocks.segments]]
+  type = "text"
+  style = "plain"
+  foreground = "p:purple"
+  template = "⸥ "
+
+  [[blocks.segments]]
+  type = "session"
+  style = "plain"
+  foreground = "p:purple"
+  template = "<b>{{ .UserName }}</b> "
+
+  [[blocks.segments]]
+  type = "path"
+  style = "plain"
+  foreground = "p:blue"
+  template = "<b>{{ .Path }}</b>"
+  properties = { style = "agnoster_short", max_depth = 4, home_icon = "~" }
+
+  [[blocks.segments]]
+  type = "executiontime"
+  style = "plain"
+  foreground = "p:yellow"
+  template = "  {{ .FormattedMs }}"
+  properties = { threshold = 2000, style = "austin" }
+
+[[blocks]]
+type = "rprompt"
+
+  [[blocks.segments]]
+  type = "jujutsu"
+  style = "plain"
+  foreground = "p:orange"
+  template = " on 󰘬 <b>{{ .ChangeID }}</b>{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}"
+  properties = { fetch_status = true, ignore_working_copy = false, fetch_ahead_counter = true, ahead_icon = "⇡", change_id_min_len = 4, status_formats = { Modified = "~%d", Deleted = "-%d", Added = "+%d", Moved = ">%d" } }
+
+  [[blocks.segments]]
+  type = "python"
+  style = "plain"
+  foreground = "p:yellow"
+  template = " via  {{ .Full }}"
+  properties = { display_mode = "files" }
+
+  [[blocks.segments]]
+  type = "node"
+  style = "plain"
+  foreground = "p:green"
+  template = " via  {{ .Full }}"
+  properties = { display_mode = "files" }
+
+  [[blocks.segments]]
+  type = "go"
+  style = "plain"
+  foreground = "p:cyan"
+  template = " via  {{ .Full }}"
+  properties = { display_mode = "files" }
+
+  [[blocks.segments]]
+  type = "rust"
+  style = "plain"
+  foreground = "p:red"
+  template = " via  {{ .Full }}"
+  properties = { display_mode = "files" }
+
+  [[blocks.segments]]
+  type = "nix-shell"
+  style = "plain"
+  foreground = "p:purple"
+  template = " via "
+
+[[blocks]]
+type = "prompt"
+alignment = "left"
+newline = true
+
+  [[blocks.segments]]
+  type = "battery"
+  style = "plain"
+  foreground = "p:green"
+  foreground_templates = ["{{ if gt .Code 0 }}p:red{{ end }}"]
+  properties = { always_enabled = true }
+  template = "{{ if and (not .Error) (le .Percentage 20) (eq \"Discharging\" .State.String) }}<b>  : </b>{{ else }}<b>→ : </b>{{ end }}"

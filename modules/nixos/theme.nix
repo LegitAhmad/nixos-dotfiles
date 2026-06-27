@@ -24,7 +24,7 @@ in
 
     scheme = lib.mkOption {
       type = lib.types.str;
-      default = "tokyo-night-dark";
+      default = "gruvbox-dark-medium"; # Warm Options: "everforest-dark-hard", "kanagawa", "rose-pine-moon", "gruvbox-dark-medium", "catppuccin-mocha"
       description = "The base16 scheme to use as a fallback when useWallpaperColors is false.";
     };
 
@@ -54,9 +54,26 @@ in
       image = ../../config/assets/wallpaper.jpg;
 
       # Conditionally set base16Scheme if not generating from wallpaper
-      base16Scheme = lib.mkIf (
-        !cfg.useWallpaperColors
-      ) "${pkgs.base16-schemes}/share/themes/${cfg.scheme}.yaml";
+      base16Scheme = lib.mkIf (!cfg.useWallpaperColors) (
+        if cfg.scheme == "tokyo-night-vibrant" then {
+          base00 = "16161e"; # Background
+          base01 = "1f2335"; # Lighter Background
+          base02 = "2f3549"; # Selection Background
+          base03 = "444b6a"; # Comments, Dark Gray
+          base04 = "565f89"; # Non-active/dim foreground
+          base05 = "c0caf5"; # Foreground
+          base06 = "c0caf5";
+          base07 = "c0caf5";
+          base08 = "f7768e"; # Red
+          base09 = "ff9e64"; # Orange
+          base0A = "e0af68"; # Yellow
+          base0B = "9ece6a"; # Green
+          base0C = "7dcfff"; # Cyan
+          base0D = "7aa2f7"; # Blue
+          base0E = "bb9af7"; # Magenta/Purple
+          base0F = "c0caf5"; # Brown/White
+        } else "${pkgs.base16-schemes}/share/themes/${cfg.scheme}.yaml"
+      );
 
       polarity = cfg.polarity;
 

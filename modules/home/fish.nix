@@ -36,17 +36,6 @@
   };
 
   # Modern shell utilities that integrate with Fish:
-  
-  # Starship: A customizable, fast, and beautiful shell prompt
-  programs.starship = {
-    enable = true;
-    enableFishIntegration = true;
-  };
-
-  xdg.configFile."starship.toml" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/starship/starship.toml";
-    force = true;
-  };
 
   # Zoxide: A smarter cd command (z)
   programs.zoxide = {

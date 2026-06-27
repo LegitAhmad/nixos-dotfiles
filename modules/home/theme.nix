@@ -1,32 +1,16 @@
-{ config, lib, pkgs, osConfig ? null, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  osConfig ? null,
+  ...
+}:
 
 let
-  # Check if Stylix is enabled on the system level
-  stylixEnabled = if osConfig != null then osConfig.theme.enableStylix else true;
-
-  # Noctalia theme colors
-  noctalia = {
-    base00 = "0b1610"; # Background
-    base01 = "364b3f";
-    base02 = "364b3f";
-    base03 = "7f9687";
-    base04 = "7f9687";
-    base05 = "d9e6db"; # Foreground
-    base06 = "b4ccbc";
-    base07 = "d9e6db";
-    base08 = "ffb4ab"; # Red
-    base09 = "ff9e64"; # Orange
-    base0A = "c9cb77"; # Yellow
-    base0B = "cacd59"; # Green
-    base0C = "c9cb77"; # Cyan
-    base0D = "90d5ae"; # Blue
-    base0E = "cacd59"; # Purple
-    base0F = "d9e6db";
-  };
-
-  # Terminals use Noctalia colors directly to match desktop shell theme
-  colors = noctalia;
-in {
+  # Terminals use the system-wide Stylix colors directly to match the system theme
+  colors = config.lib.stylix.colors;
+in
+{
   stylix = {
     autoEnable = false;
     targets = {
@@ -36,35 +20,36 @@ in {
       zen-browser.enable = true;
       vesktop.enable = true;
       yazi.enable = true;
+      fish.enable = true;
     };
   };
 
-  # Generate colors.ini for Foot (using Tokyo Night Vibrant theme)
+  # Generate colors.ini for Foot (dynamically linked to system theme)
   xdg.configFile."foot/colors.ini".text = ''
     [colors-dark]
     alpha=0.85
-    background=16161e
-    foreground=c0caf5
+    background=${colors.base00}
+    foreground=${colors.base05}
 
     # Normal/regular colors
-    regular0=15161e
-    regular1=f7768e
-    regular2=9ece6a
-    regular3=e0af68
-    regular4=7aa2f7
-    regular5=bb9af7
-    regular6=7dcfff
-    regular7=a9b1d6
+    regular0=${colors.base00}
+    regular1=${colors.base08}
+    regular2=${colors.base0B}
+    regular3=${colors.base0A}
+    regular4=${colors.base0D}
+    regular5=${colors.base0E}
+    regular6=${colors.base0C}
+    regular7=${colors.base05}
 
     # Bright colors
-    bright0=414868
-    bright1=f7768e
-    bright2=9ece6a
-    bright3=e0af68
-    bright4=7aa2f7
-    bright5=bb9af7
-    bright6=7dcfff
-    bright7=c0caf5
+    bright0=${colors.base03}
+    bright1=${colors.base08}
+    bright2=${colors.base0B}
+    bright3=${colors.base0A}
+    bright4=${colors.base0D}
+    bright5=${colors.base0E}
+    bright6=${colors.base0C}
+    bright7=${colors.base07}
   '';
 
   # Generate colors.lua for WezTerm
@@ -154,6 +139,56 @@ in {
     };
     gtk4.extraConfig = {
       gtk-application-prefer-dark-theme = 1;
+    };
+  };
+
+  # Generate ~/.config/oh-my-posh/config.toml dynamically:
+  # It extends the static config.toml file and appends the dynamic Stylix colors palette.
+  xdg.configFile."oh-my-posh/config.toml".text = ''
+    version = 4
+    extends = "${config.home.homeDirectory}/nixos-dotfiles/config/oh-my-posh/config.toml"
+
+    [palette]
+    fg = "#${colors.base05}"
+    blue = "#${colors.base0D}"
+    green = "#${colors.base0B}"
+    yellow = "#${colors.base0A}"
+    orange = "#${colors.base09}"
+    purple = "#${colors.base0E}"
+    red = "#${colors.base08}"
+    comment = "#${colors.base03}"
+    cyan = "#${colors.base0C}"
+  '';
+
+  # Oh My Posh Prompt
+  programs.oh-my-posh = {
+    enable = true;
+    enableFishIntegration = true;
+    configFile = "/home/legitahmad/.config/oh-my-posh/config.toml";
+  };
+
+  # Dircolors themed dynamically via Stylix base16 colors
+  programs.dircolors = {
+    enable = true;
+    enableFishIntegration = true;
+    settings = {
+      # Directories: Bold Blue (base0D)
+      DIR = "01;38;2;${colors.base0D-dec-r};${colors.base0D-dec-g};${colors.base0D-dec-b}";
+      # Symbolic Links: Bold Cyan (base0C)
+      LINK = "01;38;2;${colors.base0C-dec-r};${colors.base0C-dec-g};${colors.base0C-dec-b}";
+      # Sockets: Bold Purple (base0E)
+      SOCK = "01;38;2;${colors.base0E-dec-r};${colors.base0E-dec-g};${colors.base0E-dec-b}";
+      # Pipes (FIFOs): Orange (base09)
+      FIFO = "38;2;${colors.base09-dec-r};${colors.base09-dec-g};${colors.base09-dec-b}";
+      # Executables: Bold Green (base0B)
+      EXEC = "01;38;2;${colors.base0B-dec-r};${colors.base0B-dec-g};${colors.base0B-dec-b}";
+      # Block Devices: Bold Yellow (base0A)
+      BLK = "01;38;2;${colors.base0A-dec-r};${colors.base0A-dec-g};${colors.base0A-dec-b}";
+      # Character Devices: Bold Yellow (base0A)
+      CHR = "01;38;2;${colors.base0A-dec-r};${colors.base0A-dec-g};${colors.base0A-dec-b}";
+      # Orphaned/Broken Symlinks: Bold Red (base08)
+      ORPHAN = "01;38;2;${colors.base08-dec-r};${colors.base08-dec-g};${colors.base08-dec-b}";
+      MISSING = "01;38;2;${colors.base08-dec-r};${colors.base08-dec-g};${colors.base08-dec-b}";
     };
   };
 }
