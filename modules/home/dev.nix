@@ -3,6 +3,12 @@
 {
   programs.git = {
     enable = true;
+    settings = {
+      user = {
+        name = "LegitAhmad";
+        email = "a.s20061111@gmail.com";
+      };
+    };
   };
 
   programs.gh = {
@@ -10,6 +16,16 @@
     gitCredentialHelper.enable = true;
     settings = {
       git_protocol = "ssh";
+    };
+  };
+
+  programs.jujutsu = {
+    enable = true;
+    settings = {
+      user = {
+        name = "LegitAhmad";
+        email = "a.s20061111@gmail.com";
+      };
     };
   };
 

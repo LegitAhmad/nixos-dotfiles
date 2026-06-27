@@ -18,7 +18,6 @@
     ani-cli
     lazygit
     lazyjj
-    jujutsu
     bat
     cmatrix
     ffmpeg
