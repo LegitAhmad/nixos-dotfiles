@@ -183,9 +183,9 @@ in
       KeywordNegative = colors.withHashtag.base08;
       KeywordUnknown = colors.withHashtag.base09;
       FlagNoArg = colors.withHashtag.base0D;
-      FlagArg = colors.withHashtag.base0A;
-      FlagMultiArg = colors.withHashtag.base0A;
-      FlagOptArg = colors.withHashtag.base0A;
+      FlagArg = colors.withHashtag.base0C;
+      FlagMultiArg = colors.withHashtag.base0E;
+      FlagOptArg = colors.withHashtag.base09;
       Highlight1 = colors.withHashtag.base0D;
       Highlight2 = colors.withHashtag.base0B;
       Highlight3 = colors.withHashtag.base0A;

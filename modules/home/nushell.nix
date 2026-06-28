@@ -10,6 +10,7 @@ in
     extraConfig = ''
       $env.config = {
         show_banner: false
+        highlight_resolved_externals: true
         
         # Stylix Base16 color palette mapping for Nushell syntax and tables
         color_config: {
@@ -41,7 +42,8 @@ in
           shape_custom: "#${colors.base0B}"
           shape_datetime: "#${colors.base0E}"
           shape_directory: "#${colors.base0D}"
-          shape_external: "#${colors.base0C}"
+          shape_external: "#${colors.base08}"
+          shape_external_resolved: "#${colors.base0C}"
           shape_externalarg: { fg: "#${colors.base0B}" attr: b }
           shape_filepath: "#${colors.base0D}"
           shape_flag: { fg: "#${colors.base0D}" attr: b }
@@ -67,6 +69,40 @@ in
           shape_table: { fg: "#${colors.base0D}" attr: b }
           shape_variable: "#${colors.base0E}"
         }
+
+        # Custom menu styling to ensure descriptions are gray (base03) instead of default yellow
+        menus: [
+          {
+            name: completion_menu
+            only_buffer_difference: false
+            marker: "| "
+            type: {
+              layout: columnar
+              columns: 4
+              col_width: 20
+              col_padding: 2
+            }
+            style: {
+              text: "#${colors.base05}"
+              selected_text: { fg: "#${colors.base0B}" attr: r }
+              description_text: "#${colors.base03}"
+            }
+          }
+          {
+            name: history_menu
+            only_buffer_difference: true
+            marker: "? "
+            type: {
+              layout: list
+              page_size: 10
+            }
+            style: {
+              text: "#${colors.base05}"
+              selected_text: { fg: "#${colors.base0B}" attr: r }
+              description_text: "#${colors.base03}"
+            }
+          }
+        ]
       }
 
       # Source custom configurations from the dotfiles repository (out-of-store)
