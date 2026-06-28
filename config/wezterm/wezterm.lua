@@ -32,6 +32,8 @@ colors.tab_bar = {
 }
 config.colors = colors
 config.check_for_updates = false
+config.default_prog = { 'nu' }
+
 
 -- Performance & Integration Optimizations
 config.scrollback_lines = 10000                     -- Increase scrollback history
@@ -144,7 +146,7 @@ local function get_process_icon(process_name)
     return "󰊢"
   elseif name:find("nvim") or name:find("vim") or name:find("vi") then
     return ""
-  elseif name:find("fish") or name:find("bash") or name:find("zsh") or name:find("sh") then
+  elseif name:find("nu") or name:find("fish") or name:find("bash") or name:find("zsh") or name:find("sh") then
     return ""
   elseif name:find("cargo") or name:find("rustc") then
     return ""

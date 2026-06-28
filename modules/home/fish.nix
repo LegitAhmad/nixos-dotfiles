@@ -1,10 +1,29 @@
 { config, lib, pkgs, ... }:
 
+let
+  colors = config.lib.stylix.colors;
+in
 {
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
       set -g fish_greeting ""
+
+      # Custom colored fish completions (pager) using Stylix base16 colors
+      set -g fish_pager_color_progress '#${colors.base0B}' --background='#${colors.base01}'
+      set -g fish_pager_color_prefix '#${colors.base0A}' --bold --underline
+      set -g fish_pager_color_completion '#${colors.base05}'
+      set -g fish_pager_color_description '#${colors.base0D}'
+      set -g fish_pager_color_selected_background --background='#${colors.base02}'
+      set -g fish_pager_color_selected_prefix '#${colors.base09}' --bold --underline
+      set -g fish_pager_color_selected_completion '#${colors.base06}' --bold
+      set -g fish_pager_color_selected_description '#${colors.base0E}'
+      
+      # Disable zebra-striping (alternating row backgrounds)
+      set -g fish_pager_color_secondary_background
+      set -g fish_pager_color_secondary_prefix '#${colors.base0A}'
+      set -g fish_pager_color_secondary_completion '#${colors.base05}'
+      set -g fish_pager_color_secondary_description '#${colors.base0D}'
     '';
     shellAliases = {
       # NixOS & Home Manager helper (nh) shortcuts
@@ -54,6 +73,12 @@
     enable = true;
     enableFishIntegration = true;
     icons = "auto";
+    git = true;
+    extraOptions = [
+      "--group-directories-first"
+      "--header"
+      "--color-scale=all"
+    ];
   };
 
   # Fzf: A fuzzy finder

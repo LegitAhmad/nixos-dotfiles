@@ -9,6 +9,19 @@
 let
   # Terminals use the system-wide Stylix colors directly to match the system theme
   colors = config.lib.stylix.colors;
+
+  # Helper to convert Stylix float RGB components to a 0-255 RGB string
+  toRGB = prefix: r: g: b:
+    let
+      rFloat = builtins.fromJSON r;
+      gFloat = builtins.fromJSON g;
+      bFloat = builtins.fromJSON b;
+      rInt = toString (builtins.floor (rFloat * 255));
+      gInt = toString (builtins.floor (gFloat * 255));
+      bInt = toString (builtins.floor (bFloat * 255));
+      prefixStr = if prefix == "" then "" else "${prefix};";
+    in
+      "${prefixStr}38;2;${rInt};${gInt};${bInt}";
 in
 {
   stylix = {
@@ -21,6 +34,7 @@ in
       vesktop.enable = true;
       yazi.enable = true;
       fish.enable = true;
+      fzf.enable = true;
     };
   };
 
@@ -97,33 +111,65 @@ in
     }
   '';
 
-  # Generate theme.yml for Eza
+  # Generate theme.yml for Eza dynamically using Stylix base16 colors
   xdg.configFile."eza/theme.yml".text = ''
     colourful: true
 
     filekinds:
       normal: { foreground: "#${colors.base05}" }
-      directory: { foreground: "#${colors.base0D}" }
-      symlink: { foreground: "#${colors.base0C}" }
-      pipe: { foreground: "#${colors.base03}" }
-      block_device: { foreground: "#${colors.base0A}" }
-      char_device: { foreground: "#${colors.base0A}" }
-      socket: { foreground: "#${colors.base03}" }
-      special: { foreground: "#${colors.base0E}" }
-      executable: { foreground: "#${colors.base0B}" }
-      mount_point: { foreground: "#${colors.base0C}" }
+      directory: { foreground: "#${colors.base0D}" }   # Blue
+      symlink: { foreground: "#${colors.base0C}" }     # Cyan
+      pipe: { foreground: "#${colors.base0F}" }        # Brown/Dim
+      block_device: { foreground: "#${colors.base0A}" } # Yellow
+      char_device: { foreground: "#${colors.base0A}" }  # Yellow
+      socket: { foreground: "#${colors.base0E}" }       # Magenta
+      special: { foreground: "#${colors.base0E}" }      # Magenta
+      executable: { foreground: "#${colors.base0B}" }   # Green
+      mount_point: { foreground: "#${colors.base09}" }  # Orange
 
     perms:
-      user_read: { foreground: "#${colors.base0C}" }
-      user_write: { foreground: "#${colors.base0E}" }
+      user_read: { foreground: "#${colors.base04}" }
+      user_write: { foreground: "#${colors.base09}" }
       user_execute_file: { foreground: "#${colors.base0B}" }
       user_execute_other: { foreground: "#${colors.base0B}" }
-      group_read: { foreground: "#${colors.base0C}" }
+      group_read: { foreground: "#${colors.base03}" }
       group_write: { foreground: "#${colors.base09}" }
       group_execute: { foreground: "#${colors.base0B}" }
-      other_read: { foreground: "#${colors.base0C}" }
-      other_write: { foreground: "#${colors.base08}" }
+      other_read: { foreground: "#${colors.base03}" }
+      other_write: { foreground: "#${colors.base09}" }
       other_execute: { foreground: "#${colors.base0B}" }
+
+    size:
+      major: { foreground: "#${colors.base0E}" }
+      minor: { foreground: "#${colors.base0D}" }
+      number_byte: { foreground: "#${colors.base04}" }   # Smallest: Grey
+      number_kilo: { foreground: "#${colors.base0B}" }   # Kilo: Green
+      number_mega: { foreground: "#${colors.base0A}" }   # Mega: Yellow
+      number_giga: { foreground: "#${colors.base09}" }   # Giga: Orange
+      number_huge: { foreground: "#${colors.base08}" }   # Huge: Red
+      unit_byte: { foreground: "#${colors.base03}" }
+      unit_kilo: { foreground: "#${colors.base03}" }
+      unit_mega: { foreground: "#${colors.base03}" }
+      unit_giga: { foreground: "#${colors.base03}" }
+      unit_huge: { foreground: "#${colors.base03}" }
+
+    users:
+      user_you: { foreground: "#${colors.base0A}" }      # Warm Yellow
+      user_other: { foreground: "#${colors.base03}" }    # Dim Grey
+      group_yours: { foreground: "#${colors.base04}" }   # Dim Foreground
+      group_other: { foreground: "#${colors.base03}" }   # Dim Grey
+
+    links:
+      normal: { foreground: "#${colors.base0C}" }
+      multi_link_file: { foreground: "#${colors.base0C}" }
+
+    git:
+      new: { foreground: "#${colors.base0B}" }
+      modified: { foreground: "#${colors.base0A}" }
+      deleted: { foreground: "#${colors.base08}" }
+      renamed: { foreground: "#${colors.base0C}" }
+      typechange: { foreground: "#${colors.base0E}" }
+      ignored: { foreground: "#${colors.base03}" }
   '';
 
   # Generate styles.json for Carapace (dynamically mapped to Stylix base16 colors)
@@ -202,22 +248,22 @@ in
     enableFishIntegration = true;
     settings = {
       # Directories: Bold Blue (base0D)
-      DIR = "01;38;2;${colors.base0D-dec-r};${colors.base0D-dec-g};${colors.base0D-dec-b}";
+      DIR = toRGB "01" colors.base0D-dec-r colors.base0D-dec-g colors.base0D-dec-b;
       # Symbolic Links: Bold Cyan (base0C)
-      LINK = "01;38;2;${colors.base0C-dec-r};${colors.base0C-dec-g};${colors.base0C-dec-b}";
+      LINK = toRGB "01" colors.base0C-dec-r colors.base0C-dec-g colors.base0C-dec-b;
       # Sockets: Bold Purple (base0E)
-      SOCK = "01;38;2;${colors.base0E-dec-r};${colors.base0E-dec-g};${colors.base0E-dec-b}";
+      SOCK = toRGB "01" colors.base0E-dec-r colors.base0E-dec-g colors.base0E-dec-b;
       # Pipes (FIFOs): Orange (base09)
-      FIFO = "38;2;${colors.base09-dec-r};${colors.base09-dec-g};${colors.base09-dec-b}";
+      FIFO = toRGB "" colors.base09-dec-r colors.base09-dec-g colors.base09-dec-b;
       # Executables: Bold Green (base0B)
-      EXEC = "01;38;2;${colors.base0B-dec-r};${colors.base0B-dec-g};${colors.base0B-dec-b}";
+      EXEC = toRGB "01" colors.base0B-dec-r colors.base0B-dec-g colors.base0B-dec-b;
       # Block Devices: Bold Yellow (base0A)
-      BLK = "01;38;2;${colors.base0A-dec-r};${colors.base0A-dec-g};${colors.base0A-dec-b}";
+      BLK = toRGB "01" colors.base0A-dec-r colors.base0A-dec-g colors.base0A-dec-b;
       # Character Devices: Bold Yellow (base0A)
-      CHR = "01;38;2;${colors.base0A-dec-r};${colors.base0A-dec-g};${colors.base0A-dec-b}";
+      CHR = toRGB "01" colors.base0A-dec-r colors.base0A-dec-g colors.base0A-dec-b;
       # Orphaned/Broken Symlinks: Bold Red (base08)
-      ORPHAN = "01;38;2;${colors.base08-dec-r};${colors.base08-dec-g};${colors.base08-dec-b}";
-      MISSING = "01;38;2;${colors.base08-dec-r};${colors.base08-dec-g};${colors.base08-dec-b}";
+      ORPHAN = toRGB "01" colors.base08-dec-r colors.base08-dec-g colors.base08-dec-b;
+      MISSING = toRGB "01" colors.base08-dec-r colors.base08-dec-g colors.base08-dec-b;
     };
   };
 }

@@ -6,6 +6,6 @@
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "video" ]; # Enable ‘sudo’, NetworkManager, and brightness/video control.
     initialPassword = "changeme";
-    shell = pkgs.fish;
+    shell = pkgs.bash;
   };
 }

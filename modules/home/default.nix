@@ -6,6 +6,7 @@
     ./dev.nix
     ./terminal.nix
     ./fish.nix
+    ./nushell.nix
     ./noctalia.nix
     ./lazyvim.nix
     ./niri.nix

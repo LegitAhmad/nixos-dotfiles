@@ -25,6 +25,7 @@
 
   # Enable fish shell system-wide.
   programs.fish.enable = true;
+  environment.shells = with pkgs; [ nushell ];
 
   # Allow unfree packages.
   nixpkgs.config.allowUnfree = true;
@@ -92,6 +93,12 @@
   systemd.user.settings.Manager = {
     DefaultTimeoutStopSec = "10s";
   };
+
+  programs.bash.interactiveShellInit = ''
+    if ! [ "$TERM" = "dumb" ] && [ -z "$BASH_EXECUTION_STRING" ]; then
+      exec nu
+    fi
+  '';
 
   # System state version.
   system.stateVersion = "26.05";
