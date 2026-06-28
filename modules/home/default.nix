@@ -8,11 +8,12 @@
     ./fish.nix
     ./nushell.nix
     ./noctalia.nix
-    ./lazyvim.nix
+    ./neovim.nix
     ./niri.nix
     ./zellij.nix
     ./tmux.nix
     ./theme.nix
+    ./zsh.nix
   ];
 
   home.username = "legitahmad";

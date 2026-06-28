@@ -239,6 +239,7 @@ in
   programs.oh-my-posh = {
     enable = true;
     enableFishIntegration = true;
+    enableZshIntegration = true;
     configFile = "/home/legitahmad/.config/oh-my-posh/config.toml";
   };
 

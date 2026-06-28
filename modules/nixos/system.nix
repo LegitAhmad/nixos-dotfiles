@@ -23,9 +23,10 @@
     auto-optimise-store = true;        # Hardlink identical files in the store to save disk space and I/O time
   };
 
-  # Enable fish shell system-wide.
+  # Enable fish and zsh shells system-wide.
   programs.fish.enable = true;
-  environment.shells = with pkgs; [ nushell ];
+  programs.zsh.enable = true;
+  environment.shells = with pkgs; [ nushell zsh ];
 
   # Allow unfree packages.
   nixpkgs.config.allowUnfree = true;
@@ -94,11 +95,7 @@
     DefaultTimeoutStopSec = "10s";
   };
 
-  programs.bash.interactiveShellInit = ''
-    if ! [ "$TERM" = "dumb" ] && [ -z "$BASH_EXECUTION_STRING" ]; then
-      exec nu
-    fi
-  '';
+
 
   # System state version.
   system.stateVersion = "26.05";

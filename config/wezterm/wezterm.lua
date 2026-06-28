@@ -32,7 +32,6 @@ colors.tab_bar = {
 }
 config.colors = colors
 config.check_for_updates = false
-config.default_prog = { 'nu' }
 
 
 -- Performance & Integration Optimizations

@@ -16,9 +16,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    lazyvim = {
-      url = "github:pfassina/lazyvim-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+    mnw = {
+      url = "github:Gerg-L/mnw";
     };
 
     zen-browser = {
@@ -33,7 +32,7 @@
 
   };
 
-  outputs = { self, nixpkgs, home-manager, lazyvim, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, mnw, ... }@inputs: {
     nixosConfigurations."nixos-btw" = nixpkgs.lib.nixosSystem {
       system = "x86_64_linux";
 
