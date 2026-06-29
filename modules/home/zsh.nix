@@ -4,6 +4,22 @@
   programs.zsh = {
     enable = true;
     dotDir = "${config.home.homeDirectory}/.config/zsh";
+
+    completionInit = ''
+      autoload -Uz compinit
+      zmodload zsh/stat
+      zmodload zsh/datetime
+      
+      _comp_path="''${ZDOTDIR:-$HOME}/.zcompdump"
+      
+      # If .zcompdump is less than 20 hours old, run compinit -C to skip safety checks (extremely fast)
+      if [[ -f "$_comp_path" ]] && stat -A _comp_mtime +mtime "$_comp_path" && (( EPOCHSECONDS - _comp_mtime < 72000 )); then
+        compinit -C
+      else
+        compinit
+      fi
+      unset _comp_path _comp_mtime
+    '';
     
     # Zsh History options
     history = {

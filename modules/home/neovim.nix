@@ -38,6 +38,10 @@
       nvim-lspconfig # Quickstart configs for Nvim LSP client
       lualine-nvim # Statusline
       gitsigns-nvim # Git integration
+      nvim-web-devicons
+      snacks-nvim
+      nui-nvim
+      noice-nvim
     ];
 
     # Extra utility packages for LSP, formatters, and treesitter compilation
@@ -49,6 +53,8 @@
       git # Git CLI integration
       gnumake # Make for building native dependencies
       gcc # C compiler for Treesitter parsers
+      lazygit # Git terminal UI
+      lua-language-server # Lua LSP
     ];
   };
 
