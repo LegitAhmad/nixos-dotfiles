@@ -1,22 +1,22 @@
+-- Noice: floating cmdline and enhanced messages
 local ok, noice = pcall(require, "noice")
 if not ok then return end
 
 noice.setup({
   cmdline = {
     enabled = true,
-    view = "cmdline_popup", -- Centers the cmdline in a floating window
+    view = "cmdline_popup",
   },
   messages = {
     enabled = true,
   },
   popupmenu = {
-    enabled = true, -- Enable fancy popupmenu for completions/commands
+    enabled = true,
   },
   notify = {
-    enabled = false, -- Disabled to let snacks.notifier handle notifications
+    enabled = false, -- Let snacks.notifier handle notifications
   },
   lsp = {
-    -- Override markdown rendering so hover docs and signature help look beautiful
     override = {
       ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
       ["vim.lsp.util.stylize_markdown"] = true,
@@ -24,10 +24,10 @@ noice.setup({
     },
   },
   presets = {
-    bottom_search = true, -- Use a classic bottom search bar for / searches
-    command_palette = true, -- Position the cmdline and popupmenu together in the center
-    long_message_to_split = true, -- Long messages will be sent to a split
+    bottom_search = true,
+    command_palette = true,
+    long_message_to_split = true,
     inc_rename = false,
-    lsp_doc_border = true, -- Add a border to hover docs and signature help
+    lsp_doc_border = true,
   },
 })

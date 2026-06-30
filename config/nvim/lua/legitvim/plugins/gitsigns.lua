@@ -1,5 +1,5 @@
--- Setup gitsigns
-local gitsigns_ok, gitsigns = pcall(require, "gitsigns")
-if gitsigns_ok then
+-- Gitsigns: git integration
+local ok, gitsigns = pcall(require, "gitsigns")
+if ok then
   gitsigns.setup()
 end

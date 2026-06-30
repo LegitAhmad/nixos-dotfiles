@@ -1,5 +1,7 @@
--- Setup statusline (lualine)
-local lualine_ok, lualine = pcall(require, "lualine")
-if lualine_ok then
-  lualine.setup()
+-- Lualine: statusline
+local ok, lualine = pcall(require, "lualine")
+if not ok then
+	return
 end
+lualine.setup({})
+

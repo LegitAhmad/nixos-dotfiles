@@ -1,30 +1,170 @@
 _G.START_TIME = (vim.uv or vim.loop).hrtime()
 
-require('legitvim.options')
-require('legitvim.keymaps')
-require('legitvim.lsp')
+require("legitvim.options")
+require("legitvim.keymaps")
 
--- Automatically require all Lua files under lua/legitvim/plugins/
-local plugin_configs = vim.api.nvim_get_runtime_file("lua/legitvim/plugins/*.lua", true)
-for _, filepath in ipairs(plugin_configs) do
-  local filename = vim.fs.basename(filepath)
-  local module_name = filename:sub(1, -5) -- Strip ".lua" extension
-  -- Prevent requiring an init.lua in the plugins folder if one exists
-  if module_name ~= "init" then
-    require("legitvim.plugins." .. module_name)
-  end
-end
+-- immediate plugins
+require("legitvim.plugins.colorscheme")
+require("legitvim.plugins.mini")
+require("legitvim.plugins.snacks")
 
--- Pressing <leader>cl will print out what's attached to your current buffer
-vim.keymap.set("n", "<leader>cl", function()
-  local clients = vim.lsp.get_clients({ bufnr = 0 })
-  if #clients == 0 then
-    vim.notify("No LSP clients attached", vim.log.levels.WARN)
-    return
-  end
-  for _, client in ipairs(clients) do
-    vim.notify("Active LSP: " .. client.name, vim.log.levels.INFO)
-  end
-end, { desc = "Check Active LSP Clients" })
+-- Configure lz.n to use packadd for loading optional plugins
+vim.g.lz_n = {
+	load = vim.cmd.packadd,
+}
 
-print("Hello from your custom MNW Lua configuration!")
+-- Register all lazy-loaded plugins via lz.n
+require("lz.n").load({
+	-- Noice: floating cmdline and messages
+	{
+		"noice.nvim",
+		event = "DeferredUIEnter",
+		after = function()
+			require("legitvim.plugins.noice")
+		end,
+	},
+
+	-- Lualine: statusline (deferred)
+	{
+		"lualine.nvim",
+		event = "DeferredUIEnter",
+		after = function()
+			require("legitvim.plugins.lualine")
+		end,
+	},
+
+	-- Bufferline: tab bar (loads on first real buffer)
+	{
+		"bufferline.nvim",
+		event = { "BufReadPost", "BufNewFile" },
+		keys = {
+			{ "<S-h>", "<cmd>BufferLineCyclePrev<CR>", desc = "Previous Buffer" },
+			{ "<S-l>", "<cmd>BufferLineCycleNext<CR>", desc = "Next Buffer" },
+		},
+		after = function()
+			require("legitvim.plugins.bufferline")
+		end,
+	},
+
+	-- Gitsigns: git integration in gutter
+	{
+		"gitsigns.nvim",
+		event = { "BufReadPost", "BufNewFile" },
+		after = function()
+			require("legitvim.plugins.gitsigns")
+		end,
+	},
+
+	-- Telescope: fuzzy finder
+	{
+		"telescope.nvim",
+		cmd = "Telescope",
+		after = function()
+			require("telescope").setup()
+		end,
+	},
+
+	-- nvim-lspconfig + LSP setup
+	{
+		"nvim-lspconfig",
+		event = { "BufReadPre", "BufNewFile" },
+		after = function()
+			require("legitvim.lsp")
+		end,
+	},
+
+	-- Which-Key: keybinding helper
+	{
+		"which-key.nvim",
+		event = "DeferredUIEnter",
+		after = function()
+			require("legitvim.plugins.which-key")
+		end,
+	},
+
+	-- blink.cmp: fast autocompletion
+	{
+		"blink.cmp",
+		event = "InsertEnter",
+		after = function()
+			require("legitvim.plugins.blink")
+		end,
+	},
+
+	-- GrugFar: search and replace
+	{
+		"grug-far.nvim",
+		cmd = "GrugFar",
+		keys = {
+			{ "<leader>sr", "<cmd>GrugFar<CR>", desc = "Search & Replace (GrugFar)" },
+		},
+		after = function()
+			require("legitvim.plugins.grug-far")
+		end,
+	},
+
+	-- Trouble: diagnostics panel
+	{
+		"trouble.nvim",
+		cmd = "Trouble",
+		keys = {
+			{ "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
+			{ "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)" },
+			{ "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols (Trouble)" },
+			{
+				"<leader>xl",
+				"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+				desc = "LSP Definitions/References (Trouble)",
+			},
+			{ "<leader>xL", "<cmd>Trouble loclist toggle<cr>", desc = "Location List (Trouble)" },
+			{ "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List (Trouble)" },
+			{ "<leader>xt", "<cmd>Trouble todo toggle<cr>", desc = "Todo Comments (Trouble)" },
+		},
+		after = function()
+			require("legitvim.plugins.trouble")
+		end,
+	},
+
+	-- Todo Comments: highlight and navigate TODOs
+	{
+		"todo-comments.nvim",
+		event = { "BufReadPost", "BufNewFile" },
+		after = function()
+			require("legitvim.plugins.todo-comments")
+		end,
+	},
+
+	-- Conform: formatting
+	{
+		"conform.nvim",
+		event = "BufWritePre",
+		keys = {
+			{
+				"<leader>f",
+				function()
+					require("conform").format({ lsp_fallback = true, async = false, timeout_ms = 1000 })
+				end,
+				desc = "Format Document",
+				mode = { "n", "v" },
+			},
+		},
+		after = function()
+			require("legitvim.plugins.conform")
+		end,
+	},
+
+	-- nvim-lint: linting
+	{
+		"nvim-lint",
+		event = { "BufWritePost", "BufReadPost", "InsertLeave" },
+		after = function()
+			require("legitvim.plugins.lint")
+		end,
+	},
+
+	-- nvim-web-devicons: icon provider fallback
+	{
+		"nvim-web-devicons",
+		lazy = true,
+	},
+})
