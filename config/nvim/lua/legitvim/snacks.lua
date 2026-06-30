@@ -1,25 +1,27 @@
 local snacks = require("snacks")
 
 snacks.setup({
-	animate = { enabled = true },
+	-- animate = { enabled = true },
 	dashboard = {
 		enabled = true,
 		sections = {
 			{ section = "header" },
 			{ section = "keys", gap = 1, padding = 1 },
-			function()
-				local stats = ""
-				if _G.START_TIME then
-					local ms = ((vim.uv or vim.loop).hrtime() - _G.START_TIME) / 1e6
-					stats = string.format("⚡ Neovim loaded in %.2fms", ms)
+			(function()
+				local ms = nil
+				return function()
+					if not ms and _G.START_TIME then
+						ms = ((vim.uv or vim.loop).hrtime() - _G.START_TIME) / 1e6
+					end
+					local stats = ms and string.format("⚡ Neovim loaded in %.2fms", ms) or ""
+					return {
+						align = "center",
+						text = {
+							{ stats, hl = "SnacksDashboardKey" },
+						},
+					}
 				end
-				return {
-					align = "center",
-					text = {
-						{ stats, hl = "SnacksDashboardKey" },
-					},
-				}
-			end,
+			end)(),
 		},
 		preset = {
 			header = [[
@@ -43,7 +45,10 @@ snacks.setup({
 		},
 	},
 	bigfile = { enabled = true },
-	explorer = { enabled = true },
+	explorer = {
+		enabled = true,
+		trash = true,
+	},
 	git = { enabled = true },
 	gitbrowse = { enabled = true },
 	image = { enabled = true },
@@ -63,7 +68,21 @@ snacks.setup({
 		enabled = true,
 		timeout = 3000,
 	},
-	picker = { enabled = true, ui_select = true },
+	picker = {
+		enabled = true,
+		ui_select = true,
+		-- Custom configuration added below to decrease explorer width
+		sources = {
+			explorer = {
+				layout = {
+					layout = {
+						-- position = "left",
+						width = 30, -- Adjust this value to make it narrower or wider
+					},
+				},
+			},
+		},
+	},
 	quickfile = { enabled = true },
 	scratch = { enabled = true },
 	scroll = { enabled = true },
@@ -94,11 +113,14 @@ vim.keymap.set("n", "<leader>tt", function()
 end, { desc = "Toggle Terminal" })
 
 -- Picker mappings
-vim.keymap.set("n", "<leader>ff", function()
+vim.keymap.set("n", "<leader><leader>", function()
 	snacks.picker.files()
 end, { desc = "Find Files" })
-vim.keymap.set("n", "<leader>sg", function()
+vim.keymap.set("n", "<leader>/", function()
 	snacks.picker.grep()
+end, { desc = "Search Grep" })
+vim.keymap.set("n", "<leader>fp", function()
+	snacks.picker.projects()
 end, { desc = "Search Grep" })
 vim.keymap.set("n", "<leader>fr", function()
 	snacks.picker.recent()
@@ -123,6 +145,3 @@ snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
 snacks.toggle.diagnostics():map("<leader>ud")
 snacks.toggle.line_number():map("<leader>ul")
 snacks.toggle.treesitter():map("<leader>uT")
-
--- Return empty so lz.n ignores secondary scans
-return {}

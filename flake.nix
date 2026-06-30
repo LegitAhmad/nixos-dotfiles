@@ -3,7 +3,9 @@
 
   nixConfig = {
     extra-substituters = [ "https://noctalia.cachix.org" ];
-    extra-trusted-public-keys = [ "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" ];
+    extra-trusted-public-keys = [
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+    ];
   };
 
   inputs = {
@@ -30,20 +32,37 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-  };
+    jjsigns = {
+      url = "github:evanphx/jjsigns.nvim";
+      flake = false;
+    };
 
-  outputs = { self, nixpkgs, home-manager, mnw, ... }@inputs: {
-    nixosConfigurations."nixos-btw" = nixpkgs.lib.nixosSystem {
-      system = "x86_64_linux";
-
-      specialArgs = { inherit inputs; };
-
-      modules = [
-        ./hosts/nixos-btw
-
-        home-manager.nixosModules.home-manager
-        inputs.stylix.nixosModules.stylix
-      ];
+    sudo-nvim = {
+      url = "github:denialofsandwich/sudo.nvim";
+      flake = false;
     };
   };
+
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      mnw,
+      ...
+    }@inputs:
+    {
+      nixosConfigurations."nixos-btw" = nixpkgs.lib.nixosSystem {
+        system = "x86_64_linux";
+
+        specialArgs = { inherit inputs; };
+
+        modules = [
+          ./hosts/nixos-btw
+
+          home-manager.nixosModules.home-manager
+          inputs.stylix.nixosModules.stylix
+        ];
+      };
+    };
 }

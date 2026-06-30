@@ -180,6 +180,22 @@
         "type": "github"
       }
     },
+    "jjsigns": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1756327939,
+        "narHash": "sha256-nZu61pIkd85nISneMBy82ZZPB7Wj85Uy2LsOoWo99CE=",
+        "owner": "evanphx",
+        "repo": "jjsigns.nvim",
+        "rev": "f5f5cefef0945cc00ba914584275f9cef8c2e792",
+        "type": "github"
+      },
+      "original": {
+        "owner": "evanphx",
+        "repo": "jjsigns.nvim",
+        "type": "github"
+      }
+    },
     "mnw": {
       "locked": {
         "lastModified": 1780772958,
@@ -270,10 +286,12 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "jjsigns": "jjsigns",
         "mnw": "mnw",
         "nixpkgs": "nixpkgs",
         "noctalia": "noctalia",
         "stylix": "stylix",
+        "sudo-nvim": "sudo-nvim",
         "zen-browser": "zen-browser"
       }
     },
@@ -307,6 +325,22 @@
       "original": {
         "owner": "nix-community",
         "repo": "stylix",
+        "type": "github"
+      }
+    },
+    "sudo-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774656345,
+        "narHash": "sha256-CpyFqnrRre/+no4SyPY+uyKBjdqGBBkpuI2KdTG0WL0=",
+        "owner": "denialofsandwich",
+        "repo": "sudo.nvim",
+        "rev": "10c211716f0f0149ea91732bc12338ade76d4af8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "denialofsandwich",
+        "repo": "sudo.nvim",
         "type": "github"
       }
     },

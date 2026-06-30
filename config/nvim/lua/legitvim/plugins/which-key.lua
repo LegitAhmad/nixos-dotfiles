@@ -3,7 +3,7 @@ return {
 	event = "DeferredUIEnter",
 	after = function()
 		require("which-key").setup({
-			preset = "classic",
+			preset = "helix",
 			delay = 500,
 		})
 	end,

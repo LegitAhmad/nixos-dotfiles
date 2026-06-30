@@ -1,7 +1,7 @@
 return {
-	"gitsigns.nvim",
+	"jjsigns.nvim",
 	event = { "BufReadPost", "BufNewFile" },
 	after = function()
-		require("gitsigns").setup()
+		require("jjsigns").setup({})
 	end,
 }

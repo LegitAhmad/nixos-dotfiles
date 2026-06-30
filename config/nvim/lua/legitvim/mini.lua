@@ -9,7 +9,12 @@ local function load_mini_editing()
 	end
 	mini_loaded = true
 	pcall(function()
-		require("mini.ai").setup()
+		require("mini.extra").setup()
+		require("mini.ai").setup({
+			custom_textobjects = {
+				g = MiniExtra.gen_ai_spec.buffer(),
+			},
+		})
 		require("mini.surround").setup()
 		require("mini.operators").setup()
 		require("mini.pairs").setup()

@@ -31,28 +31,40 @@
 
     # Plugins loaded immediately at startup (critical path)
     plugins.start = with pkgs.vimPlugins; [
-      gruvbox-nvim # Colorscheme (must load before UI renders)
-      catppuccin-nvim
-      kanagawa-nvim
+      catppuccin-nvim # Colorscheme (must load before UI renders)
       nvim-treesitter.withAllGrammars # Treesitter (syntax highlighting)
       mini-nvim # Icons + core editing modules
       snacks-nvim # Dashboard, explorer, and UI framework
-      nui-nvim # UI component library (noice dependency)
       lz-n # Lazy loader itself
     ];
 
     # Plugins lazy-loaded on demand via lz.n + packadd
     plugins.opt = with pkgs.vimPlugins; [
+      gruvbox-nvim
+      kanagawa-nvim
+      dracula-nvim
+      nui-nvim
       noice-nvim
       lualine-nvim
       bufferline-nvim
-      gitsigns-nvim
+      (pkgs.vimUtils.buildVimPlugin {
+        pname = "jjsigns.nvim";
+        version = "unstable";
+        src = inputs.jjsigns;
+      })
+      (pkgs.vimUtils.buildVimPlugin {
+        pname = "sudo.nvim";
+        version = "unstable";
+        src = inputs.sudo-nvim;
+        dependencies = [ pkgs.vimPlugins.nui-nvim ];
+      })
       nvim-web-devicons
       telescope-nvim
       nvim-lspconfig
       which-key-nvim
       blink-cmp
       grug-far-nvim
+      flash-nvim
       trouble-nvim
       todo-comments-nvim
       conform-nvim
