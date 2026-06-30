@@ -1,7 +1,7 @@
--- Lualine: statusline
-local ok, lualine = pcall(require, "lualine")
-if not ok then
-	return
-end
-lualine.setup({})
-
+return {
+	"lualine.nvim",
+	event = "DeferredUIEnter",
+	after = function()
+		require("lualine").setup({})
+	end,
+}

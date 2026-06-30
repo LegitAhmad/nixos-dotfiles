@@ -11,3 +11,5 @@ theme.setup({
 
 -- Load the specific variant
 vim.cmd("colorscheme catppuccin")
+
+return {}

@@ -1,5 +1,7 @@
--- Gitsigns: git integration
-local ok, gitsigns = pcall(require, "gitsigns")
-if ok then
-  gitsigns.setup()
-end
+return {
+	"gitsigns.nvim",
+	event = { "BufReadPost", "BufNewFile" },
+	after = function()
+		require("gitsigns").setup()
+	end,
+}

@@ -1,8 +1,15 @@
--- Todo Comments: highlight and navigate TODO/FIXME/HACK etc.
-local ok, todo_comments = pcall(require, "todo-comments")
-if not ok then return end
+return {
+	"todo-comments.nvim",
+	event = { "BufReadPost", "BufNewFile" },
+	after = function()
+		local todo = require("todo-comments")
+		todo.setup()
 
-todo_comments.setup()
-
-vim.keymap.set("n", "]t", function() todo_comments.jump_next() end, { desc = "Next Todo Comment" })
-vim.keymap.set("n", "[t", function() todo_comments.jump_prev() end, { desc = "Previous Todo Comment" })
+		vim.keymap.set("n", "]t", function()
+			todo.jump_next()
+		end, { desc = "Next Todo Comment" })
+		vim.keymap.set("n", "[t", function()
+			todo.jump_prev()
+		end, { desc = "Previous Todo Comment" })
+	end,
+}

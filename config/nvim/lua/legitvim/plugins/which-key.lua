@@ -1,8 +1,10 @@
--- Which-Key: keybinding helper panel
-local ok, wk = pcall(require, "which-key")
-if not ok then return end
-
-wk.setup({
-  preset = "classic",
-  delay = 500,
-})
+return {
+	"which-key.nvim",
+	event = "DeferredUIEnter",
+	after = function()
+		require("which-key").setup({
+			preset = "classic",
+			delay = 500,
+		})
+	end,
+}
