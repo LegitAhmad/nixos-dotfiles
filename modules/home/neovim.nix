@@ -47,12 +47,7 @@
       noice-nvim
       lualine-nvim
       bufferline-nvim
-      (pkgs.vimUtils.buildVimPlugin {
-        pname = "jjsigns.nvim";
-        version = "unstable";
-        src = inputs.jjsigns;
-        patches = [ ./jjsigns.patch ];
-      })
+      gitsigns-nvim
       (pkgs.vimUtils.buildVimPlugin {
         pname = "sudo.nvim";
         version = "unstable";

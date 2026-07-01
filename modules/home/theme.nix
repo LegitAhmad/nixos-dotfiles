@@ -256,6 +256,15 @@ lib.mkMerge [
     catppuccin.autoEnable = true;
     catppuccin.flavor = "mocha";
     catppuccin.cache.enable = true;
+    catppuccin.eza.enable = true;
+
+    home.pointerCursor = {
+      package = pkgs.catppuccin-cursors.mochaDark;
+      name = "catppuccin-mocha-dark-cursors";
+      size = 24;
+      gtk.enable = true;
+      x11.enable = true;
+    };
 
     xdg.configFile."niri/colors.kdl".text = ''
       layout {
@@ -291,6 +300,10 @@ lib.mkMerge [
 
   # --- COMMON SETTINGS ---
   {
+    # Force overwrite gtk settings since backupFileExtension conflicts with
+    # pre-existing files from previous home-manager generations
+    xdg.configFile."gtk-4.0/settings.ini".force = true;
+
     # Enforce system-wide dark mode
     dconf.settings = {
       "org/gnome/desktop/interface" = {

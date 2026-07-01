@@ -86,8 +86,8 @@ in
 
         # Beautiful premium cursor theme
         cursor = {
-          package = pkgs.bibata-cursors;
-          name = "Bibata-Modern-Classic";
+          package = pkgs.catppuccin-cursors.mochaDark;
+          name = "catppuccin-mocha-dark-cursors";
           size = 24;
         };
 
@@ -98,12 +98,12 @@ in
             name = "JetBrainsMono Nerd Font";
           };
           sansSerif = {
-            package = pkgs.dejavu_fonts;
-            name = "DejaVu Sans";
+            package = pkgs.roboto;
+            name = "Roboto";
           };
           serif = {
-            package = pkgs.dejavu_fonts;
-            name = "DejaVu Serif";
+            package = pkgs.roboto;
+            name = "Roboto";
           };
 
           sizes = {

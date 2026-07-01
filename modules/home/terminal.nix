@@ -21,6 +21,11 @@
     ffmpeg
     imagemagick
     cava
+    libnotify
+    bottom
+    tree
+    delta
+    gh-dash
   ];
 
   programs.btop = {
@@ -32,10 +37,16 @@
     enableNushellIntegration = false;
   };
 
+  programs.kitty = {
+    enable = true;
+    extraConfig = ''
+      include ${config.home.homeDirectory}/nixos-dotfiles/config/kitty/kitty.conf
+    '';
+  };
+
   programs.ghostty = {
     enable = true;
     settings = {
-      theme = lib.mkDefault "noctalia";
       font-size = 13;
       window-padding-x = 6;
       window-padding-y = 6;

@@ -34,8 +34,11 @@
     pulse.enable = true;
   };
 
-  # Enable the Niri window manager.
-  programs.niri.enable = true;
+  # Enable the Hyprland window manager.
+  programs.hyprland = {
+    enable = true;
+    withUWSM = false;
+  };
 
   # Enable dconf for system-wide configuration storage
   programs.dconf.enable = true;
@@ -79,8 +82,10 @@
   };
   services.blueman.enable = true;
 
-  # Enable power-profiles-daemon for power profile management.
-  services.power-profiles-daemon.enable = true;
+  # Enable tuned for power profile management (replaces power-profiles-daemon).
+  services.tuned.enable = true;
+  # tuned-ppd provides the Power Profiles D-Bus API (compatible with power-profiles-daemon clients).
+  services.tuned-ppd.enable = true;
 
   # Enable Upower for battery/power management.
   services.upower.enable = true;
@@ -90,15 +95,68 @@
 
   # Fonts configuration
   fonts = {
+    enableDefaultPackages = false;
     packages = with pkgs; [
       nerd-fonts.fira-code
       nerd-fonts.jetbrains-mono
       nerd-fonts.symbols-only
+      noto-fonts-color-emoji
+      roboto
     ];
     fontconfig = {
       defaultFonts = {
-        monospace = [ "JetBrainsMono Nerd Font" ];
+        monospace = [ "JetBrainsMono Nerd Font" "FiraCode Nerd Font" "Symbols Nerd Font" ];
+        sansSerif = [ "Roboto" ];
+        serif = [ "Roboto" ];
+        emoji = [ "Noto Color Emoji" ];
       };
+      localConf = ''
+        <?xml version="1.0"?>
+        <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
+        <fontconfig>
+          <alias>
+            <family>JetBrainsMono Nerd Font</family>
+            <prefer>
+              <family>FiraCode Nerd Font</family>
+              <family>Symbols Nerd Font</family>
+              <family>Noto Color Emoji</family>
+            </prefer>
+          </alias>
+          <alias>
+            <family>JetBrainsMono NF</family>
+            <prefer>
+              <family>FiraCode Nerd Font</family>
+              <family>Symbols Nerd Font</family>
+              <family>Noto Color Emoji</family>
+            </prefer>
+          </alias>
+          <alias>
+            <family>FiraCode Nerd Font</family>
+            <prefer>
+              <family>Symbols Nerd Font</family>
+              <family>Noto Color Emoji</family>
+            </prefer>
+          </alias>
+          <alias>
+            <family>monospace</family>
+            <prefer>
+              <family>JetBrainsMono Nerd Font</family>
+              <family>JetBrainsMono NF</family>
+              <family>FiraCode Nerd Font</family>
+              <family>Symbols Nerd Font</family>
+              <family>Noto Color Emoji</family>
+            </prefer>
+          </alias>
+          <match target="pattern">
+            <test name="family" compare="eq">
+              <string>emoji</string>
+            </test>
+            <edit name="family" mode="prepend" binding="strong">
+              <string>Noto Color Emoji</string>
+            </edit>
+          </match>
+        </fontconfig>
+      '';
     };
   };
 }

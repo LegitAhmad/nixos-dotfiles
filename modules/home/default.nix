@@ -11,12 +11,14 @@
     ./nushell.nix
     ./noctalia.nix
     ./neovim.nix
-    ./niri.nix
+    ./hyprland.nix
     ./zellij.nix
     ./tmux.nix
     ./theme.nix
     ./zsh.nix
   ];
+
+  nixpkgs.config.allowUnfree = true;
 
   home.username = "legitahmad";
   home.homeDirectory = lib.mkForce "/home/legitahmad";

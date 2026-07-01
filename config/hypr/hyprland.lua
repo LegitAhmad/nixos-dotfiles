@@ -1,0 +1,5 @@
+require("config.settings")
+require("config.animations")
+require("config.autostart")
+require("config.keybinds")
+require("config.rules")
