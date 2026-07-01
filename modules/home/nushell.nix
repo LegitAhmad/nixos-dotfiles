@@ -1,6 +1,7 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, osConfig ? null, ... }:
 
 let
+  enableStylix = if osConfig != null then osConfig.theme.enableStylix else false;
   colors = config.lib.stylix.colors;
 in
 {
@@ -11,7 +12,9 @@ in
       $env.config = {
         show_banner: false
         highlight_resolved_externals: true
-        
+      }
+    '' + lib.optionalString enableStylix ''
+      $env.config = ($env.config | merge {
         # Stylix Base16 color palette mapping for Nushell syntax and tables
         color_config: {
           separator: "#${colors.base03}"
@@ -103,8 +106,8 @@ in
             }
           }
         ]
-      }
-
+      })
+    '' + ''
       # Source custom configurations from the dotfiles repository (out-of-store)
       source ~/.config/nushell/custom-config.nu
     '';

@@ -59,12 +59,17 @@
 
   programs.foot = {
     enable = true;
-  };
-
-  # Symlink the foot configuration file from the local dotfiles directory
-  xdg.configFile."foot/foot.ini" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/foot/foot.ini";
-    force = true;
+    settings = {
+      main = {
+        font = "JetBrainsMono Nerd Font:style=bold:size=13, Noto Color Emoji:size=12, Symbols Nerd Font:size=12";
+        pad = "6x6";
+        dpi-aware = "no";
+        selection-target = "both";
+      };
+      mouse = {
+        hide-when-typing = "yes";
+      };
+    };
   };
 
   programs.fastfetch = {

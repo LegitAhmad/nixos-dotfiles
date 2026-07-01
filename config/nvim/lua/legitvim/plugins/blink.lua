@@ -20,6 +20,10 @@ return {
 					return false
 				end
 
+				if vim.bo.filetype == "snacks_picker_input" or vim.bo.filetype == "TelescopePrompt" or vim.bo.filetype == "minifiles" then
+          return false
+        end
+
 				-- Disable if the current buffer is a command-line window (e.g., q:)
 				if vim.fn.getcmdwintype() ~= "" then
 					return false

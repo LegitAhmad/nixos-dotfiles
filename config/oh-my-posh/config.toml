@@ -1,7 +1,6 @@
 #:schema https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
 
 version = 4
-extends = "/home/legitahmad/.config/oh-my-posh/colors.toml"
 
 [[blocks]]
 type = "prompt"

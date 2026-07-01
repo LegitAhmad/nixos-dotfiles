@@ -2,6 +2,8 @@
 
 {
   imports = [
+    inputs.catppuccin.homeModules.catppuccin
+    inputs.stylix.homeModules.stylix
     ./apps.nix
     ./dev.nix
     ./terminal.nix

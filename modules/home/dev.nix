@@ -1,4 +1,10 @@
-{ config, lib, pkgs, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   programs.git = {
@@ -113,5 +119,6 @@
     python3
     gcc
     vscode
+    jjui
   ];
 }

@@ -2,9 +2,13 @@
   description = "I use NixOS btw";
 
   nixConfig = {
-    extra-substituters = [ "https://noctalia.cachix.org" ];
+    extra-substituters = [
+      "https://noctalia.cachix.org"
+      "https://catppuccin.cachix.org"
+    ];
     extra-trusted-public-keys = [
       "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+      "catppuccin.cachix.org-1:noG/4HkbhJb+lUAdKrph6LaozJvAeEEZj4N732IysmU="
     ];
   };
 
@@ -26,6 +30,8 @@
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    catppuccin.url = "github:catppuccin/nix";
 
     stylix = {
       url = "github:nix-community/stylix";
@@ -49,6 +55,7 @@
       nixpkgs,
       home-manager,
       mnw,
+      catppuccin,
       ...
     }@inputs:
     {
@@ -62,6 +69,7 @@
 
           home-manager.nixosModules.home-manager
           inputs.stylix.nixosModules.stylix
+          inputs.catppuccin.nixosModules.catppuccin
         ];
       };
     };

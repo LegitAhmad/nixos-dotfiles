@@ -51,6 +51,7 @@
         pname = "jjsigns.nvim";
         version = "unstable";
         src = inputs.jjsigns;
+        patches = [ ./jjsigns.patch ];
       })
       (pkgs.vimUtils.buildVimPlugin {
         pname = "sudo.nvim";

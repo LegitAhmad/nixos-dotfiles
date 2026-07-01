@@ -1,6 +1,7 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, osConfig ? null, ... }:
 
 let
+  enableStylix = if osConfig != null then osConfig.theme.enableStylix else false;
   colors = config.lib.stylix.colors;
 in
 {
@@ -8,7 +9,7 @@ in
     enable = true;
     interactiveShellInit = ''
       set -g fish_greeting ""
-
+    '' + lib.optionalString enableStylix ''
       # Custom colored fish completions (pager) using Stylix base16 colors
       set -g fish_pager_color_progress '#${colors.base0B}' --background='#${colors.base01}'
       set -g fish_pager_color_prefix '#${colors.base0A}' --bold --underline
