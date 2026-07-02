@@ -15,7 +15,7 @@ colors.tab_bar = {
 	},
 	inactive_tab = {
 		bg_color = colors.background,
-		fg_color = "#7f9687",
+		fg_color = colors.ansi[1],
 	},
 	inactive_tab_hover = {
 		bg_color = colors.background,
@@ -23,11 +23,11 @@ colors.tab_bar = {
 	},
 	new_tab = {
 		bg_color = colors.background,
-		fg_color = "#7f9687",
+		fg_color = colors.ansi[1],
 	},
 	new_tab_hover = {
 		bg_color = colors.background,
-		fg_color = "#cacd59",
+		fg_color = colors.ansi[3],
 	},
 }
 config.colors = colors
@@ -166,7 +166,7 @@ end
 wezterm.on("update-right-status", function(window, pane)
 	local workspace = window:active_workspace()
 
-	local active_bg = "#364b3f"
+	local active_bg = colors.split
 	local active_fg = colors.foreground
 	local inactive_bg = colors.background
 
@@ -200,11 +200,11 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 
 	local icon = get_process_icon(process_name)
 
-	local active_bg = "#364b3f"
+	local active_bg = colors.split
 	local active_fg = colors.foreground
 	local inactive_bg = colors.background
-	local inactive_fg = "#7f9687"
-	local hover_bg = "#25352c"
+	local inactive_fg = colors.scrollbar_thumb
+	local hover_bg = colors.selection_bg
 	local hover_fg = colors.foreground
 
 	if tab.is_active then

@@ -3,7 +3,6 @@
 {
   imports = [
     inputs.catppuccin.homeModules.catppuccin
-    inputs.stylix.homeModules.stylix
     ./apps.nix
     ./dev.nix
     ./terminal.nix
@@ -19,6 +18,14 @@
   ];
 
   nixpkgs.config.allowUnfree = true;
+
+  # vesktop pins pnpm_10_29_2 which is marked insecure.
+  # Override to use the safe pnpm_10 (10.34.4) instead.
+  nixpkgs.overlays = [
+    (final: prev: {
+      vesktop = prev.vesktop.override { pnpm_10_29_2 = final.pnpm_10; };
+    })
+  ];
 
   home.username = "legitahmad";
   home.homeDirectory = lib.mkForce "/home/legitahmad";

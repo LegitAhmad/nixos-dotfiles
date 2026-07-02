@@ -115,6 +115,7 @@
     rustc
     cargo
     nodejs
+    pnpm
     go
     python3
     gcc

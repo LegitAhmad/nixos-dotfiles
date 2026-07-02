@@ -46,20 +46,13 @@
 
   programs.ghostty = {
     enable = true;
-    settings = {
-      theme = "catppuccin-mocha";
-      font-size = 13;
-      window-padding-x = 6;
-      window-padding-y = 6;
-      window-padding-balance = true;
-      background-opacity = 0.85;
-      confirm-close-surface = false;
-    };
   };
 
-  home.activation.cleanGhosttyBackup = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
-    rm -f "${config.home.homeDirectory}/.config/ghostty/config.backup"
-  '';
+  # Symlink the ghostty configuration file from the local dotfiles directory.
+  # mkForce overrides the source set by programs.ghostty module.
+  xdg.configFile."ghostty/config".source = lib.mkForce (
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/ghostty/config"
+  );
 
   programs.wezterm = {
     enable = true;
@@ -73,7 +66,7 @@
     enable = true;
     settings = {
       main = {
-        font = "JetBrainsMono Nerd Font:style=bold:size=13, Noto Color Emoji:size=12, Symbols Nerd Font:size=12";
+        font = "JetBrainsMono Nerd Font:style=bold:size=13, Twitter Color Emoji:size=12, Symbols Nerd Font:size=12";
         pad = "6x6";
         dpi-aware = "no";
         selection-target = "both";

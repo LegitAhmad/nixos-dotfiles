@@ -1,63 +1,34 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   programs.zsh = {
     enable = true;
     dotDir = "${config.home.homeDirectory}/.config/zsh";
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
 
-    completionInit = ''
-      autoload -Uz compinit
-      zmodload zsh/stat
-      zmodload zsh/datetime
-
-      _comp_path="''${ZDOTDIR:-$HOME}/.zcompdump"
-
-      if [[ -f "$_comp_path" ]] && stat -A _comp_mtime +mtime "$_comp_path" && (( EPOCHSECONDS - _comp_mtime < 72000 )); then
-        compinit -C
-      else
-        compinit
-      fi
-      unset _comp_path _comp_mtime
-    '';
-
-    history = {
-      size = 0;
-      save = 0;
-      path = "/dev/null";
-    };
-
-    plugins = [
-      {
-        name = "zsh-autosuggestions";
-        src = pkgs.zsh-autosuggestions;
-      }
-      {
-        name = "zsh-syntax-highlighting";
-        src = pkgs.zsh-syntax-highlighting;
-      }
-      {
-        name = "zsh-history-substring-search";
-        src = pkgs.zsh-history-substring-search;
-      }
-      {
-        name = "zsh-autopair";
-        src = pkgs.zsh-autopair;
-      }
-      {
-        name = "oh-my-zsh-git";
-        src = pkgs.oh-my-zsh;
-        file = "share/oh-my-zsh/plugins/git/git.plugin.zsh";
-      }
-    ];
+    # history = {
+    #   size = 10000;
+    #   save = 10000;
+    #   path = "${config.home.homeDirectory}/.cache/zsh/history";
+    # };
 
     initContent = ''
       # -- Profile zsh startup (comment out after measuring)
       # zmodload zsh/zprof
 
-      bindkey '^[[A' history-substring-search-up
-      bindkey '^[[B' history-substring-search-down
-      bindkey '^A' beginning-of-line
-      bindkey '^E' end-of-line
+      setopt AUTO_CD
+      setopt COMPLETE_IN_WORD
+      setopt ALWAYS_TO_END
+      # setopt MENU_COMPLETE
+      # setopt EXTENDED_GLOB
+      setopt NUMERIC_GLOB_SORT
 
       # -- zprof output (uncomment with the load above)
       # zprof

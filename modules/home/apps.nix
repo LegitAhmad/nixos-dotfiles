@@ -35,6 +35,7 @@
     mpv
     libreoffice-fresh
     wpsoffice
+    libnotify
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.omp
     inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode

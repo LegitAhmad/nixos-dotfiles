@@ -40,11 +40,6 @@
 
     catppuccin.url = "github:catppuccin/nix";
 
-    stylix = {
-      url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     sudo-nvim = {
       url = "github:denialofsandwich/sudo.nvim";
       flake = false;
@@ -71,7 +66,6 @@
           ./hosts/nixos-btw
 
           home-manager.nixosModules.home-manager
-          inputs.stylix.nixosModules.stylix
           inputs.catppuccin.nixosModules.catppuccin
         ];
       };

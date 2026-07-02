@@ -1,9 +1,5 @@
 { config, lib, pkgs, osConfig ? null, ... }:
 
-let
-  enableStylix = if osConfig != null then osConfig.theme.enableStylix else false;
-  colors = config.lib.stylix.colors;
-in
 {
   programs.nushell = {
     enable = true;
@@ -13,101 +9,7 @@ in
         show_banner: false
         highlight_resolved_externals: true
       }
-    '' + lib.optionalString enableStylix ''
-      $env.config = ($env.config | merge {
-        # Stylix Base16 color palette mapping for Nushell syntax and tables
-        color_config: {
-          separator: "#${colors.base03}"
-          leading_alphabetic_title_color: { fg: "#${colors.base0D}" attr: b }
-          header: { fg: "#${colors.base0B}" attr: b }
-          empty: "#${colors.base0D}"
-          bool: "#${colors.base09}"
-          int: "#${colors.base0B}"
-          filesize: "#${colors.base0C}"
-          duration: "#${colors.base0A}"
-          date: "#${colors.base0E}"
-          range: "#${colors.base08}"
-          float: "#${colors.base0B}"
-          string: "#${colors.base05}"
-          nothing: "#${colors.base03}"
-          binary: "#${colors.base09}"
-          cellpath: "#${colors.base05}"
-          row_index: { fg: "#${colors.base04}" attr: b }
-          record: "#${colors.base05}"
-          list: "#${colors.base05}"
-          block: "#${colors.base05}"
-          hints: "#${colors.base03}"
-          search_result: { fg: "#${colors.base00}" bg: "#${colors.base0A}" }
-          shape_and: "#${colors.base0E}"
-          shape_binary: "#${colors.base09}"
-          shape_block: { fg: "#${colors.base0D}" attr: b }
-          shape_bool: "#${colors.base09}"
-          shape_custom: "#${colors.base0B}"
-          shape_datetime: "#${colors.base0E}"
-          shape_directory: "#${colors.base0D}"
-          shape_external: "#${colors.base08}"
-          shape_external_resolved: "#${colors.base0C}"
-          shape_externalarg: { fg: "#${colors.base0B}" attr: b }
-          shape_filepath: "#${colors.base0D}"
-          shape_flag: { fg: "#${colors.base0D}" attr: b }
-          shape_float: "#${colors.base0B}"
-          shape_garbage: { fg: "#${colors.base05}" bg: "#${colors.base08}" attr: b }
-          shape_globpattern: "#${colors.base0D}"
-          shape_int: "#${colors.base0B}"
-          shape_internalcall: { fg: "#${colors.base0C}" attr: b }
-          shape_list: "#${colors.base0D}"
-          shape_literal: "#${colors.base0D}"
-          shape_match_pattern: "#${colors.base0B}"
-          shape_matching_brackets: { attr: u }
-          shape_nothing: "#${colors.base03}"
-          shape_operator: "#${colors.base0A}"
-          shape_or: "#${colors.base0E}"
-          shape_pipe: "#${colors.base0E}"
-          shape_range: "#${colors.base0A}"
-          shape_record: "#${colors.base0D}"
-          shape_redirection: "#${colors.base0E}"
-          shape_signature: { fg: "#${colors.base0B}" attr: b }
-          shape_string: "#${colors.base05}"
-          shape_string_interpolation: "#${colors.base0E}"
-          shape_table: { fg: "#${colors.base0D}" attr: b }
-          shape_variable: "#${colors.base0E}"
-        }
 
-        # Custom menu styling to ensure descriptions are gray (base03) instead of default yellow
-        menus: [
-          {
-            name: completion_menu
-            only_buffer_difference: false
-            marker: "| "
-            type: {
-              layout: columnar
-              columns: 4
-              col_width: 20
-              col_padding: 2
-            }
-            style: {
-              text: "#${colors.base05}"
-              selected_text: { fg: "#${colors.base0B}" attr: r }
-              description_text: "#${colors.base03}"
-            }
-          }
-          {
-            name: history_menu
-            only_buffer_difference: true
-            marker: "? "
-            type: {
-              layout: list
-              page_size: 10
-            }
-            style: {
-              text: "#${colors.base05}"
-              selected_text: { fg: "#${colors.base0B}" attr: r }
-              description_text: "#${colors.base03}"
-            }
-          }
-        ]
-      })
-    '' + ''
       # Source custom configurations from the dotfiles repository (out-of-store)
       source ~/.config/nushell/custom-config.nu
     '';

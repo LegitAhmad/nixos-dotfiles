@@ -87,7 +87,7 @@ properties = { display_mode = "files" }
 type = "nix-shell"
 style = "plain"
 foreground = "p:purple"
-template = " via "
+template = "{{ if ne .Type \"unknown\" }} via  {{ .Type }}{{ end }}"
 
 [[blocks]]
 type = "prompt"

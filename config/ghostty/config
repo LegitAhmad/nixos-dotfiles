@@ -1,0 +1,7 @@
+theme = catppuccin-mocha
+font-size = 13
+window-padding-x = 6
+window-padding-y = 6
+window-padding-balance = true
+background-opacity = 0.85
+confirm-close-surface = false

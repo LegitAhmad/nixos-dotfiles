@@ -42,12 +42,15 @@
 
   # Only ship the plain Hyprland desktop file, exclude hyprland-uwsm.desktop.
   services.displayManager.sessionPackages = [
-    (pkgs.runCommand "hyprland-sessions-only" {
-      providedSessions = [ "hyprland" ];
-    } ''
-      mkdir -p $out/share/wayland-sessions
-      cp ${pkgs.hyprland}/share/wayland-sessions/hyprland.desktop $out/share/wayland-sessions/
-    '')
+    (pkgs.runCommand "hyprland-sessions-only"
+      {
+        providedSessions = [ "hyprland" ];
+      }
+      ''
+        mkdir -p $out/share/wayland-sessions
+        cp ${pkgs.hyprland}/share/wayland-sessions/hyprland.desktop $out/share/wayland-sessions/
+      ''
+    )
   ];
 
   # Enable dconf for system-wide configuration storage
@@ -108,14 +111,31 @@
       nerd-fonts.jetbrains-mono
       nerd-fonts.symbols-only
       noto-fonts-color-emoji
+      noto-fonts
+      twemoji-color-font
       roboto
     ];
     fontconfig = {
       defaultFonts = {
-        monospace = [ "JetBrainsMono Nerd Font" "FiraCode Nerd Font" "Symbols Nerd Font" ];
-        sansSerif = [ "Roboto" ];
-        serif = [ "Roboto" ];
-        emoji = [ "Noto Color Emoji" ];
+        monospace = [
+          "JetBrainsMono Nerd Font"
+          "FiraCode Nerd Font"
+          "Symbols Nerd Font"
+          "Twitter Color Emoji"
+          "Noto Color Emoji"
+        ];
+        sansSerif = [
+          "Roboto"
+          "Noto Sans"
+        ];
+        serif = [
+          "Noto Serif"
+          "Roboto"
+        ];
+        emoji = [
+          "Twitter Color Emoji"
+          "Noto Color Emoji"
+        ];
       };
       localConf = ''
         <?xml version="1.0"?>
@@ -126,6 +146,7 @@
             <prefer>
               <family>FiraCode Nerd Font</family>
               <family>Symbols Nerd Font</family>
+              <family>Twitter Color Emoji</family>
               <family>Noto Color Emoji</family>
             </prefer>
           </alias>
@@ -134,6 +155,7 @@
             <prefer>
               <family>FiraCode Nerd Font</family>
               <family>Symbols Nerd Font</family>
+              <family>Twitter Color Emoji</family>
               <family>Noto Color Emoji</family>
             </prefer>
           </alias>
@@ -141,6 +163,7 @@
             <family>FiraCode Nerd Font</family>
             <prefer>
               <family>Symbols Nerd Font</family>
+              <family>Twitter Color Emoji</family>
               <family>Noto Color Emoji</family>
             </prefer>
           </alias>
@@ -151,6 +174,7 @@
               <family>JetBrainsMono NF</family>
               <family>FiraCode Nerd Font</family>
               <family>Symbols Nerd Font</family>
+              <family>Twitter Color Emoji</family>
               <family>Noto Color Emoji</family>
             </prefer>
           </alias>
@@ -159,7 +183,7 @@
               <string>emoji</string>
             </test>
             <edit name="family" mode="prepend" binding="strong">
-              <string>Noto Color Emoji</string>
+              <string>Twitter Color Emoji</string>
             </edit>
           </match>
         </fontconfig>
