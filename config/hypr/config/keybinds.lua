@@ -19,10 +19,29 @@ hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:mag
 hl.bind(mainMod .. " + ALT + S", hl.dsp.window.move({ workspace = "special:magic", follow = false }))
 
 -- Window resize (width)
-hl.bind(mainMod .. " + SHIFT + H", hl.dsp.exec_cmd("hyprctl dispatch resizeactive -50 0"))
-hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("hyprctl dispatch resizeactive 50 0"))
-hl.bind(mainMod .. " + SHIFT + J", hl.dsp.exec_cmd("hyprctl dispatch resizeactive 0 50"))
-hl.bind(mainMod .. " + SHIFT + K", hl.dsp.exec_cmd("hyprctl dispatch resizeactive 0 -50"))
+-- Native window resizing with Vim keys (Hold down keys to repeat)
+local resizeUnit = 50
+
+hl.bind(
+	mainMod .. " + SHIFT + H",
+	hl.dsp.window.resize({ x = -resizeUnit, y = 0, relative = true }),
+	{ repeating = true }
+)
+hl.bind(
+	mainMod .. " + SHIFT + L",
+	hl.dsp.window.resize({ x = resizeUnit, y = 0, relative = true }),
+	{ repeating = true }
+)
+hl.bind(
+	mainMod .. " + SHIFT + J",
+	hl.dsp.window.resize({ x = 0, y = resizeUnit, relative = true }),
+	{ repeating = true }
+)
+hl.bind(
+	mainMod .. " + SHIFT + K",
+	hl.dsp.window.resize({ x = 0, y = -resizeUnit, relative = true }),
+	{ repeating = true }
+)
 
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
@@ -46,14 +65,14 @@ for i = 1, 9 do
 end
 
 -- Audio controls
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"))
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"))
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"), { repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { repeating = true })
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
 hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"))
 
 -- Brightness controls
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set +5%"))
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"))
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set +5%"), { repeating = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"), { repeating = true })
 
 -- Noctalia lock
 hl.bind(mainMod .. " + ALT + L", hl.dsp.exec_cmd("noctalia msg session lock"))

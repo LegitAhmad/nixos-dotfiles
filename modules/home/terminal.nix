@@ -47,6 +47,7 @@
   programs.ghostty = {
     enable = true;
     settings = {
+      theme = "catppuccin-mocha";
       font-size = 13;
       window-padding-x = 6;
       window-padding-y = 6;

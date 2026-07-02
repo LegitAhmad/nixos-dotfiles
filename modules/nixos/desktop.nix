@@ -40,6 +40,16 @@
     withUWSM = false;
   };
 
+  # Only ship the plain Hyprland desktop file, exclude hyprland-uwsm.desktop.
+  services.displayManager.sessionPackages = [
+    (pkgs.runCommand "hyprland-sessions-only" {
+      providedSessions = [ "hyprland" ];
+    } ''
+      mkdir -p $out/share/wayland-sessions
+      cp ${pkgs.hyprland}/share/wayland-sessions/hyprland.desktop $out/share/wayland-sessions/
+    '')
+  ];
+
   # Enable dconf for system-wide configuration storage
   programs.dconf.enable = true;
 
@@ -84,9 +94,6 @@
 
   # Enable tuned for power profile management (replaces power-profiles-daemon).
   services.tuned.enable = true;
-  # tuned-ppd provides the Power Profiles D-Bus API (compatible with power-profiles-daemon clients).
-  services.tuned-ppd.enable = true;
-
   # Enable Upower for battery/power management.
   services.upower.enable = true;
 
