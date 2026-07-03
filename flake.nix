@@ -60,7 +60,7 @@
       nixosConfigurations."nixos-btw" = nixpkgs.lib.nixosSystem {
         system = "x86_64_linux";
 
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs self; };
 
         modules = [
           ./hosts/nixos-btw

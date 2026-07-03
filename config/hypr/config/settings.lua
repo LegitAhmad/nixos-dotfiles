@@ -23,13 +23,13 @@ hl.config({
 	},
 	decoration = {
 		rounding = 10,
-		active_opacity = 1,
-		inactive_opacity = 0.95,
+		active_opacity = 0.98,
+		inactive_opacity = 0.92,
 		blur = {
 			enabled = true,
 			special = true,
-			size = 6,
-			passes = 3,
+			size = 3,
+			passes = 1,
 			new_optimizations = true,
 		},
 	},

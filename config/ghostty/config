@@ -1,7 +1,12 @@
 theme = catppuccin-mocha
 font-size = 13
-window-padding-x = 6
+window-padding-x = 0
 window-padding-y = 6
 window-padding-balance = true
-background-opacity = 0.85
-confirm-close-surface = false
+background-opacity = 0.95
+gtk-single-instance = true
+copy-on-select = true
+confirm-close-surface = true
+cursor-style = block
+tab-inherit-working-directory = true
+window-inherit-working-directory = false

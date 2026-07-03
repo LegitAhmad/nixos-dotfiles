@@ -37,15 +37,9 @@
     enableNushellIntegration = false;
   };
 
-  programs.kitty = {
-    enable = true;
-    extraConfig = ''
-      include ${config.home.homeDirectory}/nixos-dotfiles/config/kitty/kitty.conf
-    '';
-  };
-
   programs.ghostty = {
     enable = true;
+    systemd.enable = true;
   };
 
   # Symlink the ghostty configuration file from the local dotfiles directory.

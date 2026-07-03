@@ -1,15 +1,15 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, self, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/nixos
+    "${self}/modules/nixos"
   ];
 
   home-manager = {
     useUserPackages = true;
     backupFileExtension = "backup";
-    extraSpecialArgs = { inherit inputs; };
-    users.legitahmad = import ../../modules/home;
+    extraSpecialArgs = { inherit inputs self; };
+    users.legitahmad = import "${self}/modules/home";
   };
 }

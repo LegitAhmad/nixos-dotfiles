@@ -121,8 +121,8 @@
           "JetBrainsMono Nerd Font"
           "FiraCode Nerd Font"
           "Symbols Nerd Font"
-          "Twitter Color Emoji"
           "Noto Color Emoji"
+          "Twitter Color Emoji"
         ];
         sansSerif = [
           "Roboto"
@@ -133,61 +133,10 @@
           "Roboto"
         ];
         emoji = [
-          "Twitter Color Emoji"
           "Noto Color Emoji"
+          "Twitter Color Emoji"
         ];
       };
-      localConf = ''
-        <?xml version="1.0"?>
-        <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
-        <fontconfig>
-          <alias>
-            <family>JetBrainsMono Nerd Font</family>
-            <prefer>
-              <family>FiraCode Nerd Font</family>
-              <family>Symbols Nerd Font</family>
-              <family>Twitter Color Emoji</family>
-              <family>Noto Color Emoji</family>
-            </prefer>
-          </alias>
-          <alias>
-            <family>JetBrainsMono NF</family>
-            <prefer>
-              <family>FiraCode Nerd Font</family>
-              <family>Symbols Nerd Font</family>
-              <family>Twitter Color Emoji</family>
-              <family>Noto Color Emoji</family>
-            </prefer>
-          </alias>
-          <alias>
-            <family>FiraCode Nerd Font</family>
-            <prefer>
-              <family>Symbols Nerd Font</family>
-              <family>Twitter Color Emoji</family>
-              <family>Noto Color Emoji</family>
-            </prefer>
-          </alias>
-          <alias>
-            <family>monospace</family>
-            <prefer>
-              <family>JetBrainsMono Nerd Font</family>
-              <family>JetBrainsMono NF</family>
-              <family>FiraCode Nerd Font</family>
-              <family>Symbols Nerd Font</family>
-              <family>Twitter Color Emoji</family>
-              <family>Noto Color Emoji</family>
-            </prefer>
-          </alias>
-          <match target="pattern">
-            <test name="family" compare="eq">
-              <string>emoji</string>
-            </test>
-            <edit name="family" mode="prepend" binding="strong">
-              <string>Twitter Color Emoji</string>
-            </edit>
-          </match>
-        </fontconfig>
-      '';
     };
   };
 }

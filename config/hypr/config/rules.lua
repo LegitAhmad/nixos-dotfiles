@@ -1,3 +1,11 @@
+-- Ghostty: no blur, opacity controlled by Hyprland
+hl.window_rule({
+	name = "ghostty-opacity",
+	match = { class = "com.mitchellh.ghostty" },
+	no_blur = true,
+	opacity = 1,
+})
+
 -- Browser rules: no blur, fully opaque
 hl.window_rule({
 	name = "chromium-noblur",
@@ -125,4 +133,46 @@ hl.window_rule({
 	float = true,
 	size = "(monitor_w*0.5) (monitor_h*0.5)",
 	center = true,
+})
+
+-- Workspace assignments
+hl.window_rule({
+	name = "browser-workspace",
+	match = { class = "chromium-browser|zen|zen-alpha|firefox" },
+	workspace = 2,
+})
+
+hl.window_rule({
+	name = "vesktop-workspace",
+	match = { class = "[Vv]esktop" },
+	workspace = 3,
+	no_initial_focus = true,
+})
+
+hl.window_rule({
+	name = "spotify-workspace",
+	match = { class = "Spotify" },
+	workspace = 7,
+	no_initial_focus = true,
+})
+
+hl.window_rule({
+	name = "steam-workspace",
+	match = { class = "steam" },
+	workspace = 8,
+	no_initial_focus = true,
+})
+
+hl.window_rule({
+	name = "steam-client-workspace",
+	match = { class = "Steam" },
+	workspace = 8,
+	no_initial_focus = true,
+})
+
+hl.window_rule({
+	name = "obs-workspace",
+	match = { class = "com.obsproject.Studio" },
+	workspace = 9,
+	no_initial_focus = true,
 })

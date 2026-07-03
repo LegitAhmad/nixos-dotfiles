@@ -1,6 +1,6 @@
 return {
 	font = "JetBrains Mono Nerd Font",
-	terminal = "kitty",
+	terminal = "ghostty",
 	browser = "chromium",
 	editor = "nvim",
 	explorer = "thunar",

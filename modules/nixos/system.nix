@@ -37,6 +37,10 @@
   environment.systemPackages = with pkgs; [
     btrfs-progs
     compsize
+    pciutils                          # lspci
+    usbutils                          # lsusb
+    smartmontools                     # disk health (smartctl)
+    gparted                           # partition editor
   ];
 
   # Nix Helper (nh) configuration.

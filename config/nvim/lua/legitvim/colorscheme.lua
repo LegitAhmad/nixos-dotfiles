@@ -7,6 +7,7 @@ end
 -- Configure the theme options
 theme.setup({
 	flavour = "macchiato",
+	transparent_background = true,
 })
 
 -- Load the specific variant
