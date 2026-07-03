@@ -7,6 +7,7 @@ require("legitvim.keymaps")
 require("legitvim.colorscheme")
 require("legitvim.mini")
 require("legitvim.snacks")
+require("legitvim.blink")
 
 -- Configure lz.n to use packadd for loading optional plugins
 vim.g.lz_n = {

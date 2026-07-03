@@ -35,6 +35,7 @@
     '';
 
     shellAliases = {
+      gn = "hyprshutdown -t 'Shutting down...' --post-cmd 'systemctl poweroff'";
       nrs = "nh os switch";
       nrb = "nh os boot";
       nru = "nh os switch --update";

@@ -7,5 +7,5 @@ return {
 	gaps_in = 2,
 	gaps_out = 5,
 	default_layout = "dwindle",
-	layouts = { "dwindle", "master", "scrolling", "monocle" },
+	layouts = { "dwindle", "scrolling", "monocle" },
 }

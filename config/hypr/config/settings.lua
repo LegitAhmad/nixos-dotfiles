@@ -17,19 +17,19 @@ hl.config({
 	general = {
 		border_size = 1,
 		gaps_in = constants.gaps_in,
-		gaps_out = constants.gaps_out,
+		gaps_out = { 0, 0, 9, 50 },
 		layout = constants.default_layout,
 		resize_on_border = true,
 	},
 	decoration = {
 		rounding = 10,
-		active_opacity = 0.98,
-		inactive_opacity = 0.92,
+		active_opacity = 0.95,
+		inactive_opacity = 0.90,
 		blur = {
 			enabled = true,
 			special = true,
 			size = 3,
-			passes = 1,
+			passes = 2,
 			new_optimizations = true,
 		},
 	},

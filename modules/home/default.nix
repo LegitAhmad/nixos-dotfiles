@@ -15,6 +15,7 @@
     ./tmux.nix
     ./theme.nix
     ./zsh.nix
+    ./vscode.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

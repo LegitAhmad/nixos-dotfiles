@@ -8,5 +8,6 @@ gtk-single-instance = true
 copy-on-select = true
 confirm-close-surface = true
 cursor-style = block
+custom-shader = /home/legitahmad/nixos-dotfiles/config/ghostty/shaders/cursor_smear.glsl
 tab-inherit-working-directory = true
 window-inherit-working-directory = false

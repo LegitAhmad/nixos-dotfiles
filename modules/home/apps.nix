@@ -42,6 +42,8 @@
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.omp
     inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode
+    inputs.llm-agents.packages.${pkgs.system}.copilot-cli
+    inputs.llm-agents.packages.${pkgs.system}.cursor-agent
   ];
 
   gtk = {
@@ -52,7 +54,12 @@
     };
     iconTheme = {
       name = lib.mkDefault "Papirus-Dark";
-      package = lib.mkDefault (pkgs.catppuccin-papirus-folders.override { flavor = "mocha"; accent = "mauve"; });
+      package = lib.mkDefault (
+        pkgs.catppuccin-papirus-folders.override {
+          flavor = "mocha";
+          accent = "mauve";
+        }
+      );
     };
   };
 }

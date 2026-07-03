@@ -103,6 +103,11 @@
   # Enable Polkit for privilege management.
   security.polkit.enable = true;
 
+  # Enable Gnome Keyring and libsecret
+  services.gnome.gnome-keyring.enable = true;
+  environment.systemPackages = with pkgs; [ libsecret ];
+  security.pam.services.ly.enableGnomeKeyring = true;
+
   # Fonts configuration
   fonts = {
     enableDefaultPackages = false;

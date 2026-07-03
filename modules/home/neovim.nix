@@ -36,6 +36,8 @@
       mini-nvim # Icons + core editing modules
       snacks-nvim # Dashboard, explorer, and UI framework
       lz-n # Lazy loader itself
+      vim-tmux-navigator
+      blink-cmp
     ];
 
     # Plugins lazy-loaded on demand via lz.n + packadd
@@ -58,7 +60,6 @@
       telescope-nvim
       nvim-lspconfig
       which-key-nvim
-      blink-cmp
       grug-far-nvim
       flash-nvim
       trouble-nvim

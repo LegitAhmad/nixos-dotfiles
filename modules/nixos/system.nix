@@ -1,9 +1,18 @@
-{ config, lib, pkgs, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   # Nix settings.
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     accept-flake-config = true;
     narinfo-cache-negative-ttl = 0;
     warn-dirty = false;
@@ -15,32 +24,36 @@
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
     ];
-    trusted-users = [ "root" "@wheel" ];
+    trusted-users = [
+      "root"
+      "@wheel"
+    ];
 
     # 12-Core CPU & Disk I/O optimizations
     max-jobs = "auto";
-    cores = 0;                         # Tells Nix to use all 12 cores for building packages
-    auto-optimise-store = true;        # Hardlink identical files in the store to save disk space and I/O time
+    cores = 0; # Tells Nix to use all 12 cores for building packages
+    auto-optimise-store = true; # Hardlink identical files in the store to save disk space and I/O time
   };
 
   # Enable fish and zsh shells system-wide.
   programs.fish.enable = true;
   programs.zsh.enable = true;
-  environment.shells = with pkgs; [ nushell zsh ];
+  environment.shells = with pkgs; [
+    nushell
+    zsh
+  ];
 
   # Allow unfree packages.
   nixpkgs.config.allowUnfree = true;
-
-
 
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
     btrfs-progs
     compsize
-    pciutils                          # lspci
-    usbutils                          # lsusb
-    smartmontools                     # disk health (smartctl)
-    gparted                           # partition editor
+    pciutils # lspci
+    usbutils # lsusb
+    smartmontools # disk health (smartctl)
+    gparted # partition editor
   ];
 
   # Nix Helper (nh) configuration.
@@ -73,7 +86,7 @@
           };
 
           # 2. Re-create the Shift layer behaviour for your Right Alt / Slash swap
-          # In a standard layout, 'shift + /' yields '?'. 
+          # In a standard layout, 'shift + /' yields '?'.
           # Because 'rightalt' is now physically acting as your slash key,
           # holding Shift while hitting Right Alt needs to output '?' instead of 'rightalt' mappings.
           shift = {
@@ -100,8 +113,6 @@
   systemd.user.settings.Manager = {
     DefaultTimeoutStopSec = "10s";
   };
-
-
 
   # System state version.
   system.stateVersion = "26.05";

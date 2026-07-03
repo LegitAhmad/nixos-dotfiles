@@ -41,6 +41,7 @@ in
   xdg.configFile."tmux/plugins.conf".text = ''
     run-shell ${pkgs.tmuxPlugins.catppuccin}/share/tmux-plugins/catppuccin/catppuccin.tmux
     run-shell ${pkgs.tmuxPlugins.yank}/share/tmux-plugins/yank/yank.tmux
+    run-shell ${pkgs.tmuxPlugins.vim-tmux-navigator}/share/tmux-plugins/vim-tmux-navigator/vim-tmux-navigator.tmux
     run-shell ${tmux-nerd-font-window-name}/share/tmux-plugins/tmux-nerd-font-window-name/tmux-nerd-font-window-name.tmux
     run-shell ${pkgs.tmuxPlugins.cpu}/share/tmux-plugins/cpu/cpu.tmux
     run-shell ${pkgs.tmuxPlugins.battery}/share/tmux-plugins/battery/battery.tmux

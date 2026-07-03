@@ -4,12 +4,9 @@ vim.g.mapleader = " "
 -- 💾 Save file
 vim.keymap.set({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 
--- 🪟 Better window navigation
-vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window" })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window" })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window" })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window" })
-
+-- 🪟 Window navigation is handled by vim-tmux-navigator
+vim.keymap.set("n", "<leader>-", "<cmd>split<cr>", { desc = "Horizontal Split" })
+vim.keymap.set("n", "<leader>\\", "<cmd>vsplit<cr>", { desc = "Vertical Split" })
 -- 🔍 Clear search highlights with ESC
 vim.keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Clear Highlight and Escape" })
 

@@ -12,6 +12,7 @@ hl.bind(mainMod .. " + SHIFT + I", hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("noctalia msg panel-toggle clipboard"))
 hl.bind(mainMod .. " + ALT + P", hl.dsp.exec_cmd("hyprpicker -a"))
+hl.bind(mainMod .. " + DELETE", hl.dsp.exec_cmd("hyprshutdown -t 'Shutting down...' --post-cmd 'shutdown now'"))
 
 -- Scratchpad (Special Workspace)
 hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
@@ -103,3 +104,16 @@ hl.gesture({
 	direction = "horizontal",
 	action = "workspace",
 })
+
+local layouts = {
+	[1] = "dwindle",
+	[2] = "scrolling",
+	[3] = "monocle",
+}
+
+for key, layout in pairs(layouts) do
+	hl.bind(
+		mainMod .. " + CTRL + " .. key,
+		hl.dsp.exec_cmd(([[hyprctl eval 'hl.config({ general = { layout = "%s" } })']]):format(layout))
+	)
+end
