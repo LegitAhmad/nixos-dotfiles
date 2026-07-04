@@ -6,10 +6,7 @@
 }:
 
 {
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Configure keymap in X11
+  # X keyboard layout options (shared with the console; no X server needed on Wayland).
   services.xserver.xkb.layout = "us";
 
   # Enable touchpad support.

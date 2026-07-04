@@ -1,28 +1,37 @@
-{ inputs, config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  repoDir,
+  ...
+}:
+
+let
+  noctaliaPkg = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
+in
 
 {
-  imports = [
-    inputs.noctalia.homeModules.default
-  ];
+  home.packages = [ noctaliaPkg ];
 
-  programs.noctalia = {
-    enable = true;
-    systemd.enable = true;
-    settings = {
-      theme = {
-        mode = "dark";
-        source = "builtin";
-        builtin = "Catppuccin";
-      };
-
-      wallpaper = {
-        default = {
-          path = "/home/legitahmad/nixos-dotfiles/config/assets/wallpaper.jpg";
-        };
-      };
-
-      launch_apps_as_systemd_services = true;
+  systemd.user.services.noctalia = {
+    Unit = {
+      Description = "Noctalia - A lightweight Wayland shell and bar";
+      Documentation = [ "https://docs.noctalia.dev/v5/" ];
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${noctaliaPkg}/bin/noctalia";
+      Restart = "on-failure";
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
     };
   };
 
+  xdg.configFile."noctalia/config.toml" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${repoDir}/config/noctalia/config.toml";
+    force = true;
+  };
 }

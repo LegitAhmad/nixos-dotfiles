@@ -6,6 +6,9 @@
   ...
 }:
 
+let
+  system = pkgs.stdenv.hostPlatform.system;
+in
 {
   programs.chromium = {
     enable = true;
@@ -28,29 +31,33 @@
     wl-clipboard
     satty
     hyprpicker
-    thunar
     nwg-look
     adw-gtk3
     proton-vpn
     mpv
-    libreoffice-fresh
+    libreoffice-stable
     wpsoffice
     libnotify
     obs-studio
     spotify
     steam
-    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-    inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.omp
-    inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode
-    inputs.llm-agents.packages.${pkgs.system}.copilot-cli
-    inputs.llm-agents.packages.${pkgs.system}.cursor-agent
+    inputs.zen-browser.packages.${system}.default
+    inputs.llm-agents.packages.${system}.omp
+    inputs.llm-agents.packages.${system}.opencode
+    inputs.llm-agents.packages.${system}.copilot-cli
+    inputs.llm-agents.packages.${system}.cursor-agent
   ];
 
   gtk = {
     enable = lib.mkDefault true;
     theme = {
-      name = lib.mkDefault "adw-gtk3-dark";
-      package = lib.mkDefault pkgs.adw-gtk3;
+      name = lib.mkDefault "catppuccin-mocha-mauve-standard";
+      package = lib.mkDefault (
+        pkgs.catppuccin-gtk.override {
+          variant = "mocha";
+          accents = [ "mauve" ];
+        }
+      );
     };
     iconTheme = {
       name = lib.mkDefault "Papirus-Dark";

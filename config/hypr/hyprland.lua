@@ -1,5 +1,1 @@
-require("config.settings")
-require("config.animations")
-require("config.autostart")
-require("config.keybinds")
-require("config.rules")
+/nix/store/kx54db2y0fk6qfjkipbd1jyb5rbczbsn-home-manager-files/.config/hypr/hyprland.lua

@@ -119,7 +119,6 @@
     go
     python3
     gcc
-    vscode
     jjui
   ];
 }

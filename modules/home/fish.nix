@@ -1,30 +1,11 @@
-{ config, lib, pkgs, osConfig ? null, ... }:
-
 {
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
       set -g fish_greeting ""
     '';
-    shellAliases = {
-      # NixOS & Home Manager helper (nh) shortcuts
-      nrs = "nh os switch";
-      nrb = "nh os boot";
-      nru = "nh os switch --update";
-      ncg = "nix-collect-garbage -d";
-
-      # Git shortcuts
-      g = "git";
-      ga = "git add";
-      gc = "git commit";
-      gp = "git push";
-      gs = "git status";
-      gd = "git diff";
-      gl = "git log --oneline -n 10";
-
-      # Safety alias: send to trash instead of permanent delete
-      rm = "trash-put";
-    };
+    # Shell-specific extras beyond the shared aliases
+    # (nix/nh, git, eza, trash aliases come from shell-shared.nix)
 
     functions = {
       # mc: make directory and cd into it
@@ -35,40 +16,9 @@
     };
   };
 
-  # Modern shell utilities that integrate with Fish:
-
-  # Zoxide: A smarter cd command (z)
-  programs.zoxide = {
-    enable = true;
-    enableFishIntegration = true;
-  };
-
-  # Carapace: Multi-shell completion
-  programs.carapace = {
-    enable = true;
-    enableFishIntegration = true;
-  };
-
-  # Eza: A modern, colorful replacement for ls
-  programs.eza = {
-    enable = true;
-    enableFishIntegration = true;
-    icons = "auto";
-    git = true;
-    extraOptions = [
-      "--group-directories-first"
-      "--header"
-      "--color-scale=all"
-    ];
-  };
-
-  # Fzf: A fuzzy finder
-  programs.fzf = {
-    enable = true;
-    enableFishIntegration = true;
-    historyWidget.command = "";
-  };
-
-  # Trash CLI for safe deletion
-  home.packages = with pkgs; [ trash-cli ];
+  # Shell integration flags for the shared tools (see shell-shared.nix)
+  programs.zoxide.enableFishIntegration = true;
+  programs.carapace.enableFishIntegration = true;
+  programs.eza.enableFishIntegration = true;
+  programs.fzf.enableFishIntegration = true;
 }

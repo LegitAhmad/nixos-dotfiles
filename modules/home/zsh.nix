@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ config, ... }:
 
 {
   programs.zsh = {
@@ -12,12 +7,6 @@
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
-
-    # history = {
-    #   size = 10000;
-    #   save = 10000;
-    #   path = "${config.home.homeDirectory}/.cache/zsh/history";
-    # };
 
     initContent = ''
       # -- Profile zsh startup (comment out after measuring)
@@ -35,30 +24,10 @@
     '';
 
     shellAliases = {
+      # Shell-specific extras beyond the shared aliases
+      # (nix/nh, git, eza, trash aliases come from shell-shared.nix)
       gn = "hyprshutdown -t 'Shutting down...' --post-cmd 'systemctl poweroff'";
-      nrs = "nh os switch";
-      nrb = "nh os boot";
-      nru = "nh os switch --update";
-      ncg = "nix-collect-garbage -d";
-      g = "git";
-      ga = "git add";
-      gc = "git commit";
-      gp = "git push";
-      gs = "git status";
-      gd = "git diff";
-      gl = "git log --oneline -n 10";
-      rm = "trash-put";
-      e = "eza";
-      ea = "eza -a";
-      el = "eza -l";
-      ela = "eza -la";
     };
-  };
-
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-    historyWidget.command = "";
   };
 
   programs.atuin = {
@@ -71,10 +40,8 @@
     };
   };
 
-  programs.eza = {
-    enable = true;
-    enableZshIntegration = true;
-    git = true;
-    icons = "auto";
-  };
+  # Shell integration flags for the shared tools (see shell-shared.nix)
+  programs.zoxide.enableZshIntegration = true;
+  programs.eza.enableZshIntegration = true;
+  programs.fzf.enableZshIntegration = true;
 }

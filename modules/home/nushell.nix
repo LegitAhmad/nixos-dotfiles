@@ -1,4 +1,10 @@
-{ config, lib, pkgs, osConfig ? null, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  repoDir,
+  ...
+}:
 
 {
   programs.nushell = {
@@ -21,8 +27,10 @@
   };
 
   # Out-of-store symlinks to the repository configuration files for hot-reloading
-  xdg.configFile."nushell/custom-config.nu".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/nushell/config.nu";
-  xdg.configFile."nushell/custom-env.nu".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/nushell/env.nu";
+  xdg.configFile."nushell/custom-config.nu".source =
+    config.lib.file.mkOutOfStoreSymlink "${repoDir}/config/nushell/config.nu";
+  xdg.configFile."nushell/custom-env.nu".source =
+    config.lib.file.mkOutOfStoreSymlink "${repoDir}/config/nushell/env.nu";
 
   # Generate fzf integration script at build/activation time to avoid parse-time subexpression evaluation in Nushell
   # We patch the optional member access chain to avoid a type-inference bug in Nushell where previous_external_completer is incorrectly inferred as a record.

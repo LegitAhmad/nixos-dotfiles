@@ -17,7 +17,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    noctalia.url = "github:noctalia-dev/noctalia";
+    noctalia = {
+      url = "github:noctalia-dev/noctalia";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -28,9 +31,15 @@
       url = "github:Gerg-L/mnw";
     };
 
+    nvf = {
+      url = "github:notashelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
 
     llm-agents = {
@@ -38,7 +47,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    catppuccin.url = "github:catppuccin/nix";
+    catppuccin = {
+      url = "github:catppuccin/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     sudo-nvim = {
       url = "github:denialofsandwich/sudo.nvim";
@@ -56,11 +68,14 @@
       llm-agents,
       ...
     }@inputs:
+    let
+      # Path to the working repo on disk, used for out-of-store symlinks and
+      # hot-reloadable configs.
+      repoDir = "/home/legitahmad/nixos-dotfiles";
+    in
     {
       nixosConfigurations."nixos-btw" = nixpkgs.lib.nixosSystem {
-        system = "x86_64_linux";
-
-        specialArgs = { inherit inputs self; };
+        specialArgs = { inherit inputs self repoDir; };
 
         modules = [
           ./hosts/nixos-btw

@@ -1,5 +1,1 @@
-{
-  "workspace": {
-    "library": ["/usr/share/hypr/stubs"]
-  }
-}
+/nix/store/kx54db2y0fk6qfjkipbd1jyb5rbczbsn-home-manager-files/.config/hypr/.luarc.json

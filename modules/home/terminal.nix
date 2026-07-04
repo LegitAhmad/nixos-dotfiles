@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  repoDir,
   ...
 }:
 
@@ -26,6 +27,7 @@
     tree
     delta
     gh-dash
+    mpvpaper
   ];
 
   programs.btop = {
@@ -45,7 +47,7 @@
   # Symlink the ghostty configuration file from the local dotfiles directory.
   # mkForce overrides the source set by programs.ghostty module.
   xdg.configFile."ghostty/config".source = lib.mkForce (
-    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/ghostty/config"
+    config.lib.file.mkOutOfStoreSymlink "${repoDir}/config/ghostty/config"
   );
 
   programs.wezterm = {
@@ -54,7 +56,7 @@
 
   # Symlink the wezterm configuration file from the local dotfiles directory
   xdg.configFile."wezterm/wezterm.lua".source =
-    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/wezterm/wezterm.lua";
+    config.lib.file.mkOutOfStoreSymlink "${repoDir}/config/wezterm/wezterm.lua";
 
   programs.foot = {
     enable = true;

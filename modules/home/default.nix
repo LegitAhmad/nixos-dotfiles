@@ -1,4 +1,10 @@
-{ config, lib, pkgs, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   imports = [
@@ -6,6 +12,7 @@
     ./apps.nix
     ./dev.nix
     ./terminal.nix
+    ./shell-shared.nix
     ./fish.nix
     ./nushell.nix
     ./noctalia.nix
@@ -20,16 +27,8 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  # vesktop pins pnpm_10_29_2 which is marked insecure.
-  # Override to use the safe pnpm_10 (10.34.4) instead.
-  nixpkgs.overlays = [
-    (final: prev: {
-      vesktop = prev.vesktop.override { pnpm_10_29_2 = final.pnpm_10; };
-    })
-  ];
-
   home.username = "legitahmad";
-  home.homeDirectory = lib.mkForce "/home/legitahmad";
+  home.homeDirectory = lib.mkForce "/home/${config.home.username}";
 
   # Compatibility version.
   home.stateVersion = "26.05";

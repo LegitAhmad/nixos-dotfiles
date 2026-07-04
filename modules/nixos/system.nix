@@ -3,6 +3,7 @@
   lib,
   pkgs,
   inputs,
+  repoDir,
   ...
 }:
 
@@ -14,7 +15,6 @@
       "flakes"
     ];
     accept-flake-config = true;
-    narinfo-cache-negative-ttl = 0;
     warn-dirty = false;
     substituters = [
       "https://cache.nixos.org"
@@ -33,7 +33,16 @@
     max-jobs = "auto";
     cores = 0; # Tells Nix to use all 12 cores for building packages
     auto-optimise-store = true; # Hardlink identical files in the store to save disk space and I/O time
+
+    # Parallelize substituter lookups & downloads.
+    max-substitution-jobs = 32;
+    http-connections = 50;
+
   };
+
+  # Pin the global nixpkgs registry to the flake input so nix search/shell
+  # doesn't re-download the nixpkgs tarball from the network.
+  nix.registry.nixpkgs.flake = inputs.nixpkgs;
 
   # Enable fish and zsh shells system-wide.
   programs.fish.enable = true;
@@ -61,7 +70,7 @@
     enable = true;
     clean.enable = true;
     clean.extraArgs = "--keep-since 4d --keep 3";
-    flake = "/home/legitahmad/nixos-dotfiles";
+    flake = repoDir;
   };
 
   # Keyd remapping service

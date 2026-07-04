@@ -37,9 +37,11 @@ def --env y [...args] {
 source ~/.config/nushell/fzf.nu
 
 # NixOS & Home Manager helper (nh) shortcuts
-alias nrs = nh os switch
-alias nrb = nh os boot
-alias nru = nh os switch --update
+# Pass the flake path explicitly so a stale `NH_FLAKE` environment
+# variable cannot make `nh` build an outdated snapshot.
+alias nrs = nh os switch .
+alias nrb = nh os boot .
+alias nru = nh os switch --update .
 alias ncg = nix-collect-garbage -d
 
 # Git shortcuts

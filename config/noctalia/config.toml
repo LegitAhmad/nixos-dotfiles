@@ -1,0 +1,9 @@
+launch_apps_as_systemd_services = true
+
+[theme]
+builtin = "Catppuccin"
+mode = "dark"
+source = "builtin"
+
+[wallpaper.default]
+path = "/home/legitahmad/nixos-dotfiles/config/assets/wallpaper.jpg"

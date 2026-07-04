@@ -1,4 +1,12 @@
-{ config, lib, pkgs, inputs, self, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  self,
+  repoDir,
+  ...
+}:
 
 {
   imports = [
@@ -14,7 +22,7 @@
   home-manager = {
     useUserPackages = true;
     backupFileExtension = "backup";
-    extraSpecialArgs = { inherit inputs self; };
+    extraSpecialArgs = { inherit inputs self repoDir; };
     users.legitahmad = import "${self}/modules/home";
   };
 }

@@ -1,9 +1,14 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  repoDir,
+  ...
+}:
 
 let
   tmux-nerd-font-window-name = pkgs.tmuxPlugins.mkTmuxPlugin {
     pluginName = "tmux-nerd-font-window-name";
-    version = "unstable-2024-01-01";
+    version = "unstable";
     src = pkgs.fetchFromGitHub {
       owner = "joshmedeski";
       repo = "tmux-nerd-font-window-name";
@@ -14,7 +19,7 @@ let
 
   tmux-primary-ip = pkgs.tmuxPlugins.mkTmuxPlugin {
     pluginName = "tmux-primary-ip";
-    version = "unstable-2024-01-01";
+    version = "unstable";
     src = pkgs.fetchFromGitHub {
       owner = "dreknix";
       repo = "tmux-primary-ip";
@@ -33,7 +38,7 @@ in
 
   # Map the out-of-store symlink directly to ~/.config/tmux/tmux.conf
   xdg.configFile."tmux/tmux.conf" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/tmux/tmux.conf";
+    source = config.lib.file.mkOutOfStoreSymlink "${repoDir}/config/tmux/tmux.conf";
     force = true;
   };
 

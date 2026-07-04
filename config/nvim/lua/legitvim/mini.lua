@@ -1,3 +1,6 @@
+if true
+  return {}
+end;
 -- This loads instantly because it's required in init.lua
 require("mini.icons").setup()
 require("mini.icons").mock_nvim_web_devicons()

@@ -7,7 +7,7 @@ vim.api.nvim_create_autocmd("FileType", {
 			blink.cancel()
 			blink.hide()
 		end
-		vim.b.completion = false
+		-- vim.b.completion = false
 	end,
 })
 
@@ -35,13 +35,6 @@ require("legitvim.blink.cmp").setup({
 		},
 	},
 	enabled = function()
-		print(vim.bo.filetype, vim.bo.buftype)
-
-		if vim.bo.buftype == "prompt" then
-			print("disabled")
-			return false
-		end
-
 		if vim.bo.buftype == "terminal" or vim.bo.buftype == "nofile" then
 			return false
 		end

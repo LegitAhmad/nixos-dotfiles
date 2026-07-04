@@ -20,6 +20,7 @@ lib.mkMerge [
     catppuccin.eza.enable = true;
 
     home.pointerCursor = {
+      enable = true;
       package = pkgs.catppuccin-cursors.mochaDark;
       name = "catppuccin-mocha-dark-cursors";
       size = 24;
@@ -89,7 +90,24 @@ lib.mkMerge [
       enable = true;
       enableFishIntegration = true;
       enableZshIntegration = true;
-      configFile = "/home/legitahmad/.config/oh-my-posh/config.toml";
+      configFile = "${config.home.homeDirectory}/.config/oh-my-posh/config.toml";
+    };
+
+    qt = {
+      enable = true;
+      platformTheme.name = "qtct";
+      style.name = "kvantum";
+    };
+
+    qt.kvantum = {
+      enable = true;
+      themes = [
+        (pkgs.catppuccin-kvantum.override {
+          variant = "mocha";
+          accent = "mauve";
+        })
+      ];
+      settings.General.theme = "catppuccin-mocha-mauve";
     };
   })
 

@@ -17,12 +17,10 @@ in
     };
   };
 
-  config = lib.mkMerge [
-    (lib.mkIf cfg.enableCatppuccin {
-      catppuccin.enable = true;
-      catppuccin.autoEnable = true;
-      catppuccin.flavor = "mocha";
-      catppuccin.cache.enable = true;
-    })
-  ];
+  config = lib.mkIf cfg.enableCatppuccin {
+    catppuccin.enable = true;
+    catppuccin.autoEnable = true;
+    catppuccin.flavor = "mocha";
+    catppuccin.cache.enable = true;
+  };
 }
