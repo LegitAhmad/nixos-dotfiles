@@ -23,6 +23,7 @@
     ./theme.nix
     ./zsh.nix
     ./vscode.nix
+    ./pc-sharing.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

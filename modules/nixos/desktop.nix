@@ -12,6 +12,9 @@
   # Enable touchpad support.
   services.libinput.enable = true;
 
+  # Enable uinput support for virtual input devices (e.g. Lan Mouse)
+  hardware.uinput.enable = true;
+
   # Enable Intel CPU/GPU drivers & hardware graphics acceleration
   hardware.graphics = {
     enable = true;
@@ -52,6 +55,9 @@
 
   # Enable dconf for system-wide configuration storage
   programs.dconf.enable = true;
+
+  # Enable KDE Connect and open required firewall ports (TCP & UDP 1714:1764)
+  programs.kdeconnect.enable = true;
 
   # Enable XDG Desktop Portals
   xdg.portal = {

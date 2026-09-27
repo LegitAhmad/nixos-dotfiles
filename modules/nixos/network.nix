@@ -12,4 +12,10 @@
 
   # Set your locale.
   i18n.defaultLocale = "en_US.UTF-8";
+
+  # Open firewall ports for Lan Mouse (software KVM switch)
+  networking.firewall = {
+    allowedTCPPorts = [ 4242 ];
+    allowedUDPPorts = [ 4242 ];
+  };
 }

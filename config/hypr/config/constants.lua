@@ -1,1 +1,11 @@
-/nix/store/kx54db2y0fk6qfjkipbd1jyb5rbczbsn-home-manager-files/.config/hypr/config/constants.lua
+return {
+	font = "JetBrains Mono Nerd Font",
+	terminal = "ghostty",
+	browser = "chromium",
+	editor = "nvim",
+	explorer = "thunar",
+	gaps_in = 2,
+	gaps_out = 5,
+	default_layout = "dwindle",
+	layouts = { "dwindle", "scrolling", "monocle" },
+}
