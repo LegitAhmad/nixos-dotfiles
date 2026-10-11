@@ -48,11 +48,11 @@
     ];
   };
 
-  zramSwap = {
+  boot.zswap = {
     enable = true;
-    algorithm = "zstd";
-    memoryPercent = 50;
-    priority = 100;
+    compressor = "zstd";
+    zpool = "zsmalloc";
+    maxPoolPercent = 50; # ~8GB pool on 16GB RAM
   };
 
   boot.kernel.sysctl = {
