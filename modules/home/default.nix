@@ -18,6 +18,7 @@
     ./noctalia.nix
     ./neovim.nix
     ./hyprland.nix
+    ./niri.nix
     ./zellij.nix
     ./tmux.nix
     ./theme.nix

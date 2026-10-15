@@ -62,15 +62,6 @@ lib.mkMerge [
       }
     '';
 
-    xdg.configFile."niri/colors.kdl".text = ''
-      layout {
-          focus-ring {
-              active-gradient from="#89b4fa" to="#cba6f7" angle=45
-              inactive-color "#313244"
-          }
-      }
-    '';
-
     xdg.configFile."oh-my-posh/config.toml".text = ''
       ${builtins.readFile ../../config/oh-my-posh/config.toml}
 

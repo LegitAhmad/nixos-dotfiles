@@ -1,4 +1,5 @@
-launch_apps_as_systemd_services = true
+[shell]
+polkit_agent = true
 
 [theme]
 builtin = "Catppuccin"

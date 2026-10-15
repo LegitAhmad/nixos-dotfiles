@@ -75,6 +75,7 @@ in
             "pyright"
             "gopls"
             "rust-analyzer"
+            "clangd"
             "nushell"
             "bash-language-server"
             "vscode-json-language-server"
@@ -118,6 +119,11 @@ in
       };
       go.enable = true;
       rust.enable = true;
+      # C/C++ share clangd; a project's compile_commands.json supplies build flags and include paths.
+      clang = {
+        enable = true;
+        lsp.servers = [ "clangd" ];
+      };
       nu.enable = true;
       bash.enable = true;
       json.enable = true;
@@ -158,6 +164,8 @@ in
             "goimports"
           ];
           rust = [ "rustfmt" ];
+          c = [ "clang_format" ];
+          cpp = [ "clang_format" ];
           json = [ "prettier" ];
           yaml = [ "prettier" ];
           toml = [ "taplo" ];
@@ -214,6 +222,7 @@ in
       golangci-lint
       rust-analyzer
       rustfmt
+      clang-tools
       nushell
       tailwindcss-language-server
       vscode-langservers-extracted

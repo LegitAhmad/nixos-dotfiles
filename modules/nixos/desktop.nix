@@ -40,8 +40,15 @@
     withUWSM = false;
   };
 
-  # Replace Hyprland's default session package rather than merging with it,
-  # so the display manager only offers the plain session, not UWSM.
+  # Niri is an alternative session; keep the existing login default.
+  programs.niri = {
+    enable = true;
+    package = pkgs.niri;
+    useNautilus = false; # Keep Thunar and use the GTK portal's file chooser.
+  };
+  services.displayManager.defaultSession = "hyprland";
+
+  # Keep plain Hyprland (not UWSM) and Niri's upstream systemd session launcher.
   services.displayManager.sessionPackages = lib.mkForce [
     (pkgs.runCommand "hyprland-sessions-only"
       {
@@ -52,6 +59,7 @@
         cp ${pkgs.hyprland}/share/wayland-sessions/hyprland.desktop $out/share/wayland-sessions/
       ''
     )
+    config.programs.niri.package
   ];
 
   # Enable dconf for system-wide configuration storage

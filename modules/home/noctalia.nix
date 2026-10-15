@@ -13,8 +13,8 @@ in
 {
   home.packages = [ noctaliaPkg ];
 
-  # Plain Hyprland starts Noctalia in config/hypr/config/autostart.lua;
-  # it does not activate graphical-session.target for systemd user services.
+  # Each compositor starts Noctalia itself: Hyprland in autostart.lua,
+  # Niri in config.kdl. Do not also enable a shared shell user service.
 
   xdg.configFile."noctalia/config.toml" = {
     source = config.lib.file.mkOutOfStoreSymlink "${repoDir}/config/noctalia/config.toml";
