@@ -1,7 +1,7 @@
 return {
 	font = "JetBrains Mono Nerd Font",
 	terminal = "ghostty",
-	browser = "chromium",
+	browser = "xdg-open https://",
 	editor = "nvim",
 	explorer = "thunar",
 	gaps_in = 2,

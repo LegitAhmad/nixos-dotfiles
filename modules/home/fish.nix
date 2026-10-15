@@ -17,6 +17,7 @@
   };
 
   # Shell integration flags for the shared tools (see shell-shared.nix)
+  programs.direnv.enableFishIntegration = true;
   programs.zoxide.enableFishIntegration = true;
   programs.carapace.enableFishIntegration = true;
   programs.eza.enableFishIntegration = true;

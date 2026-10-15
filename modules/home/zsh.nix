@@ -41,6 +41,7 @@
   };
 
   # Shell integration flags for the shared tools (see shell-shared.nix)
+  programs.direnv.enableZshIntegration = true;
   programs.zoxide.enableZshIntegration = true;
   programs.eza.enableZshIntegration = true;
   programs.fzf.enableZshIntegration = true;

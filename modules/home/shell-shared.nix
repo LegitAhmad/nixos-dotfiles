@@ -57,6 +57,12 @@ in
 
   programs.carapace.enable = true;
 
+  # Load project .envrc files after `direnv allow`; cache Nix/devenv environments.
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
+
   programs.fish.shellAliases = aliases;
   programs.zsh.shellAliases = aliases;
 

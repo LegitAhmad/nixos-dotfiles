@@ -33,7 +33,6 @@ in
   # Install tmux as a regular package to bypass Home Manager's generated config
   home.packages = with pkgs; [
     tmux
-    sesh
   ];
 
   # Map the out-of-store symlink directly to ~/.config/tmux/tmux.conf

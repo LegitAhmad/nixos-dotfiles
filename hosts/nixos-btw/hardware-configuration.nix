@@ -102,7 +102,8 @@
   };
 
   fileSystems."/boot" = {
-    device = "/dev/nvme0n1p1";
+    # Resolve the EFI filesystem by label, independent of disk enumeration.
+    device = "/dev/disk/by-label/EFI";
     fsType = "vfat";
     options = [
       "fmask=0022"

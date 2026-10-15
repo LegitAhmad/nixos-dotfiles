@@ -40,8 +40,9 @@
     withUWSM = false;
   };
 
-  # Only ship the plain Hyprland desktop file, exclude hyprland-uwsm.desktop.
-  services.displayManager.sessionPackages = [
+  # Replace Hyprland's default session package rather than merging with it,
+  # so the display manager only offers the plain session, not UWSM.
+  services.displayManager.sessionPackages = lib.mkForce [
     (pkgs.runCommand "hyprland-sessions-only"
       {
         providedSessions = [ "hyprland" ];

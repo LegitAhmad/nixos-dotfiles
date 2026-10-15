@@ -138,8 +138,8 @@ hl.window_rule({
 -- Workspace assignments
 hl.window_rule({
 	name = "browser-workspace",
-	match = { class = "chromium-browser|zen|zen-alpha|firefox" },
-	workspace = 2,
+	match = { class = "chromium-browser|zen|zen-alpha|firefox|[Hh]elium" },
+	workspace = 1,
 })
 
 hl.window_rule({

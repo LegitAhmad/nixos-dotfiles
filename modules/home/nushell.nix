@@ -38,6 +38,9 @@
     fzf --nushell | sed 's|let previous_external_completer = .*|let previous_external_completer = ($env.CARAPACE_COMPLETER? \| default null)|' > $out
   '';
 
+  # Direnv integration for Nushell
+  programs.direnv.enableNushellIntegration = true;
+
   # Carapace integration for Nushell
   programs.carapace.enableNushellIntegration = true;
 

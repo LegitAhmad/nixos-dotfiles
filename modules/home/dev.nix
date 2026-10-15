@@ -14,6 +14,7 @@
         name = "legitahmad";
         email = "a.s20061111@gmail.com";
       };
+      url."git@github.com:".insteadOf = "https://github.com/";
     };
   };
 
