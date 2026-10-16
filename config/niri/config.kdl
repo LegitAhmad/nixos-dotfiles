@@ -107,6 +107,8 @@ binds {
     Mod+A hotkey-overlay-title="Application launcher" { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
     Mod+V hotkey-overlay-title="Clipboard history" { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
     Mod+W hotkey-overlay-title="Wallpaper picker" { spawn "noctalia" "msg" "panel-toggle" "wallpaper"; }
+    Mod+Alt+P hotkey-overlay-title="Color picker" { spawn "hyprpicker" "-a"; }
+    Mod+Alt+C hotkey-overlay-title="Toggle PC sharing" { spawn "toggle-pc-sharing"; }
     Mod+N hotkey-overlay-title="Notifications" { spawn "noctalia" "msg" "panel-toggle" "control-center" "notifications"; }
     Mod+Comma hotkey-overlay-title="Shell settings" { spawn "noctalia" "msg" "settings-toggle"; }
     Mod+Delete hotkey-overlay-title="Session menu" { spawn "noctalia" "msg" "panel-toggle" "session"; }
@@ -172,6 +174,15 @@ binds {
     Mod+Shift+7 { move-column-to-workspace 7; }
     Mod+Shift+8 { move-column-to-workspace 8; }
     Mod+Shift+9 { move-column-to-workspace 9; }
+    Mod+Alt+1 { move-column-to-workspace 1 focus=false; }
+    Mod+Alt+2 { move-column-to-workspace 2 focus=false; }
+    Mod+Alt+3 { move-column-to-workspace 3 focus=false; }
+    Mod+Alt+4 { move-column-to-workspace 4 focus=false; }
+    Mod+Alt+5 { move-column-to-workspace 5 focus=false; }
+    Mod+Alt+6 { move-column-to-workspace 6 focus=false; }
+    Mod+Alt+7 { move-column-to-workspace 7 focus=false; }
+    Mod+Alt+8 { move-column-to-workspace 8 focus=false; }
+    Mod+Alt+9 { move-column-to-workspace 9 focus=false; }
 
     Mod+Alt+H { focus-monitor-left; }
     Mod+Alt+J { focus-monitor-down; }
@@ -193,6 +204,8 @@ binds {
     XF86AudioPlay allow-when-locked=true { spawn "noctalia" "msg" "media" "toggle"; }
     XF86AudioNext allow-when-locked=true { spawn "noctalia" "msg" "media" "next"; }
     XF86AudioPrev allow-when-locked=true { spawn "noctalia" "msg" "media" "previous"; }
+    Mod+Shift+N hotkey-overlay-title="Next media track" { spawn "noctalia" "msg" "media" "next"; }
+    Mod+Shift+O hotkey-overlay-title="Toggle media playback" { spawn "noctalia" "msg" "media" "toggle"; }
     XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+5%"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "5%-"; }
 

@@ -48,12 +48,71 @@
 
     llm-agents = {
       url = "github:numtide/llm-agents.nix";
-      # Keep its pinned nixpkgs to match Numtide's pre-built packages.
+      # Keep its pinned nixpkgs for Numtide's pre-built agent CLIs, including omp.
     };
 
-    omp = {
-      url = "git+ssh://git@github.com/can1357/oh-my-pi?ref=main&shallow=1";
-      # Keep upstream's pinned dependencies to match its binary cache.
+    serena = {
+      url = "github:oraios/serena";
+      # Retain upstream's Python and packaging dependency pins.
+    };
+
+    # Lock official release metadata; `nix flake update` refreshes the suite.
+    # The package builder selects each Linux archive and its published checksum.
+    # Single app: `nix flake update photocraft-release`.
+    # API counters can change metadata hashes without changing app versions.
+    # Preserve inputs with `nix flake archive` for historical/cold rebuilds:
+    # GitHub's mutable endpoint cannot re-serve a previous JSON snapshot.
+    photocraft-release = {
+      url = "file+https://api.github.com/repos/storytold/photocraft/releases/latest";
+      flake = false;
+    };
+    vectorcraft-release = {
+      url = "file+https://api.github.com/repos/storytold/vectorcraft/releases/latest";
+      flake = false;
+    };
+    filmcraft-release = {
+      url = "file+https://api.github.com/repos/storytold/filmcraft/releases/latest";
+      flake = false;
+    };
+    lightcraft-release = {
+      url = "file+https://api.github.com/repos/storytold/lightcraft/releases/latest";
+      flake = false;
+    };
+    effectcraft-release = {
+      url = "file+https://api.github.com/repos/storytold/effectcraft/releases/latest";
+      flake = false;
+    };
+    designcraft-release = {
+      url = "file+https://api.github.com/repos/storytold/designcraft/releases/latest";
+      flake = false;
+    };
+    figcraft-release = {
+      url = "file+https://api.github.com/repos/storytold/figcraft/releases/latest";
+      flake = false;
+    };
+    soundcraft-release = {
+      url = "file+https://api.github.com/repos/storytold/soundcraft/releases/latest";
+      flake = false;
+    };
+    wordcraft-release = {
+      url = "file+https://api.github.com/repos/storytold/wordcraft/releases/latest";
+      flake = false;
+    };
+    pdfcraft-release = {
+      url = "file+https://api.github.com/repos/storytold/pdfcraft/releases/latest";
+      flake = false;
+    };
+    deckcraft-release = {
+      url = "file+https://api.github.com/repos/storytold/deckcraft/releases/latest";
+      flake = false;
+    };
+    cadcraft-release = {
+      url = "file+https://api.github.com/repos/storytold/cadcraft/releases/latest";
+      flake = false;
+    };
+    gridcraft-release = {
+      url = "file+https://api.github.com/repos/storytold/gridcraft/releases/latest";
+      flake = false;
     };
 
     catppuccin = {

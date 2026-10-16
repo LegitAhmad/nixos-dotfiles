@@ -1,10 +1,215 @@
+# Home Manager generates this private key locally; no Secret Service prompts.
+[storage]
+key_source = "file"
+key_file = "/home/legitahmad/.local/state/noctalia/storage-key"
+
 [shell]
 polkit_agent = true
+time_format = "{:%H:%M}"
+date_format = "%A, %d %B"
+# Do not retain a password manager's last selection after it exits.
+clipboard_keep_from_closed_apps = false
+
+[shell.animation]
+speed = 1.25
+
+[shell.panel]
+transparency_mode = "soft"
+launcher_placement = "floating"
+clipboard_placement = "floating"
+control_center_placement = "floating"
+wallpaper_placement = "floating"
+session_placement = "floating"
+
+[shell.launcher]
+layout = "simple"
+categories = false
+show_app_origin_indicator = false
+compact = true
+
+[shell.window_switcher]
+style = "compact"
+mru = true
 
 [theme]
 builtin = "Catppuccin"
 mode = "dark"
 source = "builtin"
 
+# A lightly translucent bar joined to the top, left, and right screen edges.
+[bar.main]
+position = "top"
+thickness = 38
+margin_ends = 0
+margin_edge = 0
+padding = 12
+widget_spacing = 8
+radius = 0
+concave_edge_corners = false
+background_opacity = 0.94
+border = "outline"
+border_width = 1.0
+reserve_space = true
+start = ["launcher", "workspaces", "group:media"]
+center = ["clock"]
+end = ["privacy", "tray", "bitwarden", "group:connectivity", "group:levels", "group:power", "notifications", "control-center"]
+
+[[bar.main.capsule_group]]
+id = "media"
+members = ["audio_visualizer", "media"]
+fill = "surface_variant"
+opacity = 0.55
+radius = 8
+padding = 8
+widget_spacing = 8
+
+[[bar.main.capsule_group]]
+id = "connectivity"
+members = ["network", "bluetooth"]
+fill = "surface_variant"
+opacity = 0.55
+radius = 8
+padding = 8
+widget_spacing = 8
+
+[[bar.main.capsule_group]]
+id = "levels"
+members = ["volume", "brightness"]
+fill = "surface_variant"
+opacity = 0.55
+radius = 8
+padding = 8
+widget_spacing = 8
+
+[[bar.main.capsule_group]]
+id = "power"
+members = ["power_profile", "battery", "caffeine"]
+fill = "surface_variant"
+opacity = 0.55
+radius = 8
+padding = 8
+widget_spacing = 8
+
+[widget.launcher]
+color = "primary"
+
+[widget.workspaces]
+style = "focus_hint"
+show_labels = true
+show_icons = true
+
+[widget.media]
+hide_when_no_media = true
+hide_when_idle = true
+hide_artist = true
+min_length = 80
+max_length = 180
+title_scroll = "on_hover"
+
+[widget.audio_visualizer]
+width = 64
+bands = 20
+show_when_idle = false
+color_1 = "primary"
+color_2 = "secondary"
+
+[widget.clock]
+format = "{:%a %d %b  ·  %H:%M}"
+tooltip_format = "{:%A, %d %B %Y}"
+
+[widget.privacy]
+hide_inactive = true
+
+[widget.network]
+show_label = false
+vpn_status = "both"
+
+[widget.bluetooth]
+show_label = false
+hide_when_adapter_off = false
+hide_when_no_connected_device = false
+show_tooltip = true
+
+[widget.volume]
+scroll_repeat = "steps"
+
+[widget.volume.actions]
+scroll_up = "volume-up 5"
+scroll_down = "volume-down 5"
+right = "volume-mute"
+
+[widget.brightness]
+show_label = false
+show_when_unavailable = false
+scroll_repeat = "steps"
+
+[widget.brightness.actions]
+scroll_up = "brightness-up current 5"
+scroll_down = "brightness-down current 5"
+
+[widget.battery]
+warning_color = "error"
+
+[battery]
+warning_threshold = 20
+
+[widget.notifications]
+hide_when_no_unread = true
+
+[widget.bitwarden]
+type = "custom_button"
+glyph = "lock"
+tooltip = "Bitwarden vault"
+
+[widget.bitwarden.actions]
+left = 'panel-toggle launcher "/bw"'
+
+# Keep secondary controls one click away without dedicating a bar icon to each.
+[[control_center.shortcuts]]
+type = "wifi"
+
+[[control_center.shortcuts]]
+type = "bluetooth"
+
+[[control_center.shortcuts]]
+type = "notification"
+
+[[control_center.shortcuts]]
+type = "wallpaper"
+
+[[control_center.shortcuts]]
+type = "session"
+
+[notification]
+position = "top_right"
+width = 320
+max_visible = 3
+follow_focused_output = true
+offset_x = 12
+offset_y = 58
+border = true
+border_color = "outline"
+border_width = 1.0
+# Preserve critical urgency borders and persistent alerts; do not cap all timeouts.
+
+[osd]
+position = "bottom_center"
+hide_delay_ms = 1200
+follow_focused_output = true
+offset_y = 24
+
+[wallpaper]
+directory = "/home/legitahmad/nixos-dotfiles/config/assets"
+transition = ["fade"]
+transition_duration = 500
+
 [wallpaper.default]
 path = "/home/legitahmad/nixos-dotfiles/config/assets/wallpaper.jpg"
+
+[plugins]
+enabled = ["noctalia/bitwarden"]
+
+[plugin_settings."noctalia/bitwarden"]
+vault_timeout = "custom"
+vault_timeout_custom_minutes = 15
+clear_clipboard_seconds = 30

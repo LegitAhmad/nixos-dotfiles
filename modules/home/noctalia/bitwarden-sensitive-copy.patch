@@ -1,0 +1,63 @@
+--- a/bitwarden/service.luau
++++ b/bitwarden/service.luau
+@@ -398,12 +398,25 @@
+   if type(value) ~= "string" or value == "" then
+     return false
+   end
+-  noctalia.copyToClipboard(value, "text/plain;charset=utf-8")
+-  scheduleClipboardClear(value)
+-  if cfg("notify_on_copy") ~= false then
+-    noctalia.notify(noctalia.tr("title"), noctalia.tr(notifyKey or "copied"))
++  -- Old runtimes ignore extra copy arguments, so never copy before checking the patched API.
++  if type(noctalia.clearClipboardIfUnchanged) ~= "function" then
++    noctalia.notifyError(noctalia.tr("title"), noctalia.tr("errors.shell-upgrade-required"))
++    return false
++  end
++  local accepted = noctalia.copyToClipboard(value, "text/plain;charset=utf-8", true, function(ok)
++    if not ok then
++      noctalia.notifyError(noctalia.tr("title"), noctalia.tr("errors.copy-failed"))
++      return
++    end
++    scheduleClipboardClear(value)
++    if cfg("notify_on_copy") ~= false then
++      noctalia.notify(noctalia.tr("title"), noctalia.tr(notifyKey or "copied"))
++    end
++  end)
++  if not accepted then
++    noctalia.notifyError(noctalia.tr("title"), noctalia.tr("errors.copy-failed"))
+   end
+-  return true
++  return accepted
+ end
+ 
+ local function parseSecretValue(data)
+@@ -876,10 +889,7 @@
+   if pendingClear ~= nil then
+     pendingClear.ticksLeft -= 1
+     if pendingClear.ticksLeft <= 0 then
+-      local current = noctalia.clipboardText()
+-      if current == pendingClear.text then
+-        noctalia.copyToClipboard("", "text/plain;charset=utf-8")
+-      end
++      noctalia.clearClipboardIfUnchanged(pendingClear.text)
+       pendingClear = nil
+     end
+   end
+--- a/bitwarden/translations/en.json
++++ b/bitwarden/translations/en.json
+@@ -2,6 +2,7 @@
+   "copied": "Copied to clipboard",
+   "errors": {
+     "api-key-required": "Enter both client id and client secret",
++    "copy-failed": "Could not copy to the clipboard",
+     "encode-failed": "Could not encode unlock request",
+     "field-empty": "That field is empty for this item",
+     "generate-failed": "Could not generate a password",
+@@ -11,6 +12,7 @@
+     "logout-failed": "Could not log out of Bitwarden CLI",
+     "password-required": "Enter your master password",
+     "request-failed": "Request failed",
++    "shell-upgrade-required": "Install the matching Noctalia shell and restart it before copying secrets",
+     "sync-failed": "Could not sync the vault",
+     "vault-locked": "Vault is locked"
+   },

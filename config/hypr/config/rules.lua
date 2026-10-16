@@ -135,13 +135,7 @@ hl.window_rule({
 	center = true,
 })
 
--- Workspace assignments
-hl.window_rule({
-	name = "browser-workspace",
-	match = { class = "chromium-browser|zen|zen-alpha|firefox|[Hh]elium" },
-	workspace = 1,
-})
-
+-- Workspace assignments: browsers use the current workspace.
 hl.window_rule({
 	name = "vesktop-workspace",
 	match = { class = "[Vv]esktop" },
