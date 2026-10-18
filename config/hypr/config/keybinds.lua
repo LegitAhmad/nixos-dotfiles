@@ -66,9 +66,9 @@ for i = 1, 9 do
 	hl.bind(mainMod .. " + ALT + " .. i, hl.dsp.window.move({ workspace = tostring(i), follow = false }))
 end
 
--- Audio controls
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"), { repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { repeating = true })
+-- Keep speaker volume in Noctalia's bounded range and show its volume OSD.
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("noctalia msg volume-up 5"), { repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("noctalia msg volume-down 5"), { repeating = true })
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
 hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"))
 
@@ -88,6 +88,9 @@ hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd("noctalia msg screenshot-region")
 
 -- Noctalia notifications
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("noctalia msg panel-toggle control-center notifications"))
+-- D dismisses visible notifications without clearing history; Shift+D toggles Do Not Disturb.
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("noctalia msg notification-clear-active"))
+hl.bind(mainMod .. " + SHIFT + D", hl.dsp.exec_cmd("noctalia msg notification-dnd-toggle"))
 
 -- Noctalia media controls
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("noctalia msg media next"))

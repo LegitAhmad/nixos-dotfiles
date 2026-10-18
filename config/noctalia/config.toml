@@ -31,6 +31,10 @@ compact = true
 style = "compact"
 mru = true
 
+[audio]
+# Bound bar, keyboard, and IPC volume adjustments to 150%.
+enable_overdrive = true
+
 [theme]
 builtin = "Catppuccin"
 mode = "dark"
@@ -94,20 +98,24 @@ widget_spacing = 8
 color = "primary"
 
 [widget.workspaces]
-style = "focus_hint"
+# Label occupied workspaces; keep empty ones unlabeled and visually muted.
+style = "regular"
 show_labels = true
-show_icons = true
+labels_only_when_occupied = true
+occupied_color = "secondary"
+empty_color = "surface_variant"
 
 [widget.media]
+# Keep track and artist visible while paused; hide only when no player is available.
 hide_when_no_media = true
-hide_when_idle = true
-hide_artist = true
-min_length = 80
-max_length = 180
+hide_when_idle = false
+hide_artist = false
+min_length = 60
+max_length = 160
 title_scroll = "on_hover"
 
 [widget.audio_visualizer]
-width = 64
+width = 40
 bands = 20
 show_when_idle = false
 color_1 = "primary"
@@ -119,6 +127,11 @@ tooltip_format = "{:%A, %d %B %Y}"
 
 [widget.privacy]
 hide_inactive = true
+
+[widget.tray]
+# Show all registered application icons inline, including passive ones.
+drawer = false
+hide_passive = false
 
 [widget.network]
 show_label = false

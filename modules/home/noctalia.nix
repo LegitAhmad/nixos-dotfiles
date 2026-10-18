@@ -8,36 +8,11 @@
 }:
 
 let
-  noctaliaPkg =
-    inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs
-      (old: {
-        patches = (old.patches or [ ]) ++ [
-          ./noctalia/widget-states.patch
-          ./noctalia/sensitive-clipboard.patch
-        ];
-        mesonFlags = builtins.filter (flag: flag != "-Dtests=disabled") (old.mesonFlags or [ ])
-          ++ [ "-Dtests=enabled" ];
-        ninjaFlags = (old.ninjaFlags or [ ]) ++ [
-          "noctalia"
-          "clipboard_service_test"
-          "plugin_lifecycle_test"
-        ];
-        doCheck = true;
-        checkPhase = ''
-          runHook preCheck
-          meson test --no-rebuild --print-errorlogs clipboard_service plugin_lifecycle
-          runHook postCheck
-        '';
-      });
-  officialPlugins = pkgs.applyPatches {
-    name = "noctalia-official-plugins-private-copy";
-    src = pkgs.fetchFromGitHub {
-      owner = "noctalia-dev";
-      repo = "official-plugins";
-      rev = "734850fd1ee3badc2a18a515df31f36267852e46";
-      hash = "sha256-kYgPQYiQ3A8NS6S7E2wp2spwFEoXO+URJ4FVtDGp31o=";
-    };
-    patches = [ ./noctalia/bitwarden-sensitive-copy.patch ];
+  officialPlugins = pkgs.fetchFromGitHub {
+    owner = "noctalia-dev";
+    repo = "official-plugins";
+    rev = "734850fd1ee3badc2a18a515df31f36267852e46";
+    hash = "sha256-kYgPQYiQ3A8NS6S7E2wp2spwFEoXO+URJ4FVtDGp31o=";
   };
   initializeStorageKey = pkgs.writeShellScript "noctalia-storage-key" ''
     set -eu
@@ -52,7 +27,8 @@ in
 
 {
   home.packages = [
-    noctaliaPkg
+    # Keep the upstream derivation unchanged so noctalia.cachix.org can supply it.
+    inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
     pkgs.bitwarden-cli
     pkgs.coreutils # sleep when restarting bw serve
     pkgs.curl # lock and sync requests, including shutdown locking

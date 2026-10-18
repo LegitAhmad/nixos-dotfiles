@@ -70,6 +70,9 @@
     gparted # partition editor
   ];
 
+  # Enable firmware updates and provide fwupdmgr.
+  services.fwupd.enable = true;
+
   # Nix Helper (nh) configuration.
   programs.nh = {
     enable = true;

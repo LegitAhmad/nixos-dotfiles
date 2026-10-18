@@ -21,7 +21,7 @@
 
     noctalia = {
       url = "github:noctalia-dev/noctalia";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # Retain upstream's nixpkgs pin to match the official binary cache.
     };
 
     home-manager = {
@@ -60,6 +60,7 @@
     # The package builder selects each Linux archive and its published checksum.
     # Single app: `nix flake update photocraft-release`.
     # API counters can change metadata hashes without changing app versions.
+    # If several hashes drift, refresh all *-release inputs in one update command.
     # Preserve inputs with `nix flake archive` for historical/cold rebuilds:
     # GitHub's mutable endpoint cannot re-serve a previous JSON snapshot.
     photocraft-release = {

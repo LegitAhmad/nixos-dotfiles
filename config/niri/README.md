@@ -40,21 +40,23 @@ Inspect connected displays with `niri msg outputs` before adding output override
 `config/noctalia/config.toml` is shared with Hyprland and reloads live:
 
 - Edge-to-edge Catppuccin bar flush with the top and both sides, with a centered
-  date/time and focus-hint workspaces. Media titles stay bounded to 180 pixels;
-  the media widget and spectrum disappear when nothing is playing.
+  date/time and numbered occupied workspace pills; empty workspaces stay muted
+  and unlabeled. Media titles and artists stay bounded to 160 pixels, remain
+  visible while paused, and hide when no player is available.
 - Subtle capsule groups organize connectivity, volume/brightness, and
   power-profile/battery/caffeine controls. Bluetooth stays visible even when off
   or disconnected: left-click opens controls; right-click toggles adapter power.
   Device details remain in hover tooltips instead of widening the bar.
 - Scroll volume or brightness for 5-percentage-point adjustments; right-click
-  volume to mute. Brightness hides on outputs without a controllable backlight.
+  volume to mute. Speaker volume is capped at 150%, including the volume keys.
+  Brightness hides on outputs without a controllable backlight.
   Wallpaper/session actions remain in Control Center; keyboard shortcuts are
   unchanged.
 - Power-profile control uses the existing TuneD interface (balanced,
-  performance, power-saver), with distinct glyphs and theme colors. Left-click
-  cycles forward; right-click cycles backward.
-- The coffee icon toggles compositor idle inhibition and gets an accent-filled
-  background while active. Adding the widget does not enable caffeine.
+  performance, power-saver), with distinct glyphs. Left-click cycles forward;
+  right-click cycles backward.
+- The coffee icon toggles compositor idle inhibition. Adding the widget does
+  not enable caffeine.
 - Compact search-first launcher and most-recently-used window switcher.
 - Floating soft-translucent panels, shorter fade transitions, at most three
   compact 320-pixel notification toasts on the focused display, and bottom-center
@@ -88,12 +90,10 @@ here.
 
 Home Manager installs the pinned native
 [official Bitwarden plugin](https://github.com/noctalia-dev/official-plugins/tree/734850fd1ee3badc2a18a515df31f36267852e46/bitwarden)
-and its CLI dependencies, with matching sensitive-copy patches for the plugin
-and shell. Apply the Nix changes with the rebuild command above, then log out
-and back in so the compositor starts the patched shell. Config reload alone
-cannot load native code changes. The plugin refuses secret copies on an older
-shell and asks you to install/restart the matching shell rather than silently
-falling back to unsafe copying.
+and its CLI dependencies without local source patches. Apply the Nix changes
+with the rebuild command above, then log out and back in so the compositor
+starts the upstream shell. Config reload alone cannot replace the running
+shell binary.
 
 Click the bar's lock icon or open the launcher and type `/bw`. Log in through
 the plugin's **Log in** panel or run `bw login` interactively, then unlock in the
@@ -101,15 +101,12 @@ plugin. For EU or self-hosted accounts, configure **Server URL** before login
 (or use `bw config server https://your.server`). Never put credentials in these
 dotfiles or pass passwords/API secrets as command-line arguments.
 
-The vault auto-locks after 15 minutes of inactivity. Vault-field, generated
-password, and generated passphrase copies advertise the password-manager
-sensitive hint while remaining pasteable as normal text. Noctalia excludes
-these selections from clipboard history and orphan adoption; ordinary copies
-still retain history. Other clipboard managers must honor the hint themselves.
-Copies are cleared after 30 seconds only if Noctalia still owns the same
-selection, so the timer never erases a newer copy. Copy failures report an error
-instead of falling back to an ordinary, history-retained copy. Existing saved
-history is not purged.
+The vault auto-locks after 15 minutes of inactivity. Copies use the official
+plugin's ordinary text clipboard behavior and are scheduled to clear after
+30 seconds if the clipboard text still matches. They do not advertise the
+custom password-manager sensitive hint and can enter clipboard history.
+The stock timer compares text rather than clipboard ownership; a newer copy
+with identical text can also be cleared. Existing saved history is not purged.
 
 The plugin runs `bw serve` on `127.0.0.1:8087`. While unlocked, other local
 processes that can reach that port can read vault secrets. Use `/bw` → **Lock
@@ -117,11 +114,15 @@ vault** or **Log out** when finished; `bw logout` alone does not invalidate a
 running unlocked server. The plugin source is Nix-pinned; update its revision
 and hash in `modules/home/noctalia.nix` to upgrade it.
 
-The native widget-state and clipboard patches live in
-`modules/home/noctalia/`. The package build runs the `clipboard_service` and
-`plugin_lifecycle` regressions using synthetic data, without the user clipboard
-or a keyring. Keep the source pins and patches compatible when updating;
-native patch changes require rebuilding the shell.
+### Cached Noctalia package
+
+Home Manager uses the unmodified upstream Noctalia package, which is available
+from `https://noctalia.cachix.org`. The cache and its signing key are configured
+in both the flake and NixOS settings. Local C++ patches and test-build overrides
+have been removed so this package can be downloaded instead of compiled.
+Widget highlighting and Bitwarden copying now follow upstream behavior.
+The Noctalia input retains its upstream nixpkgs pin instead of following the
+system pin, keeping its derivation aligned with the published binary cache.
 
 ## Essential keys
 

@@ -17,6 +17,11 @@
     ani-cli
     lazygit
     lazyjj
+    superfile
+    # Nixpkgs names the executable superfile; expose its usual spf command too.
+    (writeShellScriptBin "spf" ''
+      exec ${superfile}/bin/superfile "$@"
+    '')
     bat
     cmatrix
     ffmpeg
