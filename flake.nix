@@ -152,5 +152,16 @@
           inputs.catppuccin.nixosModules.catppuccin
         ];
       };
+
+      nixosConfigurations."lennix" = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs self repoDir; };
+
+        modules = [
+          ./hosts/lennix
+
+          home-manager.nixosModules.home-manager
+          inputs.catppuccin.nixosModules.catppuccin
+        ];
+      };
     };
 }

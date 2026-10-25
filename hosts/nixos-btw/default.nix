@@ -14,6 +14,8 @@
     "${self}/modules/nixos"
   ];
 
+  networking.hostName = "nixos-btw";
+
   home-manager = {
     useUserPackages = true;
     backupFileExtension = "backup";

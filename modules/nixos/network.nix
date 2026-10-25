@@ -2,7 +2,7 @@
 
 {
   # Define your hostname.
-  networking.hostName = "nixos-btw";
+  networking.hostName = lib.mkDefault "nixos-btw";
 
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
