@@ -7,12 +7,14 @@
       "https://catppuccin.cachix.org"
       "https://cache.numtide.com"
       "https://nix-community.cachix.org"
+      "https://ezkea.cachix.org"
     ];
     extra-trusted-public-keys = [
       "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
       "catppuccin.cachix.org-1:noG/4HkbhJb+lUAdKrph6LaozJvAeEEZj4N732IysmU="
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "ezkea.cachix.org-1:ioBmUbJTZIKsHmWWXPe1FSFbeVe+afhfgqgTSNd34eI="
     ];
   };
 
@@ -125,6 +127,11 @@
       url = "github:denialofsandwich/sudo.nvim";
       flake = false;
     };
+
+    aagl = {
+      url = "github:ezKEa/aagl-gtk-on-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -150,6 +157,7 @@
 
           home-manager.nixosModules.home-manager
           inputs.catppuccin.nixosModules.catppuccin
+          inputs.aagl.nixosModules.default
         ];
       };
 
@@ -161,6 +169,7 @@
 
           home-manager.nixosModules.home-manager
           inputs.catppuccin.nixosModules.catppuccin
+          inputs.aagl.nixosModules.default
         ];
       };
     };

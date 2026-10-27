@@ -37,6 +37,11 @@
     dedicatedServer.openFirewall = true;
   };
 
+  # An Anime Games Launcher (Universal multi-game launcher for Honkai Star Rail, ZZZ, Genshin, etc.)
+  programs.anime-games-launcher.enable = true;
+  # Dedicated Honkai: Star Rail launcher
+  programs.honkers-railway-launcher.enable = true;
+
   # Intel CPU temperature/throttling daemon
   services.thermald.enable = true;
 

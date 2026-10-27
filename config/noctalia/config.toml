@@ -46,7 +46,7 @@ source = "builtin"
 # A lightly translucent bar joined to the top, left, and right screen edges.
 [bar.main]
 position = "top"
-thickness = 38
+thickness = 34
 margin_ends = 0
 margin_edge = 0
 padding = 12
@@ -54,19 +54,19 @@ widget_spacing = 8
 radius = 0
 concave_edge_corners = false
 background_opacity = 0.94
-border = "outline"
+border = "outline_variant"
 border_width = 0.0
 reserve_space = true
 shadow = false
 contact_shadow = false
-start = ["launcher", "workspaces", "group:media"]
+start = ["workspaces", "group:media"]
 center = ["clock"]
-end = ["privacy", "tray", "bitwarden", "group:connectivity", "group:levels", "group:power", "notifications", "control-center"]
+end = ["privacy", "tray", "group:connectivity", "group:levels", "group:power", "notifications"]
 
 [[bar.main.capsule_group]]
 id = "media"
 members = ["audio_visualizer", "media"]
-fill = "surface_variant"
+fill = "surface_container"
 opacity = 0.55
 radius = 8
 padding = 8
@@ -75,7 +75,7 @@ widget_spacing = 8
 [[bar.main.capsule_group]]
 id = "connectivity"
 members = ["network", "bluetooth"]
-fill = "surface_variant"
+fill = "surface_container"
 opacity = 0.55
 radius = 8
 padding = 8
@@ -83,8 +83,8 @@ widget_spacing = 8
 
 [[bar.main.capsule_group]]
 id = "levels"
-members = ["volume", "brightness"]
-fill = "surface_variant"
+members = ["volume"]
+fill = "surface_container"
 opacity = 0.55
 radius = 8
 padding = 8
@@ -93,7 +93,7 @@ widget_spacing = 8
 [[bar.main.capsule_group]]
 id = "power"
 members = ["power_profile", "battery", "caffeine"]
-fill = "surface_variant"
+fill = "surface_container"
 opacity = 0.55
 radius = 8
 padding = 8
@@ -109,7 +109,7 @@ hide_when_empty = true
 show_labels = true
 labels_only_when_occupied = true
 occupied_color = "secondary"
-empty_color = "surface_variant"
+empty_color = "surface_container"
 
 [widget.media]
 # Keep track and artist visible while paused; hide only when no player is available.
@@ -135,8 +135,8 @@ tooltip_format = "{:%A, %d %B %Y}"
 hide_inactive = true
 
 [widget.tray]
-# Show all registered application icons inline, including passive ones.
-drawer = false
+# Collapse tray items into a popup drawer button rather than showing every icon inline.
+drawer = true
 hide_passive = false
 
 [widget.network]
@@ -157,15 +157,6 @@ scroll_up = "volume-up 5"
 scroll_down = "volume-down 5"
 right = "volume-mute"
 
-[widget.brightness]
-show_label = false
-show_when_unavailable = false
-scroll_repeat = "steps"
-
-[widget.brightness.actions]
-scroll_up = "brightness-up current 5"
-scroll_down = "brightness-down current 5"
-
 [widget.battery]
 warning_color = "error"
 
@@ -174,14 +165,6 @@ warning_threshold = 20
 
 [widget.notifications]
 hide_when_no_unread = true
-
-[widget.bitwarden]
-type = "custom_button"
-glyph = "lock"
-tooltip = "Bitwarden vault"
-
-[widget.bitwarden.actions]
-left = 'panel-toggle launcher "/bw"'
 
 # Keep secondary controls one click away without dedicating a bar icon to each.
 [[control_center.shortcuts]]
@@ -207,7 +190,7 @@ follow_focused_output = true
 offset_x = 12
 offset_y = 58
 border = true
-border_color = "outline"
+border_color = "outline_variant"
 border_width = 1.0
 # Preserve critical urgency borders and persistent alerts; do not cap all timeouts.
 
@@ -219,9 +202,9 @@ offset_y = 24
 
 [wallpaper]
 directory = "/home/legitahmad/nixos-dotfiles/config/assets"
+fill_mode = "crop"
 transition = ["fade"]
 transition_duration = 500
-
 [wallpaper.default]
 path = "/home/legitahmad/nixos-dotfiles/config/assets/wallpaper.jpg"
 

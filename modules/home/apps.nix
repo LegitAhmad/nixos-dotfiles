@@ -190,6 +190,8 @@ in
       "application/xhtml+xml" = [ "helium.desktop" ];
       "x-scheme-handler/http" = [ "helium.desktop" ];
       "x-scheme-handler/https" = [ "helium.desktop" ];
+      "application/x-bittorrent" = [ "transmission-gtk.desktop" ];
+      "x-scheme-handler/magnet" = [ "transmission-gtk.desktop" ];
     };
   };
 
@@ -214,7 +216,10 @@ in
       brave-origin
       lunar-client
       osu-lazer-bin
+      heroic
       file-roller
+      gnome-network-displays
+      transmission_4-gtk
       heliumPackage
       inputs.zen-browser.packages.${system}.default
       inputs.llm-agents.packages.${system}.omp

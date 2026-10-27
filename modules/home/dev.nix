@@ -26,6 +26,27 @@
     };
   };
 
+  # Prevent Home Manager from symlinking config.yml to the immutable /nix/store,
+  # which causes `gh auth login`, `gh auth switch`, and `gh config set` to fail
+  # with "open ~/.config/gh/config.yml: read-only file system".
+  xdg.configFile."gh/config.yml".enable = false;
+
+  home.activation.ghConfig =
+    let
+      ghConfigFile = (pkgs.formats.yaml { }).generate "gh-config.yml" (
+        { version = "1"; } // config.programs.gh.settings
+      );
+    in
+    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      configFile="${config.xdg.configHome}/gh/config.yml"
+      if [ -L "$configFile" ]; then
+        run rm -f "$configFile"
+      fi
+      run mkdir -p "$(dirname "$configFile")"
+      run cp --no-preserve=mode "${ghConfigFile}" "$configFile"
+      run chmod 600 "$configFile"
+    '';
+
   programs.jujutsu = {
     enable = true;
     settings = {

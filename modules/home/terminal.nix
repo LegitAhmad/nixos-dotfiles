@@ -33,6 +33,9 @@
     delta
     gh-dash
     mpvpaper
+    dysk
+    ouch
+    procs
   ];
 
   programs.btop = {

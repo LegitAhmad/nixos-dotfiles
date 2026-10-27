@@ -24,7 +24,7 @@ Inspect connected displays with `niri msg outputs` before adding output override
   they do not depend on the optional system Catppuccin switch.
 - Tuned native Dual-Kawase blur for transparent Foot, Ghostty, WezTerm, Kitty,
   Alacritty, pop-up context menus, Noctalia panels, and floating utility dialogs.
-  Configured with efficient xray blur (`xray true`) against the wallpaper.
+  Configured with scene blur (`xray false`) to blur windows and content underneath.
   Window opacity can be toggled on the fly with `Mod+Ctrl+O`.
 - Noctalia starts once from Niri and supplies the bar, wallpaper, launcher,
   clipboard, notifications, session menu, native lock screen and polkit prompts.
