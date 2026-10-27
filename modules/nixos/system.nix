@@ -94,29 +94,26 @@
             capslock = "esc";
             esc = "capslock";
 
-            # Swap / and Right Alt (rightalt is mapped to /)
-            rightalt = "/";
+            # Swap / and Right Alt (AltGr)
+            slash = "layer(altgr)";
+            rightalt = "slash";
+            altgr = "slash";
 
             # Swap Backspace and Right Shift
             backspace = "rightshift";
             rightshift = "backspace";
+
+            # Swap Up/Down arrows with PgUp/PgDown
+            up = "pageup";
+            pageup = "up";
+            down = "pagedown";
+            pagedown = "down";
           };
 
-          # 2. Re-create the Shift layer behaviour for your Right Alt / Slash swap
-          # In a standard layout, 'shift + /' yields '?'.
-          # Because 'rightalt' is now physically acting as your slash key,
-          # holding Shift while hitting Right Alt needs to output '?' instead of 'rightalt' mappings.
+          # 2. Shift layer: produce '?' when holding Shift with Right Alt / AltGr
           shift = {
             rightalt = "?";
-          };
-
-          # 3. Create a custom modifier layer to catch what Right Alt does now
-          # Since 'rightalt' is now '/', its shifted variant is '?'.
-          # Therefore, hitting '/' normally outputs Right Alt.
-          # Holding '/' and hitting another key should trigger Alt shortcuts.
-          # We turn the '/' key into a layer modifier that mirrors standard 'alt'.
-          "/" = {
-            "~rightalt" = "M-rightalt"; # Falls back to the system's Right Alt meta modifier
+            altgr = "?";
           };
         };
       };

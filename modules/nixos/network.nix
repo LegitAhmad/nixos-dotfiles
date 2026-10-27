@@ -13,6 +13,9 @@
   # Set your locale.
   i18n.defaultLocale = "en_US.UTF-8";
 
+  # Cloudflare Warp daemon
+  services.cloudflare-warp.enable = true;
+
   # Open firewall ports for Lan Mouse (software KVM switch)
   networking.firewall = {
     allowedTCPPorts = [ 4242 ];

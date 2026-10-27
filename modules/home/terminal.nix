@@ -55,6 +55,12 @@
     config.lib.file.mkOutOfStoreSymlink "${repoDir}/config/ghostty/config"
   );
 
+  home.sessionVariables = {
+    TERMINAL = "ghostty";
+  };
+
+  xdg.configFile."xdg-terminals.list".text = "com.mitchellh.ghostty.desktop\n";
+
   programs.wezterm = {
     enable = true;
   };
@@ -71,6 +77,9 @@
         pad = "6x6";
         dpi-aware = "no";
         selection-target = "both";
+      };
+      colors-dark = {
+        alpha = 0.88;
       };
       mouse = {
         hide-when-typing = "yes";

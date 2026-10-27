@@ -4,6 +4,7 @@
   pkgs,
   inputs,
   repoDir,
+  osConfig ? null,
   ...
 }:
 
@@ -47,8 +48,15 @@ in
   # Each compositor starts Noctalia itself: Hyprland in autostart.lua,
   # Niri in config.kdl. Do not also enable a shared shell user service.
 
-  xdg.configFile."noctalia/config.toml" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${repoDir}/config/noctalia/config.toml";
-    force = true;
+  xdg.configFile = {
+    "noctalia/config.toml" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${repoDir}/config/noctalia/config.toml";
+      force = true;
+    };
+  } // lib.optionalAttrs (osConfig != null && osConfig.networking.hostName == "lennix") {
+    "noctalia/host.toml" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${repoDir}/config/noctalia/hosts/lennix.toml";
+      force = true;
+    };
   };
 }

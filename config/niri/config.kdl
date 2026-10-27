@@ -13,13 +13,22 @@ input {
         natural-scroll
         scroll-method "two-finger"
     }
-    focus-follows-mouse max-scroll-amount="0%"
+    focus-follows-mouse
 }
 
+workspace "1"
+workspace "2"
+workspace "3"
+workspace "4"
+workspace "5"
+workspace "6"
+workspace "7"
+workspace "8"
+workspace "9"
+
 layout {
-    gaps 10
-    center-focused-column "on-overflow"
-    always-center-single-column
+    gaps 6
+    center-focused-column "never"
     default-column-width { proportion 0.5; }
     preset-column-widths {
         proportion 0.33333
@@ -36,13 +45,7 @@ layout {
         inactive-color "#45475a"
     }
     border { off; }
-    shadow {
-        on
-        softness 24
-        spread 2
-        offset x=0 y=4
-        color "#00000040"
-    }
+    shadow { off; }
     tab-indicator {
         place-within-column
         position "top"
@@ -51,6 +54,13 @@ layout {
         inactive-color "#45475a"
     }
     background-color "#1e1e2e"
+}
+
+blur {
+    passes 3
+    offset 3.0
+    noise 0.02
+    saturation 1.5
 }
 
 prefer-no-csd
@@ -66,12 +76,25 @@ window-rule {
     geometry-corner-radius 10
     clip-to-geometry true
     draw-border-with-background false
+    popups {
+        background-effect {
+            blur true
+        }
+    }
 }
 
-// Xray blur reuses the wallpaper instead of blurring the scene every frame.
-// Only affects transparent pixels; opaque terminals stay opaque.
+layer-rule {
+    shadow { off; }
+    exclude namespace="noctalia-wallpaper"
+    background-effect {
+        blur true
+    }
+}
+
+// Blur for terminals and applications with native background transparency.
+// xray true reuses blurred wallpaper for maximal GPU efficiency and zero animation stutter.
 window-rule {
-    match app-id=r#"^(foot|com\.mitchellh\.ghostty|org\.wezfurlong\.wezterm)$"#
+    match app-id=r#"^(foot|com\.mitchellh\.ghostty|org\.wezfurlong\.wezterm|kitty|Alacritty|alacritty)$"#
     background-effect {
         blur true
         xray true
@@ -79,8 +102,13 @@ window-rule {
 }
 
 window-rule {
-    match app-id=r#"^org\.wezfurlong\.wezterm$"#
-    default-column-width {}
+    match app-id=r#"(?i)(helium|firefox|zen|brave|chromium|chrome)"#
+    default-column-width { proportion 1.0; }
+}
+
+window-rule {
+    match app-id=r#"^(foot|com\.mitchellh\.ghostty|org\.wezfurlong\.wezterm|kitty|Alacritty)$"#
+    default-column-width { proportion 0.66667; }
 }
 
 window-rule {
@@ -92,16 +120,54 @@ window-rule {
 window-rule {
     match app-id=r#"^(org\.pulseaudio\.pavucontrol|pavucontrol|nm-connection-editor|blueman-manager)$"#
     open-floating true
+    opacity 0.95
+    background-effect {
+        blur true
+        xray true
+    }
+}
+
+window-rule {
+    match app-id=r#"(?i)^(thunar|org\.xfce\.thunar|nautilus|org\.gnome\.nautilus|nemo|dolphin|org\.kde\.dolphin|pcmanfm|pcmanfm-qt|file-roller|org\.gnome\.fileroller|xarchiver|ark|org\.kde\.ark|xdg-desktop-portal-(gtk|gnome|kde))$"#
+    open-floating true
+    default-column-width { proportion 0.6; }
+    default-window-height { proportion 0.65; }
+    opacity 0.95
+    background-effect {
+        blur true
+        xray true
+    }
 }
 
 window-rule {
     match app-id=r#"^dev\.noctalia\.Noctalia$"#
     open-floating true
+    background-effect {
+        blur true
+        xray true
+    }
+}
+
+window-rule {
+    match app-id=r#"(?i)^steam$"#
+    exclude title=r#"^notificationtoasts_"#
+    open-on-workspace "8"
+}
+
+window-rule {
+    match app-id=r#"(?i)^steam$"# title=r#"^notificationtoasts_"#
+    open-floating true
+    default-floating-position x=24 y=24 relative-to="bottom-right"
+}
+
+window-rule {
+    match app-id=r#"(?i)^(com\.obsproject\.Studio|obs)$"#
+    open-on-workspace "9"
 }
 
 binds {
     Mod+Shift+Slash hotkey-overlay-title="Show keyboard shortcuts" { show-hotkey-overlay; }
-    Mod+T hotkey-overlay-title="Terminal" { spawn "foot"; }
+    Mod+T hotkey-overlay-title="Terminal" { spawn "ghostty"; }
     Mod+B hotkey-overlay-title="Browser" { spawn "helium"; }
     Mod+E hotkey-overlay-title="Files" { spawn "thunar"; }
     Mod+A hotkey-overlay-title="Application launcher" { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
@@ -116,12 +182,11 @@ binds {
 
     Mod+Q repeat=false { close-window; }
     Mod+O repeat=false hotkey-overlay-title="Workspace overview" { toggle-overview; }
-    Mod+Tab repeat=false { focus-workspace-previous; }
-
-    Mod+H { focus-column-left; }
+    Mod+grave repeat=false hotkey-overlay-title="Previous workspace" { focus-workspace-previous; }
+    Mod+Shift+Tab { focus-column-left-or-last; }
+    Mod+Tab { focus-column-right-or-first; }
     Mod+J { focus-window-down; }
     Mod+K { focus-window-up; }
-    Mod+L { focus-column-right; }
     Mod+Left { focus-column-left; }
     Mod+Down { focus-window-down; }
     Mod+Up { focus-window-up; }
@@ -146,43 +211,46 @@ binds {
     Mod+BracketLeft { consume-or-expel-window-left; }
     Mod+BracketRight { consume-or-expel-window-right; }
     Mod+Ctrl+T repeat=false hotkey-overlay-title="Toggle column tabs" { toggle-column-tabbed-display; }
+    Mod+Ctrl+O repeat=false hotkey-overlay-title="Toggle window opacity" { toggle-window-rule-opacity; }
 
+    Mod+Z hotkey-overlay-title="Next occupied workspace" { spawn "/home/legitahmad/nixos-dotfiles/scripts/niri-focus-occupied-workspace.py" "down" "--wrap"; }
+    Mod+X hotkey-overlay-title="Previous occupied workspace" { spawn "/home/legitahmad/nixos-dotfiles/scripts/niri-focus-occupied-workspace.py" "up" "--wrap"; }
     Mod+Page_Up { focus-workspace-up; }
     Mod+Page_Down { focus-workspace-down; }
     Mod+Shift+Page_Up { move-column-to-workspace-up; }
     Mod+Shift+Page_Down { move-column-to-workspace-down; }
     Mod+Ctrl+Page_Up { move-workspace-up; }
     Mod+Ctrl+Page_Down { move-workspace-down; }
-    Mod+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
-    Mod+WheelScrollUp cooldown-ms=150 { focus-workspace-up; }
+    Mod+WheelScrollDown cooldown-ms=150 { spawn "/home/legitahmad/nixos-dotfiles/scripts/niri-focus-occupied-workspace.py" "down"; }
+    Mod+WheelScrollUp cooldown-ms=150 { spawn "/home/legitahmad/nixos-dotfiles/scripts/niri-focus-occupied-workspace.py" "up"; }
 
-    Mod+1 { focus-workspace 1; }
-    Mod+2 { focus-workspace 2; }
-    Mod+3 { focus-workspace 3; }
-    Mod+4 { focus-workspace 4; }
-    Mod+5 { focus-workspace 5; }
-    Mod+6 { focus-workspace 6; }
-    Mod+7 { focus-workspace 7; }
-    Mod+8 { focus-workspace 8; }
-    Mod+9 { focus-workspace 9; }
-    Mod+Shift+1 { move-column-to-workspace 1; }
-    Mod+Shift+2 { move-column-to-workspace 2; }
-    Mod+Shift+3 { move-column-to-workspace 3; }
-    Mod+Shift+4 { move-column-to-workspace 4; }
-    Mod+Shift+5 { move-column-to-workspace 5; }
-    Mod+Shift+6 { move-column-to-workspace 6; }
-    Mod+Shift+7 { move-column-to-workspace 7; }
-    Mod+Shift+8 { move-column-to-workspace 8; }
-    Mod+Shift+9 { move-column-to-workspace 9; }
-    Mod+Alt+1 { move-column-to-workspace 1 focus=false; }
-    Mod+Alt+2 { move-column-to-workspace 2 focus=false; }
-    Mod+Alt+3 { move-column-to-workspace 3 focus=false; }
-    Mod+Alt+4 { move-column-to-workspace 4 focus=false; }
-    Mod+Alt+5 { move-column-to-workspace 5 focus=false; }
-    Mod+Alt+6 { move-column-to-workspace 6 focus=false; }
-    Mod+Alt+7 { move-column-to-workspace 7 focus=false; }
-    Mod+Alt+8 { move-column-to-workspace 8 focus=false; }
-    Mod+Alt+9 { move-column-to-workspace 9 focus=false; }
+    Mod+1 { focus-workspace "1"; }
+    Mod+2 { focus-workspace "2"; }
+    Mod+3 { focus-workspace "3"; }
+    Mod+4 { focus-workspace "4"; }
+    Mod+5 { focus-workspace "5"; }
+    Mod+6 { focus-workspace "6"; }
+    Mod+7 { focus-workspace "7"; }
+    Mod+8 { focus-workspace "8"; }
+    Mod+9 { focus-workspace "9"; }
+    Mod+Shift+1 { move-column-to-workspace "1"; }
+    Mod+Shift+2 { move-column-to-workspace "2"; }
+    Mod+Shift+3 { move-column-to-workspace "3"; }
+    Mod+Shift+4 { move-column-to-workspace "4"; }
+    Mod+Shift+5 { move-column-to-workspace "5"; }
+    Mod+Shift+6 { move-column-to-workspace "6"; }
+    Mod+Shift+7 { move-column-to-workspace "7"; }
+    Mod+Shift+8 { move-column-to-workspace "8"; }
+    Mod+Shift+9 { move-column-to-workspace "9"; }
+    Mod+Alt+1 { move-column-to-workspace "1" focus=false; }
+    Mod+Alt+2 { move-column-to-workspace "2" focus=false; }
+    Mod+Alt+3 { move-column-to-workspace "3" focus=false; }
+    Mod+Alt+4 { move-column-to-workspace "4" focus=false; }
+    Mod+Alt+5 { move-column-to-workspace "5" focus=false; }
+    Mod+Alt+6 { move-column-to-workspace "6" focus=false; }
+    Mod+Alt+7 { move-column-to-workspace "7" focus=false; }
+    Mod+Alt+8 { move-column-to-workspace "8" focus=false; }
+    Mod+Alt+9 { move-column-to-workspace "9" focus=false; }
 
     Mod+Alt+H { focus-monitor-left; }
     Mod+Alt+J { focus-monitor-down; }
@@ -193,8 +261,8 @@ binds {
     Mod+Alt+Shift+K { move-column-to-monitor-up; }
     Mod+Alt+Shift+L { move-column-to-monitor-right; }
 
-    Print repeat=false { screenshot; }
-    Mod+Print repeat=false { screenshot-screen; }
+    Print repeat=false { screenshot-screen; }
+    Mod+Print repeat=false { screenshot; }
     Mod+Shift+Print repeat=false { screenshot-window; }
 
     XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "-l" "1.5" "@DEFAULT_AUDIO_SINK@" "5%+"; }

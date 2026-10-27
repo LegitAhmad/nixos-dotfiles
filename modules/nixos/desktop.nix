@@ -18,11 +18,23 @@
   # Enable Intel CPU/GPU drivers & hardware graphics acceleration
   hardware.graphics = {
     enable = true;
+    enable32Bit = true;
     extraPackages = with pkgs; [
       intel-media-driver
       intel-vaapi-driver
       vpl-gpu-rt
     ];
+    extraPackages32 = with pkgs.pkgsi686Linux; [
+      intel-media-driver
+      intel-vaapi-driver
+    ];
+  };
+
+  # Steam client & gaming integration
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
   };
 
   # Intel CPU temperature/throttling daemon
@@ -38,6 +50,9 @@
   programs.hyprland = {
     enable = true;
     withUWSM = false;
+    # Prevent the NixOS module from triggering a custom recompile of Hyprland
+    # while keeping withUWSM = false.
+    package = pkgs.hyprland // { override = _: pkgs.hyprland; };
   };
 
   # Niri is an alternative session; keep the existing login default.

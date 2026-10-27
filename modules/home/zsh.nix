@@ -1,4 +1,8 @@
-{ config, ... }:
+{
+  config,
+  repoDir,
+  ...
+}:
 
 {
   programs.zsh = {
@@ -26,17 +30,19 @@
     shellAliases = {
       # Shell-specific extras beyond the shared aliases
       # (nix/nh, git, eza, trash aliases come from shell-shared.nix)
-      gn = "hyprshutdown -t 'Shutting down...' --post-cmd 'systemctl poweroff'";
+      gn = "${repoDir}/scripts/system-shutdown.sh";
     };
   };
 
   programs.atuin = {
     enable = true;
     enableZshIntegration = true;
+    flags = [ "--disable-ai" ];
     settings = {
       auto_sync = true;
       search_mode = "fuzzy";
       inline_height = 20;
+      ai.enabled = false;
     };
   };
 

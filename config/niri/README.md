@@ -19,12 +19,13 @@ Inspect connected displays with `niri msg outputs` before adding output override
 ## Desktop behavior
 
 - Half-screen columns by default; one-third, half and two-thirds width presets.
-- Overflow-aware centering, tabbed columns, rounded corners, subtle shadows and
+- Left-aligned focused columns ("never" center-focused-column), static workspaces 1-9, tabbed columns, rounded corners and
   Catppuccin Mocha focus colors. These colors belong to this standalone config;
   they do not depend on the optional system Catppuccin switch.
-- Efficient native xray blur for transparent Foot, Ghostty and WezTerm surfaces.
-  This does not force application transparency. Noctalia requests its own blur
-  through the standard background-effect protocol.
+- Tuned native Dual-Kawase blur for transparent Foot, Ghostty, WezTerm, Kitty,
+  Alacritty, pop-up context menus, Noctalia panels, and floating utility dialogs.
+  Configured with efficient xray blur (`xray true`) against the wallpaper.
+  Window opacity can be toggled on the fly with `Mod+Ctrl+O`.
 - Noctalia starts once from Niri and supplies the bar, wallpaper, launcher,
   clipboard, notifications, session menu, native lock screen and polkit prompts.
   Its shared config also enables the native polkit agent for Hyprland. Existing
@@ -40,8 +41,8 @@ Inspect connected displays with `niri msg outputs` before adding output override
 `config/noctalia/config.toml` is shared with Hyprland and reloads live:
 
 - Edge-to-edge Catppuccin bar flush with the top and both sides, with a centered
-  date/time and numbered occupied workspace pills; empty workspaces stay muted
-  and unlabeled. Media titles and artists stay bounded to 160 pixels, remain
+  date/time and numbered occupied workspace pills; empty workspaces stay hidden
+  rather than showing unpopulated pills. Media titles and artists stay bounded to 160 pixels, remain
   visible while paused, and hide when no player is available.
 - Subtle capsule groups organize connectivity, volume/brightness, and
   power-profile/battery/caffeine controls. Bluetooth stays visible even when off
@@ -149,7 +150,7 @@ system pin, keeping its derivation aligned with the published binary cache.
 | Super+PageUp/PageDown | Previous/next workspace |
 | Super+Tab | Previous workspace |
 | Super+Shift+N/O | Next / toggle media playback |
-| Print / Super+Print / Super+Shift+Print | Region / screen / window screenshot |
+| Print / Super+Print / Super+Shift+Print | Screen / region / window screenshot |
 | Super+Escape | Escape shortcut inhibition (remote desktop/KVM) |
 | Super+Shift+E | Log out with confirmation |
 | Super+Shift+P | Power displays off; input wakes them |

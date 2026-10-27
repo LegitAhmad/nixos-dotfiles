@@ -121,5 +121,6 @@
     python3
     gcc
     jjui
+    texliveFull
   ];
 }

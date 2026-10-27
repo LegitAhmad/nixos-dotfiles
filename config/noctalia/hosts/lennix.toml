@@ -1,0 +1,8 @@
+# Host-specific Noctalia overrides for lennix (14-inch laptop)
+
+[bar.main]
+thickness = 34
+border_width = 0.0
+font_scale = 0.95
+shadow = false
+contact_shadow = false

@@ -16,8 +16,8 @@ hl.window_rule({
 
 -- Floating rules for dialogs and portals
 hl.window_rule({
-	name = "thunar-float",
-	match = { class = "thunar" },
+	name = "file-manager-float",
+	match = { class = "(?i)(thunar|org\\.xfce\\.thunar|nautilus|org\\.gnome\\.nautilus|nemo|dolphin|org\\.kde\\.dolphin|pcmanfm|pcmanfm-qt)" },
 	float = true,
 	size = "(monitor_w*0.5) (monitor_h*0.5)",
 	center = true,
@@ -144,6 +144,13 @@ hl.window_rule({
 })
 
 hl.window_rule({
+	name = "discord-workspace",
+	match = { class = "[Dd]iscord" },
+	workspace = 3,
+	no_initial_focus = true,
+})
+
+hl.window_rule({
 	name = "spotify-workspace",
 	match = { class = "Spotify" },
 	workspace = 7,
@@ -166,7 +173,7 @@ hl.window_rule({
 
 hl.window_rule({
 	name = "obs-workspace",
-	match = { class = "com.obsproject.Studio" },
+	match = { class = "(?i)(com\\.obsproject\\.Studio|^obs$)" },
 	workspace = 9,
 	no_initial_focus = true,
 })

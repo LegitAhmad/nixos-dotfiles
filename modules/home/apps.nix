@@ -15,11 +15,57 @@ let
     "dcjichoefijpinlfnjghokpkojhlhkgl" # Notifier for Gmail
     "ponfpcnoihfmfllpaingbgckeeldkhle" # Enhancer for YouTube
   ];
+  googleSearchTemplate = {
+    alternate_urls = [ ];
+    contextual_search_url = "";
+    created_from_play_api = false;
+    date_created = "0";
+    doodle_url = "";
+    enforced_by_policy = false;
+    favicon_url = "https://www.gstatic.com/images/branding/searchlogo/ico/favicon.ico";
+    featured_by_policy = false;
+    id = "8";
+    image_search_branding_label = "";
+    image_translate_source_language_param_key = "";
+    image_translate_target_language_param_key = "";
+    image_translate_url = "";
+    image_url = "https://lens.google.com/upload";
+    image_url_post_params = "encoded_image={google:imageThumbnail}";
+    input_encodings = [ "UTF-8" ];
+    is_active = 0;
+    keyword = "google.com";
+    last_modified = "13437518791831905";
+    last_visited = "13437557656498685";
+    logo_url = "";
+    new_tab_url = "";
+    originating_url = "";
+    policy_origin = 0;
+    preconnect_to_search_url = false;
+    prefetch_likely_navigations = false;
+    prepopulate_id = 1;
+    safe_for_autoreplace = true;
+    search_intent_params = [ ];
+    search_url_post_params = "";
+    send_x_geo_header = false;
+    short_name = "Google";
+    starter_pack_id = 0;
+    suggestions_url = "https://www.google.com/complete/search?client=chrome&q={searchTerms}";
+    suggestions_url_post_params = "";
+    synced_guid = "485bf7d3-0215-45af-87dc-538868000001";
+    url = "https://www.google.com/search?q={searchTerms}";
+    usage_count = 0;
+  };
   # Seed new profiles and reapply preferences on activation or the next launch.
   heliumPreferences = {
+    default_search_provider = {
+      guid = "485bf7d3-0215-45af-87dc-538868000001";
+    };
+    default_search_provider_data = {
+      template_url_data = googleSearchTemplate;
+      mirrored_template_url_data = googleSearchTemplate;
+    };
     session.restore_on_startup = 1; # Continue where you left off.
     download.prompt_for_download = true; # Ask where to save each download.
-    # Native navigation and split controls stay to the left of the address bar.
     browser = {
       show_forward_button = true;
       show_home_button = false;
@@ -27,6 +73,11 @@ let
     };
     toolbar.pinned_actions = [ ]; # Remove other pinned toolbar actions.
     helium = {
+      completed_onboarding = true;
+      services = {
+        user_consented = true;
+        schema_version = 1;
+      };
       browser = {
         layout = 2; # Vertical tabs.
         vertical_right_aligned = true; # Keep the vertical tab sidebar on the right.
@@ -146,6 +197,7 @@ in
   home.packages =
     lib.attrValues craftingApps
     ++ (with pkgs; [
+      discord
       vesktop
       wl-clipboard
       satty
@@ -154,13 +206,15 @@ in
       adw-gtk3
       proton-vpn
       mpv
-      libreoffice-stable
+      onlyoffice-desktopeditors
       wpsoffice
       libnotify
       obs-studio
       spotify
-      steam
       brave-origin
+      lunar-client
+      osu-lazer-bin
+      file-roller
       heliumPackage
       inputs.zen-browser.packages.${system}.default
       inputs.llm-agents.packages.${system}.omp

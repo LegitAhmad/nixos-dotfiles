@@ -3,7 +3,8 @@ font-size = 13
 window-padding-x = 0
 window-padding-y = 6
 window-padding-balance = true
-background-opacity = 0.95
+background-opacity = 0.88
+background-blur = true
 gtk-single-instance = true
 copy-on-select = clipboard
 confirm-close-surface = true
@@ -11,3 +12,5 @@ cursor-style = block
 custom-shader = /home/legitahmad/nixos-dotfiles/config/ghostty/shaders/cursor_smear.glsl
 tab-inherit-working-directory = true
 window-inherit-working-directory = false
+keybind = ctrl+shift+key_t=new_tab
+keybind = ctrl+shift+t=new_tab

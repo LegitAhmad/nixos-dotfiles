@@ -1,5 +1,10 @@
 port = 4242
-frontend = "gtk"
+
+[[clients]]
+hostname = "nixos-btw"
+ips = []
+position = "right"
+activate_on_startup = true
 
 [authorized_fingerprints]
 "04:60:39:74:35:d0:e5:86:ae:0e:b8:74:87:2d:82:c7:ba:7a:5b:9e:52:0a:f2:21:39:11:f6:67:e7:5b:82:3b" = "Archise"

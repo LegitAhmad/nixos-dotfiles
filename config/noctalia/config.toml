@@ -9,18 +9,21 @@ time_format = "{:%H:%M}"
 date_format = "%A, %d %B"
 # Do not retain a password manager's last selection after it exits.
 clipboard_keep_from_closed_apps = false
+popup_shadows = false
 
+[shell.shadow]
+alpha = 0.0
 [shell.animation]
 speed = 1.25
 
 [shell.panel]
+shadow = false
 transparency_mode = "soft"
 launcher_placement = "floating"
 clipboard_placement = "floating"
 control_center_placement = "floating"
 wallpaper_placement = "floating"
 session_placement = "floating"
-
 [shell.launcher]
 layout = "simple"
 categories = false
@@ -52,8 +55,10 @@ radius = 0
 concave_edge_corners = false
 background_opacity = 0.94
 border = "outline"
-border_width = 1.0
+border_width = 0.0
 reserve_space = true
+shadow = false
+contact_shadow = false
 start = ["launcher", "workspaces", "group:media"]
 center = ["clock"]
 end = ["privacy", "tray", "bitwarden", "group:connectivity", "group:levels", "group:power", "notifications", "control-center"]
@@ -98,8 +103,9 @@ widget_spacing = 8
 color = "primary"
 
 [widget.workspaces]
-# Label occupied workspaces; keep empty ones unlabeled and visually muted.
+# Hide empty workspaces so only occupied (and active) workspaces show pills.
 style = "regular"
+hide_when_empty = true
 show_labels = true
 labels_only_when_occupied = true
 occupied_color = "secondary"
