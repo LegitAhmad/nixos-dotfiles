@@ -149,14 +149,13 @@ system pin, keeping its derivation aligned with the published binary cache.
 | Super+Alt+1…9 | Move column to workspace without following |
 | Super+PageUp/PageDown | Previous/next workspace |
 | Super+Tab | Previous workspace |
-| Super+Shift+N/O | Next / toggle media playback |
-| Print / Super+Print / Super+Shift+Print | Screen / region / window screenshot |
+| Super+Shift+N/P/O | Next / previous / toggle media playback |
+| Print / Super+Print | Screen / region screenshot |
 | Super+Escape | Escape shortcut inhibition (remote desktop/KVM) |
 | Super+Shift+E | Log out with confirmation |
-| Super+Shift+P | Power displays off; input wakes them |
 | Super+Shift+/ (Super+?) | Show the hotkey overlay |
 
-Screenshots also go to `~/Pictures/Screenshots`. Audio, media and backlight keys
+Screenshots save to `/tmp/screenshot.png` and open in Satty for annotation. Audio, media and backlight keys
 work while locked. Other bindings are listed directly in `config.kdl`.
 
 ## Version and updates

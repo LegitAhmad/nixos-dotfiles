@@ -15,7 +15,8 @@
       "video"
       "input"
       "uinput"
-    ]; # Enable ‘sudo’, NetworkManager, video control, and input/uinput access.
+      "docker"
+    ]; # Enable ‘sudo’, NetworkManager, video control, input/uinput, and docker access.
     initialPassword = "changeme";
     shell = pkgs.zsh;
   };

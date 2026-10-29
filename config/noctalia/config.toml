@@ -11,6 +11,12 @@ date_format = "%A, %d %B"
 clipboard_keep_from_closed_apps = false
 popup_shadows = false
 
+[shell.screenshot]
+save_to_file = false
+copy_to_clipboard = true
+pipe_to_command = true
+pipe_command = "tee /tmp/screenshot.png | satty -f - --output-filename /tmp/screenshot.png"
+
 [shell.shadow]
 alpha = 0.0
 [shell.animation]

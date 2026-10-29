@@ -3,6 +3,7 @@
   lib,
   pkgs,
   inputs,
+  repoDir,
   ...
 }:
 
@@ -158,8 +159,13 @@ in
           # Helium resolves its built-in Web Store URL through its extension proxy.
           external_update_url = "https://update-url-to-be-replaced.qjz9zk";
         };
-      });
-
+      })
+    // {
+      "satty/config.toml" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${repoDir}/config/satty/config.toml";
+        force = true;
+      };
+    };
   # An open browser defers the update to its next launch, never failing activation.
   home.activation.heliumPreferences = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     run ${configureHelium}
@@ -202,6 +208,8 @@ in
       discord
       vesktop
       wl-clipboard
+      grim
+      slurp
       satty
       hyprpicker
       nwg-look
@@ -222,13 +230,13 @@ in
       transmission_4-gtk
       heliumPackage
       inputs.zen-browser.packages.${system}.default
-      inputs.llm-agents.packages.${system}.omp
-      inputs.llm-agents.packages.${system}.opencode
-      inputs.llm-agents.packages.${system}.copilot-cli
-      inputs.llm-agents.packages.${system}.cursor-agent
-      inputs.llm-agents.packages.${system}.codex
-      inputs.llm-agents.packages.${system}.claude-code
-      inputs.llm-agents.packages.${system}.chatgpt # Official Linux desktop app.
+      omp
+      opencode
+      github-copilot-cli
+      cursor-cli
+      codex
+      claude-code
+      chatgpt # Official Linux desktop app.
       inputs.serena.packages.${system}.default # Serena CLI and MCP server toolkit.
     ]);
 

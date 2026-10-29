@@ -22,8 +22,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     noctalia = {
-      url = "github:noctalia-dev/noctalia";
-      # Retain upstream's nixpkgs pin to match the official binary cache.
+      url = "github:noctalia-dev/noctalia/cachix";
+      # Retain upstream's nixpkgs pin and cachix branch to match the official binary cache.
     };
 
     home-manager = {
@@ -46,11 +46,6 @@
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
-    };
-
-    llm-agents = {
-      url = "github:numtide/llm-agents.nix";
-      # Keep its pinned nixpkgs for Numtide's pre-built agent CLIs, including omp.
     };
 
     serena = {
@@ -140,7 +135,6 @@
       nixpkgs,
       home-manager,
       catppuccin,
-      llm-agents,
       ...
     }@inputs:
     let

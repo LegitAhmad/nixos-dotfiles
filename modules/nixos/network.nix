@@ -13,12 +13,26 @@
   networking.networkmanager = {
     enable = true;
     # Periodic connectivity check to detect captive portals
-    settings.connectivity = {
-      uri = "http://nmcheck.gnome.org/check_network_status.txt";
-      interval = 30;
-      response = "NetworkManager is online";
+    settings = {
+      connectivity = {
+        uri = "http://nmcheck.gnome.org/check_network_status.txt";
+        interval = 30;
+        response = "NetworkManager is online";
+      };
+      # Force Cloudflare and Google DNS globally across all connections
+      "global-dns-domain-*" = {
+        servers = "1.1.1.1,8.8.8.8,1.0.0.1,8.8.4.4";
+      };
     };
   };
+
+  # Static nameserver fallback
+  networking.nameservers = [
+    "1.1.1.1"
+    "8.8.8.8"
+    "1.0.0.1"
+    "8.8.4.4"
+  ];
   # Disable IPv6 to prevent unreachable route failures on networks without WAN IPv6.
   networking.enableIPv6 = false;
 

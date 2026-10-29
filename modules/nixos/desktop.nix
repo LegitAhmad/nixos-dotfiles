@@ -41,6 +41,8 @@
   programs.anime-games-launcher.enable = true;
   # Dedicated Honkai: Star Rail launcher
   programs.honkers-railway-launcher.enable = true;
+  # Dedicated Zenless Zone Zero launcher
+  programs.sleepy-launcher.enable = true;
 
   # Intel CPU temperature/throttling daemon
   services.thermald.enable = true;

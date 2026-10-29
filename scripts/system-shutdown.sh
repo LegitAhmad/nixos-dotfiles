@@ -67,7 +67,7 @@ if detect_niri_socket && niri msg version >/dev/null 2>&1; then
         notify-send -u critical -a "Niri" "Shutting down..." "Closing applications and powering down" >/dev/null 2>&1 || true
     fi
 
-    # Execute Python shutdown helper to gracefully close windows and exit Niri
+    # Execute Python shutdown helper to gracefully close windows
     python3 - "$TARGET_ACTION" "$DRY_RUN" << 'EOF'
 import json
 import os
@@ -92,7 +92,6 @@ if dry_run:
     for w in windows:
         print(f"  - [{w.get('id')}] {w.get('app_id', 'unknown')}: {w.get('title', 'untitled')}")
     print(f"[dry-run] Would send 'close-window' to {len(windows)} windows with 2.5s timeout.")
-    print("[dry-run] Would execute: niri msg action quit -s")
     print(f"[dry-run] Would execute: systemctl {action}")
     sys.exit(0)
 
@@ -113,13 +112,6 @@ if windows:
         if not get_windows():
             break
 
-# Exit Niri cleanly (triggers niri-shutdown.target in niri-session)
-try:
-    subprocess.run(["niri", "msg", "action", "quit", "-s"], check=False)
-except Exception:
-    pass
-
-time.sleep(0.3)
 EOF
 
     if [ "${DRY_RUN}" -eq 1 ]; then

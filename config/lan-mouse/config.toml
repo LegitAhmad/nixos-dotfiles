@@ -2,7 +2,7 @@ port = 4242
 
 [[clients]]
 hostname = "nixos-btw"
-ips = []
+ips = ["192.168.1.5"]
 position = "right"
 activate_on_startup = true
 

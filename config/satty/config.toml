@@ -1,0 +1,7 @@
+[general]
+fullscreen = false
+early-exit = ["copy", "save"]
+initial-tool = "brush"
+copy-command = "wl-copy"
+default-hide-toolbars = false
+output-filename = "/tmp/screenshot.png"

@@ -67,7 +67,7 @@ blur {
 }
 
 prefer-no-csd
-screenshot-path "~/Pictures/Screenshots/Screenshot-%Y-%m-%d_%H-%M-%S.png"
+screenshot-path "/tmp/screenshot.png"
 hotkey-overlay { skip-at-startup; }
 
 // niri-session handles the systemd/D-Bus environment and XDG autostart.
@@ -153,6 +153,11 @@ window-rule {
 }
 
 window-rule {
+    match app-id="com.gabm.satty"
+    open-floating true
+}
+
+window-rule {
     match app-id=r#"(?i)^steam$"#
     exclude title=r#"^notificationtoasts_"#
     open-on-workspace "8"
@@ -179,6 +184,8 @@ binds {
     Mod+W hotkey-overlay-title="Wallpaper picker" { spawn "noctalia" "msg" "panel-toggle" "wallpaper"; }
     Mod+Alt+P hotkey-overlay-title="Color picker" { spawn "hyprpicker" "-a"; }
     Mod+Alt+C hotkey-overlay-title="Toggle PC sharing" { spawn "toggle-pc-sharing"; }
+    Mod+G hotkey-overlay-title="Toggle Auto-F (Genshin)" { spawn "/home/legitahmad/nixos-dotfiles/scripts/autokey-toggle.py"; }
+    Mod+F1 hotkey-overlay-title="Toggle AutoKey" { spawn "/home/legitahmad/nixos-dotfiles/scripts/autokey-toggle.py"; }
     Mod+N hotkey-overlay-title="Notifications" { spawn "noctalia" "msg" "panel-toggle" "control-center" "notifications"; }
     Mod+Comma hotkey-overlay-title="Shell settings" { spawn "noctalia" "msg" "settings-toggle"; }
     Mod+Delete hotkey-overlay-title="Session menu" { spawn "noctalia" "msg" "panel-toggle" "session"; }
@@ -265,9 +272,8 @@ binds {
     Mod+Alt+Shift+K { move-column-to-monitor-up; }
     Mod+Alt+Shift+L { move-column-to-monitor-right; }
 
-    Print repeat=false { screenshot-screen; }
-    Mod+Print repeat=false { screenshot; }
-    Mod+Shift+Print repeat=false { screenshot-window; }
+    Print repeat=false { spawn "noctalia" "msg" "screenshot-fullscreen"; }
+    Mod+Print repeat=false { spawn "noctalia" "msg" "screenshot-region"; }
 
     XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "-l" "1.5" "@DEFAULT_AUDIO_SINK@" "5%+"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"; }
@@ -275,7 +281,7 @@ binds {
     XF86AudioMicMute allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
     XF86AudioPlay allow-when-locked=true { spawn "noctalia" "msg" "media" "toggle"; }
     XF86AudioNext allow-when-locked=true { spawn "noctalia" "msg" "media" "next"; }
-    XF86AudioPrev allow-when-locked=true { spawn "noctalia" "msg" "media" "previous"; }
+    Mod+Shift+P hotkey-overlay-title="Previous media track" { spawn "noctalia" "msg" "media" "previous"; }
     Mod+Shift+N hotkey-overlay-title="Next media track" { spawn "noctalia" "msg" "media" "next"; }
     Mod+Shift+O hotkey-overlay-title="Toggle media playback" { spawn "noctalia" "msg" "media" "toggle"; }
     XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+5%"; }
@@ -284,5 +290,4 @@ binds {
     // Keep an escape hatch for remote-desktop and software-KVM clients.
     Mod+Escape allow-inhibiting=false repeat=false { toggle-keyboard-shortcuts-inhibit; }
     Mod+Shift+E repeat=false hotkey-overlay-title="Log out (confirmation)" { quit; }
-    Mod+Shift+P repeat=false hotkey-overlay-title="Turn displays off" { power-off-monitors; }
 }

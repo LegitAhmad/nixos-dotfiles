@@ -85,7 +85,6 @@ hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("noctalia msg panel-toggle wallpaper"
 -- Screenshots
 hl.bind("Print", hl.dsp.exec_cmd("noctalia msg screenshot-fullscreen"))
 hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd("noctalia msg screenshot-region"))
-
 -- Noctalia notifications
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("noctalia msg panel-toggle control-center notifications"))
 -- D dismisses visible notifications without clearing history; Shift+D toggles Do Not Disturb.

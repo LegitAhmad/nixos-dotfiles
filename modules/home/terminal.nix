@@ -36,6 +36,7 @@
     dysk
     ouch
     procs
+    cloudflared
   ];
 
   programs.btop = {
