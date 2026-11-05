@@ -39,7 +39,7 @@ hl.config({
 	input = {
 		repeat_rate = 50,
 		repeat_delay = 300,
-		sensitivity = 6,
+		sensitivity = 1,
 		accel_profile = "flat",
 		natural_scroll = false,
 		touchpad = {

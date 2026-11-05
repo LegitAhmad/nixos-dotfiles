@@ -7,4 +7,6 @@ position = "right"
 activate_on_startup = true
 
 [authorized_fingerprints]
+"f1:b2:5c:e0:ac:1a:68:d7:66:4f:fb:1a:f3:f6:11:d0:c3:cf:ed:77:81:94:a9:93:89:97:2e:f0:ec:59:2b:7a" = ""
 "04:60:39:74:35:d0:e5:86:ae:0e:b8:74:87:2d:82:c7:ba:7a:5b:9e:52:0a:f2:21:39:11:f6:67:e7:5b:82:3b" = "Archise"
+"f6:49:12:5f:44:11:01:6d:5f:65:8b:ca:d4:bf:a4:90:29:10:fc:d9:e6:95:90:88:38:40:e7:1b:f8:f1:e8:03" = ""
