@@ -4,16 +4,6 @@ let
   inherit (lib.generators) mkLuaInline;
 in
 {
-  # Work around the pnpm dependency hash mismatch in nixpkgs' 6.0.2 package.
-  nixpkgs.overlays = [
-    (_final: prev: {
-      typescript-language-server = prev.typescript-language-server.overrideAttrs (oldAttrs: {
-        pnpmDeps = oldAttrs.pnpmDeps.overrideAttrs {
-          outputHash = "sha256-xR/EF60lVBsITKgH7wCM2wHM46PFQevD51KfCENSUH4=";
-        };
-      });
-    })
-  ];
   programs.nvf.settings.vim = {
     # ----------------------------------------------------------------------
     # Treesitter / LSP / Languages

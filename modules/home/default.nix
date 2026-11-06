@@ -26,9 +26,6 @@
     ./vscode.nix
     ./pc-sharing.nix
   ];
-
-  nixpkgs.config.allowUnfree = true;
-
   home.username = "legitahmad";
   home.homeDirectory = lib.mkForce "/home/${config.home.username}";
 

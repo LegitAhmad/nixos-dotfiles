@@ -22,8 +22,8 @@ let
   # entries, icons and MIME definitions. Release metadata is pinned in
   # flake.lock; `nix flake update` refreshes versions and archive checksums.
   # Catalog: https://getartcraft.com/apps
-  # These are early-alpha apps. Keep existing office tools and MIME defaults;
-  # native Wayland file drag-and-drop is not supported by every app upstream.
+  # Upstream apps register MIME types; XDG defaults are wired in apps.nix.
+  # Native Wayland file drag-and-drop is not supported by every app upstream.
   runtimeLibraries = with pkgs; [
     libxkbcommon
     libx11

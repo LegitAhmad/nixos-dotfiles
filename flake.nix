@@ -53,6 +53,11 @@
       # Retain upstream's Python and packaging dependency pins.
     };
 
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Lock official release metadata; `nix flake update` refreshes the suite.
     # The package builder selects each Linux archive and its published checksum.
     # Single app: `nix flake update photocraft-release`.

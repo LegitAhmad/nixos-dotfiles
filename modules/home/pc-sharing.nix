@@ -8,10 +8,14 @@
 
 let
   kdeconnectPkg = pkgs.kdePackages.kdeconnect-kde;
+  lanMousePkg = pkgs.lan-mouse.overrideAttrs (oldAttrs: {
+    buildInputs = (oldAttrs.buildInputs or [ ]) ++ [ pkgs.libgit2 ];
+    doCheck = false;
+  });
 in
 {
   home.packages = [
-    pkgs.lan-mouse
+    lanMousePkg
     kdeconnectPkg
     (pkgs.writeShellScriptBin "toggle-pc-sharing" ''
       exec "${repoDir}/scripts/toggle-pc-sharing.sh" "$@"
@@ -65,7 +69,7 @@ in
     };
     Service = {
       Type = "simple";
-      ExecStart = "${pkgs.lan-mouse}/bin/lan-mouse daemon";
+      ExecStart = "${lanMousePkg}/bin/lan-mouse daemon";
       Restart = "on-failure";
       RestartSec = "3s";
     };

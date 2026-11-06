@@ -150,6 +150,13 @@ let
       trap - EXIT
     done
   '';
+  localsendPackage = pkgs.symlinkJoin {
+    name = "localsend";
+    paths = [ pkgs.localsend ];
+    postBuild = ''
+      ln -s $out/bin/localsend_app $out/bin/localsend
+    '';
+  };
 in
 {
   xdg.configFile =
@@ -192,12 +199,140 @@ in
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
+      # Web & Network
       "text/html" = [ "helium.desktop" ];
       "application/xhtml+xml" = [ "helium.desktop" ];
       "x-scheme-handler/http" = [ "helium.desktop" ];
       "x-scheme-handler/https" = [ "helium.desktop" ];
       "application/x-bittorrent" = [ "transmission-gtk.desktop" ];
       "x-scheme-handler/magnet" = [ "transmission-gtk.desktop" ];
+
+      # ArtCraft: PDF (PdfCraft)
+      "application/pdf" = [ "ai.storyteller.pdfcraft.desktop" ];
+      "application/x-pdf" = [ "ai.storyteller.pdfcraft.desktop" ];
+
+      # ArtCraft: Documents & Word Processing (WordCraft)
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = [ "ai.storyteller.wordcraft.desktop" ];
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.template" = [ "ai.storyteller.wordcraft.desktop" ];
+      "application/msword" = [ "ai.storyteller.wordcraft.desktop" ];
+      "application/msword-template" = [ "ai.storyteller.wordcraft.desktop" ];
+      "application/vnd.ms-word.document.macroEnabled.12" = [ "ai.storyteller.wordcraft.desktop" ];
+      "application/vnd.ms-word.template.macroEnabled.12" = [ "ai.storyteller.wordcraft.desktop" ];
+      "application/vnd.oasis.opendocument.text" = [ "ai.storyteller.wordcraft.desktop" ];
+      "application/vnd.oasis.opendocument.text-template" = [ "ai.storyteller.wordcraft.desktop" ];
+      "application/rtf" = [ "ai.storyteller.wordcraft.desktop" ];
+      "text/rtf" = [ "ai.storyteller.wordcraft.desktop" ];
+
+      # ArtCraft: Spreadsheets (GridCraft)
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" = [ "ai.storyteller.gridcraft.desktop" ];
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.template" = [ "ai.storyteller.gridcraft.desktop" ];
+      "application/vnd.ms-excel" = [ "ai.storyteller.gridcraft.desktop" ];
+      "application/vnd.ms-excel.sheet.macroEnabled.12" = [ "ai.storyteller.gridcraft.desktop" ];
+      "application/vnd.ms-excel.sheet.binary.macroEnabled.12" = [ "ai.storyteller.gridcraft.desktop" ];
+      "application/vnd.oasis.opendocument.spreadsheet" = [ "ai.storyteller.gridcraft.desktop" ];
+      "application/vnd.oasis.opendocument.spreadsheet-template" = [ "ai.storyteller.gridcraft.desktop" ];
+      "text/csv" = [ "ai.storyteller.gridcraft.desktop" ];
+      "text/tab-separated-values" = [ "ai.storyteller.gridcraft.desktop" ];
+
+      # ArtCraft: Presentations (DeckCraft)
+      "application/x-deckcraft" = [ "ai.storyteller.deckcraft.desktop" ];
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation" = [ "ai.storyteller.deckcraft.desktop" ];
+      "application/vnd.openxmlformats-officedocument.presentationml.template" = [ "ai.storyteller.deckcraft.desktop" ];
+      "application/vnd.openxmlformats-officedocument.presentationml.slideshow" = [ "ai.storyteller.deckcraft.desktop" ];
+      "application/vnd.ms-powerpoint" = [ "ai.storyteller.deckcraft.desktop" ];
+      "application/vnd.oasis.opendocument.presentation" = [ "ai.storyteller.deckcraft.desktop" ];
+      "application/vnd.oasis.opendocument.presentation-template" = [ "ai.storyteller.deckcraft.desktop" ];
+
+      # Images (Satty)
+      "image/png" = [ "satty.desktop" ];
+      "image/jpeg" = [ "satty.desktop" ];
+      "image/gif" = [ "satty.desktop" ];
+      "image/webp" = [ "satty.desktop" ];
+      "image/tiff" = [ "satty.desktop" ];
+      "image/bmp" = [ "satty.desktop" ];
+      "image/avif" = [ "satty.desktop" ];
+      "image/heic" = [ "satty.desktop" ];
+      "image/heif" = [ "satty.desktop" ];
+      "image/qoi" = [ "satty.desktop" ];
+      "image/x-tga" = [ "satty.desktop" ];
+      "image/x-icon" = [ "satty.desktop" ];
+      "image/vnd.microsoft.icon" = [ "satty.desktop" ];
+
+      # ArtCraft: Image Editing Projects (PhotoCraft)
+      "application/x-photocraft" = [ "ai.storyteller.photocraft.desktop" ];
+      "image/vnd.adobe.photoshop" = [ "ai.storyteller.photocraft.desktop" ];
+      "image/x-psd" = [ "ai.storyteller.photocraft.desktop" ];
+      "image/x-psb" = [ "ai.storyteller.photocraft.desktop" ];
+      "image/x-paintnet" = [ "ai.storyteller.photocraft.desktop" ];
+      "image/openraster" = [ "ai.storyteller.photocraft.desktop" ];
+      "application/x-krita" = [ "ai.storyteller.photocraft.desktop" ];
+
+      # ArtCraft: Vector Graphics (VectorCraft)
+      "application/x-vectorcraft" = [ "ai.storyteller.vectorcraft.desktop" ];
+      "application/x-vectorcraft-template" = [ "ai.storyteller.vectorcraft.desktop" ];
+      "image/svg+xml" = [ "ai.storyteller.vectorcraft.desktop" ];
+      "image/svg+xml-compressed" = [ "ai.storyteller.vectorcraft.desktop" ];
+      "application/illustrator" = [ "ai.storyteller.vectorcraft.desktop" ];
+      "application/x-ai-template" = [ "ai.storyteller.vectorcraft.desktop" ];
+      "application/x-affinity" = [ "ai.storyteller.vectorcraft.desktop" ];
+      "image/x-eps" = [ "ai.storyteller.vectorcraft.desktop" ];
+
+      # ArtCraft: Photography & RAW (LightCraft)
+      "image/x-adobe-dng" = [ "ai.storyteller.lightcraft.desktop" ];
+      "image/x-sony-arw" = [ "ai.storyteller.lightcraft.desktop" ];
+      "image/x-canon-cr2" = [ "ai.storyteller.lightcraft.desktop" ];
+      "image/x-canon-cr3" = [ "ai.storyteller.lightcraft.desktop" ];
+      "image/x-nikon-nef" = [ "ai.storyteller.lightcraft.desktop" ];
+      "image/x-fuji-raf" = [ "ai.storyteller.lightcraft.desktop" ];
+      "image/x-olympus-orf" = [ "ai.storyteller.lightcraft.desktop" ];
+      "image/x-panasonic-rw" = [ "ai.storyteller.lightcraft.desktop" ];
+      "image/x-panasonic-rw2" = [ "ai.storyteller.lightcraft.desktop" ];
+      "image/x-pentax-pef" = [ "ai.storyteller.lightcraft.desktop" ];
+
+      # Video (mpv)
+      "video/mp4" = [ "mpv.desktop" ];
+      "video/x-m4v" = [ "mpv.desktop" ];
+      "video/quicktime" = [ "mpv.desktop" ];
+      "video/x-matroska" = [ "mpv.desktop" ];
+      "video/webm" = [ "mpv.desktop" ];
+      "video/vnd.avi" = [ "mpv.desktop" ];
+      "video/avi" = [ "mpv.desktop" ];
+      "video/x-msvideo" = [ "mpv.desktop" ];
+      "video/mpeg" = [ "mpv.desktop" ];
+      "video/3gpp" = [ "mpv.desktop" ];
+      "video/mp2t" = [ "mpv.desktop" ];
+      "application/mxf" = [ "mpv.desktop" ];
+
+      # ArtCraft: Video Projects (FilmCraft)
+      "application/x-filmcraft" = [ "ai.storyteller.filmcraft.desktop" ];
+
+      # ArtCraft: Audio (SoundCraft)
+      "application/x-soundcraft-session" = [ "ai.storyteller.soundcraft.desktop" ];
+      "audio/mpeg" = [ "ai.storyteller.soundcraft.desktop" ];
+      "audio/wav" = [ "ai.storyteller.soundcraft.desktop" ];
+      "audio/x-wav" = [ "ai.storyteller.soundcraft.desktop" ];
+      "audio/vnd.wave" = [ "ai.storyteller.soundcraft.desktop" ];
+      "audio/flac" = [ "ai.storyteller.soundcraft.desktop" ];
+      "audio/x-flac" = [ "ai.storyteller.soundcraft.desktop" ];
+      "audio/x-aiff" = [ "ai.storyteller.soundcraft.desktop" ];
+      "audio/aiff" = [ "ai.storyteller.soundcraft.desktop" ];
+      "audio/midi" = [ "ai.storyteller.soundcraft.desktop" ];
+      "audio/x-midi" = [ "ai.storyteller.soundcraft.desktop" ];
+
+      # ArtCraft: CAD (CADCraft)
+      "image/vnd.dxf" = [ "ai.storyteller.cadcraft.desktop" ];
+      "image/vnd.dwg" = [ "ai.storyteller.cadcraft.desktop" ];
+      "application/x-dxf" = [ "ai.storyteller.cadcraft.desktop" ];
+      "application/acad" = [ "ai.storyteller.cadcraft.desktop" ];
+
+      # ArtCraft: Publishing & Layout (DesignCraft)
+      "application/x-designcraft" = [ "ai.storyteller.designcraft.desktop" ];
+      "application/vnd.adobe.indesign-idml-package" = [ "ai.storyteller.designcraft.desktop" ];
+
+      # ArtCraft: Interface Design (FigCraft)
+      "application/x-figcraft" = [ "ai.storyteller.figcraft.desktop" ];
+      "application/x-sketch" = [ "ai.storyteller.figcraft.desktop" ];
+      "x-scheme-handler/figcraft" = [ "ai.storyteller.figcraft.desktop" ];
     };
   };
 
@@ -221,7 +356,6 @@ in
       libnotify
       obs-studio
       spotify
-      brave-origin
       lunar-client
       osu-lazer-bin
       heroic
@@ -230,13 +364,11 @@ in
       transmission_4-gtk
       heliumPackage
       inputs.zen-browser.packages.${system}.default
-      omp
-      opencode
-      github-copilot-cli
-      cursor-cli
-      codex
-      claude-code
-      chatgpt # Official Linux desktop app.
+      llm-agents.omp
+      llm-agents.opencode
+      llm-agents.copilot-cli
+      llm-agents.cursor-agent
+      llm-agents.claude-code
       inputs.serena.packages.${system}.default # Serena CLI and MCP server toolkit.
     ]);
 

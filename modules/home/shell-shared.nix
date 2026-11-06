@@ -63,6 +63,14 @@ in
     nix-direnv.enable = true;
   };
 
+  # Devenv integration for direnv: pre-generate the extension so `use devenv` works
+  # out of the box in any repository without spawning subshells on every direnv run.
+  xdg.configFile."direnv/lib/devenv.sh".source = pkgs.runCommand "devenv-direnvrc" {
+    nativeBuildInputs = [ pkgs.devenv ];
+  } ''
+    devenv direnvrc > $out
+  '';
+
   programs.fish.shellAliases = aliases;
   programs.zsh.shellAliases = aliases;
 

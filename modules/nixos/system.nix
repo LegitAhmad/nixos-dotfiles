@@ -60,6 +60,7 @@
 
   # Allow unfree packages.
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.overlays = [ inputs.llm-agents.overlays.shared-nixpkgs ];
 
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
