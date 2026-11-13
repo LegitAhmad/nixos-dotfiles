@@ -19,6 +19,7 @@
     substituters = [
       "https://cache.nixos.org"
       "https://noctalia.cachix.org"
+      "https://catppuccin.cachix.org"
       "https://cache.numtide.com"
       "https://nix-community.cachix.org"
       "https://ezkea.cachix.org"
@@ -26,6 +27,7 @@
     trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+      "catppuccin.cachix.org-1:noG/4HkbhJb+lUAdKrph6LaozJvAeEEZj4N732IysmU="
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "ezkea.cachix.org-1:ioBmUbJTZIKsHmWWXPe1FSFbeVe+afhfgqgTSNd34eI="
@@ -60,7 +62,9 @@
 
   # Allow unfree packages.
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays = [ inputs.llm-agents.overlays.shared-nixpkgs ];
+  nixpkgs.overlays = [
+    inputs.llm-agents.overlays.shared-nixpkgs
+  ];
 
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
@@ -135,6 +139,12 @@
   systemd.sleep.settings.Sleep = {
     MemorySleepMode = "deep s2idle";
   };
+
+  # Set your time zone.
+  time.timeZone = "Asia/Karachi";
+
+  # Set your locale.
+  i18n.defaultLocale = "en_US.UTF-8";
 
   # System state version.
   system.stateVersion = "26.05";

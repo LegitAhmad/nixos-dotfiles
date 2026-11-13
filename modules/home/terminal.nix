@@ -59,6 +59,12 @@
     config.lib.file.mkOutOfStoreSymlink "${repoDir}/config/ghostty/config"
   );
 
+  # Keep the shader itself hot-reloadable alongside the config; ghostty
+  # expands ~ in config paths (since 1.1), so the config references it
+  # without hardcoding the username.
+  xdg.configFile."ghostty/shaders/cursor_smear.glsl".source =
+    config.lib.file.mkOutOfStoreSymlink "${repoDir}/config/ghostty/shaders/cursor_smear.glsl";
+
   home.sessionVariables = {
     TERMINAL = "ghostty";
   };

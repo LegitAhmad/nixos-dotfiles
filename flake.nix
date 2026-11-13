@@ -58,29 +58,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Lock official release metadata; `nix flake update` refreshes the suite.
-    # The package builder selects each Linux archive and its published checksum.
-    # Single app: `nix flake update photocraft-release`.
-    # API counters can change metadata hashes without changing app versions.
-    # If several hashes drift, refresh all *-release inputs in one update command.
-    # Preserve inputs with `nix flake archive` for historical/cold rebuilds:
-    # GitHub's mutable endpoint cannot re-serve a previous JSON snapshot.
-    photocraft-release = {
-      url = "file+https://api.github.com/repos/storytold/photocraft/releases/latest";
-      flake = false;
-    };
-    vectorcraft-release = {
-      url = "file+https://api.github.com/repos/storytold/vectorcraft/releases/latest";
-      flake = false;
-    };
-    filmcraft-release = {
-      url = "file+https://api.github.com/repos/storytold/filmcraft/releases/latest";
-      flake = false;
-    };
-    lightcraft-release = {
-      url = "file+https://api.github.com/repos/storytold/lightcraft/releases/latest";
-      flake = false;
-    };
+    # Craft apps not packaged in nixpkgs (and no upstream binary cache):
+    # lock official release metadata and fetch upstream's prebuilt binaries.
+    # `nix flake update <name>-release` refreshes versions and archive
+    # checksums. API counters can change metadata hashes without changing app
+    # versions; if several drift, refresh all *-release inputs in one update
+    # command. Preserve inputs with `nix flake archive` for historical/cold
+    # rebuilds: GitHub's mutable endpoint cannot re-serve a previous JSON
+    # snapshot.
     effectcraft-release = {
       url = "file+https://api.github.com/repos/storytold/effectcraft/releases/latest";
       flake = false;
@@ -91,30 +76,6 @@
     };
     figcraft-release = {
       url = "file+https://api.github.com/repos/storytold/figcraft/releases/latest";
-      flake = false;
-    };
-    soundcraft-release = {
-      url = "file+https://api.github.com/repos/storytold/soundcraft/releases/latest";
-      flake = false;
-    };
-    wordcraft-release = {
-      url = "file+https://api.github.com/repos/storytold/wordcraft/releases/latest";
-      flake = false;
-    };
-    pdfcraft-release = {
-      url = "file+https://api.github.com/repos/storytold/pdfcraft/releases/latest";
-      flake = false;
-    };
-    deckcraft-release = {
-      url = "file+https://api.github.com/repos/storytold/deckcraft/releases/latest";
-      flake = false;
-    };
-    cadcraft-release = {
-      url = "file+https://api.github.com/repos/storytold/cadcraft/releases/latest";
-      flake = false;
-    };
-    gridcraft-release = {
-      url = "file+https://api.github.com/repos/storytold/gridcraft/releases/latest";
       flake = false;
     };
 
@@ -171,5 +132,8 @@
           inputs.aagl.nixosModules.default
         ];
       };
+
+      # `nix fmt` entry point (nixfmt formats RFC 115 style).
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
     };
 }

@@ -81,7 +81,7 @@ lib.mkMerge [
       enable = true;
       enableFishIntegration = true;
       enableZshIntegration = true;
-      configFile = "${config.home.homeDirectory}/.config/oh-my-posh/config.toml";
+      configFile = "${config.xdg.configHome}/oh-my-posh/config.toml";
     };
 
     qt = {

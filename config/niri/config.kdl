@@ -184,8 +184,8 @@ binds {
     Mod+W hotkey-overlay-title="Wallpaper picker" { spawn "noctalia" "msg" "panel-toggle" "wallpaper"; }
     Mod+Alt+P hotkey-overlay-title="Color picker" { spawn "hyprpicker" "-a"; }
     Mod+Alt+C hotkey-overlay-title="Toggle PC sharing" { spawn "toggle-pc-sharing"; }
-    Mod+G hotkey-overlay-title="Toggle Auto-F (Genshin)" { spawn "/home/legitahmad/nixos-dotfiles/scripts/autokey-toggle.py"; }
-    Mod+F1 hotkey-overlay-title="Toggle AutoKey" { spawn "/home/legitahmad/nixos-dotfiles/scripts/autokey-toggle.py"; }
+    Mod+G hotkey-overlay-title="Toggle Auto-F (Genshin)" { spawn "autokey-toggle"; }
+    Mod+F1 hotkey-overlay-title="Toggle AutoKey" { spawn "autokey-toggle"; }
     Mod+N hotkey-overlay-title="Notifications" { spawn "noctalia" "msg" "panel-toggle" "control-center" "notifications"; }
     Mod+Comma hotkey-overlay-title="Shell settings" { spawn "noctalia" "msg" "settings-toggle"; }
     Mod+Delete hotkey-overlay-title="Session menu" { spawn "noctalia" "msg" "panel-toggle" "session"; }
@@ -224,16 +224,16 @@ binds {
     Mod+Ctrl+T repeat=false hotkey-overlay-title="Toggle column tabs" { toggle-column-tabbed-display; }
     Mod+Ctrl+O repeat=false hotkey-overlay-title="Toggle window opacity" { toggle-window-rule-opacity; }
 
-    Mod+Z hotkey-overlay-title="Next occupied workspace" { spawn "/home/legitahmad/nixos-dotfiles/scripts/niri-focus-occupied-workspace.py" "down" "--wrap"; }
-    Mod+X hotkey-overlay-title="Previous occupied workspace" { spawn "/home/legitahmad/nixos-dotfiles/scripts/niri-focus-occupied-workspace.py" "up" "--wrap"; }
+    Mod+Z hotkey-overlay-title="Next occupied workspace" { spawn "niri-focus-occupied-workspace" "down" "--wrap"; }
+    Mod+X hotkey-overlay-title="Previous occupied workspace" { spawn "niri-focus-occupied-workspace" "up" "--wrap"; }
     Mod+Page_Up { focus-workspace-up; }
     Mod+Page_Down { focus-workspace-down; }
     Mod+Shift+Page_Up { move-column-to-workspace-up; }
     Mod+Shift+Page_Down { move-column-to-workspace-down; }
     Mod+Ctrl+Page_Up { move-workspace-up; }
     Mod+Ctrl+Page_Down { move-workspace-down; }
-    Mod+WheelScrollDown cooldown-ms=150 { spawn "/home/legitahmad/nixos-dotfiles/scripts/niri-focus-occupied-workspace.py" "down"; }
-    Mod+WheelScrollUp cooldown-ms=150 { spawn "/home/legitahmad/nixos-dotfiles/scripts/niri-focus-occupied-workspace.py" "up"; }
+    Mod+WheelScrollDown cooldown-ms=150 { spawn "niri-focus-occupied-workspace" "down"; }
+    Mod+WheelScrollUp cooldown-ms=150 { spawn "niri-focus-occupied-workspace" "up"; }
 
     Mod+1 { focus-workspace "1"; }
     Mod+2 { focus-workspace "2"; }

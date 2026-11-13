@@ -27,7 +27,7 @@
     ./pc-sharing.nix
   ];
   home.username = "legitahmad";
-  home.homeDirectory = lib.mkForce "/home/${config.home.username}";
+  home.homeDirectory = "/home/${config.home.username}";
 
   # Compatibility version.
   home.stateVersion = "26.05";

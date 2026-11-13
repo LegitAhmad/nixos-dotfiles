@@ -6,8 +6,6 @@
 }:
 
 {
-  # Define your hostname.
-  networking.hostName = lib.mkDefault "nixos-btw";
 
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager = {
@@ -35,12 +33,6 @@
   ];
   # Disable IPv6 to prevent unreachable route failures on networks without WAN IPv6.
   networking.enableIPv6 = false;
-
-  # Set your time zone.
-  time.timeZone = "Asia/Karachi";
-
-  # Set your locale.
-  i18n.defaultLocale = "en_US.UTF-8";
 
   # Cloudflare Warp daemon
   services.cloudflare-warp.enable = true;

@@ -22,11 +22,22 @@ in
     '')
   ];
 
-  # Lan Mouse configuration (out-of-store symlink)
-  xdg.configFile."lan-mouse" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${repoDir}/config/lan-mouse";
-    recursive = true;
-  };
+  # Lan Mouse configuration (out-of-store symlink). Only the config is linked
+  # from the repo; the TLS key stays a real file in ~/.config/lan-mouse so the
+  # private key never has to live in the repository. Its fingerprint is
+  # authorized on peers, so preserve it rather than letting lan-mouse regenerate.
+  xdg.configFile."lan-mouse/config.toml".source =
+    config.lib.file.mkOutOfStoreSymlink "${repoDir}/config/lan-mouse/config.toml";
+
+  # One-time migration from the old whole-directory symlink. Must run after
+  # linkGeneration so ~/.config/lan-mouse is a real directory again.
+  home.activation.lanMouseKeyMigration =
+    lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+      if [ -f "${repoDir}/config/lan-mouse/lan-mouse.pem" ] && [ ! -f "${config.xdg.configHome}/lan-mouse/lan-mouse.pem" ]; then
+        run ${pkgs.coreutils}/bin/cp "${repoDir}/config/lan-mouse/lan-mouse.pem" "${config.xdg.configHome}/lan-mouse/lan-mouse.pem"
+        run ${pkgs.coreutils}/bin/chmod 400 "${config.xdg.configHome}/lan-mouse/lan-mouse.pem"
+      fi
+    '';
 
   # Prevent KDE Connect daemon from autostarting at login via XDG desktop autostart
   xdg.configFile."autostart/org.kde.kdeconnect.daemon.desktop".text = ''

@@ -12,7 +12,7 @@ hl.bind(mainMod .. " + SHIFT + I", hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("noctalia msg panel-toggle clipboard"))
 hl.bind(mainMod .. " + ALT + P", hl.dsp.exec_cmd("hyprpicker -a"))
-hl.bind(mainMod .. " + ALT + C", hl.dsp.exec_cmd(os.getenv("HOME") .. "/nixos-dotfiles/scripts/toggle-pc-sharing.sh"))
+hl.bind(mainMod .. " + ALT + C", hl.dsp.exec_cmd("toggle-pc-sharing"))
 hl.bind(mainMod .. " + DELETE", hl.dsp.exec_cmd("hyprshutdown -t 'Shutting down...' --post-cmd 'shutdown now'"))
 
 -- Scratchpad (Special Workspace)

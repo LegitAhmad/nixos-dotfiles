@@ -4,7 +4,7 @@
   # NVF owns the editor; each module below owns one area of its configuration.
   # LSP and tooling configurations live in languages.nix; Snacks Lua hooks live in snacks.nix.
   imports = [
-    inputs.nvf.homeManagerModules.default
+    inputs.nvf.homeModules.default
     ./neovim/options.nix
     ./neovim/languages.nix
     ./neovim/completion.nix
