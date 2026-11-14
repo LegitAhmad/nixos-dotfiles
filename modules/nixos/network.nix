@@ -52,11 +52,12 @@
     openFirewall = true;
   };
 
-  # Open firewall ports for Lan Mouse (software KVM switch) and GNOME Network Displays (Miracast RTSP)
+  # Open firewall ports for Lan Mouse (software KVM switch), GNOME Network Displays (Miracast RTSP), and Metro Bundler
   networking.firewall = {
     allowedTCPPorts = [
       4242
       7236
+      8081
     ];
     allowedUDPPorts = [
       4242

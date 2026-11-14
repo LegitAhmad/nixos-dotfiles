@@ -97,7 +97,14 @@
       pkgs.xdg-desktop-portal-gnome
       pkgs.xdg-desktop-portal-gtk
     ];
-    config.common.default = "*";
+    config.common = {
+      default = "*";
+      # The gnome portal's FileChooser delegates its dialog to Nautilus, which
+      # this setup intentionally replaces with Thunar, so browser save prompts
+      # fail silently under Hyprland (the niri session already routes
+      # FileChooser to gtk via the config programs.niri generates).
+      "org.freedesktop.impl.portal.FileChooser" = "gtk";
+    };
   };
 
   # Enable Thunar file manager and XFCE desktop integrations
@@ -151,6 +158,8 @@
       nerd-fonts.symbols-only
       noto-fonts-color-emoji
       noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
       twemoji-color-font
       roboto
     ];
@@ -166,9 +175,17 @@
         sansSerif = [
           "Roboto"
           "Noto Sans"
+          "Noto Sans CJK SC"
+          "Noto Sans CJK TC"
+          "Noto Sans CJK JP"
+          "Noto Sans CJK KR"
         ];
         serif = [
           "Noto Serif"
+          "Noto Serif CJK SC"
+          "Noto Serif CJK TC"
+          "Noto Serif CJK JP"
+          "Noto Serif CJK KR"
           "Roboto"
         ];
         emoji = [
