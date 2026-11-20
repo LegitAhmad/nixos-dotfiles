@@ -25,6 +25,7 @@
     ./zsh.nix
     ./vscode.nix
     ./pc-sharing.nix
+    ./genshin-wish.nix
   ];
   home.username = "legitahmad";
   home.homeDirectory = "/home/${config.home.username}";

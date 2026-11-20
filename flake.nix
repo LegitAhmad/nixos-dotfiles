@@ -20,6 +20,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # Pinned Mesa 26.2.6 for lennix: Mesa 26.3.1 ANV causes repeated i915 GPU
+    # hangs (ecode 12:1) on Raptor Lake under Vulkan load. Remove this input
+    # and the overlay in hosts/lennix once a fixed mesa lands in unstable.
+    nixpkgs-mesa262.url = "github:nixos/nixpkgs/177d0540942fb205af6993b1d5fa0b57799e09f8";
 
     noctalia = {
       url = "github:noctalia-dev/noctalia/cachix";
